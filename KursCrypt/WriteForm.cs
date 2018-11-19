@@ -10,10 +10,12 @@ using System.Windows.Forms;
 
 namespace KursCrypt
 {
-    public partial class Form1 : Form
+    public partial class WriteForm : Form
     {
-        public Form1()
+        MainForm Main;
+        public WriteForm(MainForm main)
         {
+            Main = main;
             InitializeComponent();
         }
     }
