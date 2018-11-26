@@ -10,16 +10,16 @@ using System.Windows.Forms;
 
 namespace KursCrypt
 {
-    struct Email
+    public struct Email
     {
-        int id;// Выдается на сессию
-        string Login, Address, Password;
+        public int id;// Выдается на сессию
+        public string Login, Password;
     }
     public partial class MainForm : Form
     {
-        private List<Email> emails = new List<Email>();
+        public List<Email> emails = new List<Email>();
         private int curr_email = -1;
-        public ImapX.ImapClient client = new ImapX.ImapClient();
+        public ImapX.ImapClient curr_client = new ImapX.ImapClient("imap.mail.ru", 993, true, true);
 
         public MainForm()
         {

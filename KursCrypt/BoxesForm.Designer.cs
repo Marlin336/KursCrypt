@@ -42,6 +42,7 @@
             this.lb_boxes.Name = "lb_boxes";
             this.lb_boxes.Size = new System.Drawing.Size(216, 212);
             this.lb_boxes.TabIndex = 1;
+            this.lb_boxes.TabStop = false;
             this.lb_boxes.SelectedIndexChanged += new System.EventHandler(this.lb_boxes_SelectedIndexChanged);
             // 
             // b_add
@@ -86,9 +87,8 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.ListBox lb_boxes;
         private System.Windows.Forms.Button b_add;
         private System.Windows.Forms.Button b_del;
+        public System.Windows.Forms.ListBox lb_boxes;
     }
 }

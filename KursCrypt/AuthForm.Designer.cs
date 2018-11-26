@@ -44,6 +44,7 @@
             this.bAccept.TabIndex = 0;
             this.bAccept.Text = "Добавить";
             this.bAccept.UseVisualStyleBackColor = true;
+            this.bAccept.Click += new System.EventHandler(this.bAccept_Click);
             // 
             // tb_mail
             // 
