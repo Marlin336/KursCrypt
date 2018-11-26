@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ImapX, Version=2.0.0.18, Culture=neutral, PublicKeyToken=5992873d65130d1f, processorArchitecture=MSIL">
+      <HintPath>..\packages\ImapX.2.0.0.18\lib\net46\ImapX.dll</HintPath>
+    </Reference>
     <Reference Include="OpenPop">
       <HintPath>.\OpenPop.dll</HintPath>
     </Reference>
@@ -96,6 +99,7 @@
     <EmbeddedResource Include="WriteForm.resx">
       <DependentUpon>WriteForm.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

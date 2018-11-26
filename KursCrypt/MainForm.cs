@@ -7,7 +7,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using OpenPop.Pop3;
 
 namespace KursCrypt
 {
@@ -20,7 +19,7 @@ namespace KursCrypt
     {
         private List<Email> emails = new List<Email>();
         private int curr_email = -1;
-        public Pop3Client Client = new Pop3Client();
+        public ImapX.ImapClient client = new ImapX.ImapClient();
 
         public MainForm()
         {
