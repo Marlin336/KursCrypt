@@ -29,9 +29,9 @@
         private void InitializeComponent()
         {
             this.textBox = new System.Windows.Forms.TextBox();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.cb_to = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.tb_subject = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.b_send = new System.Windows.Forms.Button();
             this.list = new System.Windows.Forms.DataGridView();
@@ -60,18 +60,18 @@
             this.textBox.Size = new System.Drawing.Size(651, 259);
             this.textBox.TabIndex = 0;
             // 
-            // comboBox1
+            // cb_to
             // 
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.cb_to.FormattingEnabled = true;
+            this.cb_to.Items.AddRange(new object[] {
             "abc",
             "bcd",
             "cde",
             "efg"});
-            this.comboBox1.Location = new System.Drawing.Point(68, 12);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(595, 21);
-            this.comboBox1.TabIndex = 1;
+            this.cb_to.Location = new System.Drawing.Point(68, 12);
+            this.cb_to.Name = "cb_to";
+            this.cb_to.Size = new System.Drawing.Size(595, 21);
+            this.cb_to.TabIndex = 1;
             // 
             // label1
             // 
@@ -83,12 +83,12 @@
             this.label1.TabIndex = 2;
             this.label1.Text = "Кому:";
             // 
-            // textBox1
+            // tb_subject
             // 
-            this.textBox1.Location = new System.Drawing.Point(68, 39);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(595, 20);
-            this.textBox1.TabIndex = 3;
+            this.tb_subject.Location = new System.Drawing.Point(68, 39);
+            this.tb_subject.Name = "tb_subject";
+            this.tb_subject.Size = new System.Drawing.Size(595, 20);
+            this.tb_subject.TabIndex = 3;
             // 
             // label2
             // 
@@ -207,9 +207,9 @@
             this.Controls.Add(this.list);
             this.Controls.Add(this.b_send);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.tb_subject);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.cb_to);
             this.Controls.Add(this.textBox);
             this.Name = "WriteForm";
             this.Text = "Новое письмо";
@@ -222,9 +222,9 @@
         #endregion
 
         private System.Windows.Forms.TextBox textBox;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox cb_to;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox tb_subject;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button b_send;
         private System.Windows.Forms.DataGridView list;

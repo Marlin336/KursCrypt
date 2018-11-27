@@ -61,6 +61,12 @@
     <Compile Include="BoxesForm.Designer.cs">
       <DependentUpon>BoxesForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="InAttachForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="InAttachForm.Designer.cs">
+      <DependentUpon>InAttachForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -81,6 +87,9 @@
     <EmbeddedResource Include="BoxesForm.resx">
       <DependentUpon>BoxesForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="InAttachForm.resx">
+      <DependentUpon>InAttachForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -97,7 +106,6 @@
       <DependentUpon>WriteForm.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
-    <None Include="Properties\DataSources\MainForm.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

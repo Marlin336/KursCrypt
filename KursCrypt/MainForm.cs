@@ -35,9 +35,18 @@ namespace KursCrypt
 
         private void написатьToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            WriteForm write = new WriteForm(this);
-            write.Show();
+            Write_message(null, null);
+        }
 
+        private void b_reply_Click(object sender, EventArgs e)
+        {
+            Write_message(tb_from.Text, "Re: " + tb_subject.Text);
+        }
+
+        private void Write_message(string to, string subj)
+        {
+            WriteForm write = new WriteForm(this, to, subj);
+            write.Show();
             /// ПОКА ТЕСТ
 
             //if (curr_email != -1)

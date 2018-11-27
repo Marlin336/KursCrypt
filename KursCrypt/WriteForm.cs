@@ -16,18 +16,17 @@ namespace KursCrypt
     {
         public struct Attach_elem
         {
-            public static int count = 0;
+            static int count = 0;
             public int id;
             public string path, name, ext;
             public double size;
             public Attach_elem(FileInfo file)
             {
-                id = count;
+                id = count++;
                 path = file.FullName;
                 name = file.Name;
                 ext = file.Extension;
                 size = Math.Round((double)file.Length / 1024, 2);//KB
-                count++;
             }
         } 
 
@@ -39,6 +38,12 @@ namespace KursCrypt
             Main = main;
             client = Main.curr_client;
             InitializeComponent();
+        }
+
+        public WriteForm(MainForm main, string to, string subject) : this(main)
+        {
+            cb_to.Text = to;
+            tb_subject.Text = subject;
         }
 
         private void b_addattach_Click(object sender, EventArgs e)
