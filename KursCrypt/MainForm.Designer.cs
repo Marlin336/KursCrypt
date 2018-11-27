@@ -43,12 +43,6 @@
             this.lb_mail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lb_mail.FormattingEnabled = true;
             this.lb_mail.ItemHeight = 16;
-            this.lb_mail.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"});
             this.lb_mail.Location = new System.Drawing.Point(12, 37);
             this.lb_mail.Name = "lb_mail";
             this.lb_mail.Size = new System.Drawing.Size(269, 468);

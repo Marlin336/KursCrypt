@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ImapX;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,7 +20,7 @@ namespace KursCrypt
     {
         public List<Email> emails = new List<Email>();
         private int curr_email = -1;
-        public ImapX.ImapClient curr_client = new ImapX.ImapClient("imap.mail.ru", 993, true, true);
+        public ImapClient curr_client = new ImapClient("imap.mail.ru", 993, true, true);
 
         public MainForm()
         {
@@ -34,13 +35,18 @@ namespace KursCrypt
 
         private void написатьToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (curr_email != -1)
-            {
-                WriteForm write = new WriteForm(this);
-                write.Show();
-            }
-            else
-                MessageBox.Show("Для того чтобы написать письмо нужно авторизоваться", "", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            WriteForm write = new WriteForm(this);
+            write.Show();
+
+            /// ПОКА ТЕСТ
+
+            //if (curr_email != -1)
+            //{
+            //    WriteForm write = new WriteForm(this);
+            //    write.Show();
+            //}
+            //else
+            //    MessageBox.Show("Для того чтобы написать письмо нужно авторизоваться", "", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
     }
 }
