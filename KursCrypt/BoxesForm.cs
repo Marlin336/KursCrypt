@@ -17,17 +17,52 @@ namespace KursCrypt
         {
             Main = main;
             InitializeComponent();
-        }
-
-        private void lb_boxes_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            b_del.Enabled = lb_boxes.SelectedIndex != -1;
+            foreach (Email item in main.emails)
+            {
+                object[] row = { item.id, item.Login };
+                grid_boxes.Rows.Add(row);
+            }
+            grid_boxes_RowsCountChange();
         }
 
         private void b_add_Click(object sender, EventArgs e)
         {
             AuthForm auth = new AuthForm(this);
             auth.ShowDialog();
+        }
+
+        public void AddToBoxlist(Email email)
+        {
+            object[] row = { email.id, email.Login };
+            grid_boxes.Rows.Add(row);
+        }
+
+        private void grid_boxes_RowsCountChange()
+        {
+            b_del.Enabled = grid_boxes.RowCount != 0;
+        }
+
+        private void grid_boxes_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
+        {
+            grid_boxes_RowsCountChange();
+        }
+
+        private void grid_boxes_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
+        {
+            grid_boxes_RowsCountChange();
+        }
+
+        private void b_del_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < Main.emails.Count; i++)
+            {
+                if (Main.emails[i].id == (int)grid_boxes.SelectedRows[0].Cells[0].Value)
+                {
+                    Main.emails.RemoveAt(i);
+                    grid_boxes.Rows.RemoveAt(grid_boxes.SelectedRows[0].Index);
+                    break;
+                }
+            }
         }
     }
 }

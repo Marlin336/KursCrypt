@@ -39,6 +39,7 @@
             this.tb_from = new System.Windows.Forms.TextBox();
             this.b_reply = new System.Windows.Forms.Button();
             this.b_attach = new System.Windows.Forms.Button();
+            this.stateIndicator = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -71,10 +72,11 @@
             // 
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.написатьToolStripMenuItem,
-            this.почтовыеЯщикиToolStripMenuItem});
+            this.почтовыеЯщикиToolStripMenuItem,
+            this.stateIndicator});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(845, 25);
+            this.menuStrip.Size = new System.Drawing.Size(845, 29);
             this.menuStrip.TabIndex = 2;
             this.menuStrip.Text = "menuStrip";
             // 
@@ -82,7 +84,7 @@
             // 
             this.написатьToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.написатьToolStripMenuItem.Name = "написатьToolStripMenuItem";
-            this.написатьToolStripMenuItem.Size = new System.Drawing.Size(75, 21);
+            this.написатьToolStripMenuItem.Size = new System.Drawing.Size(75, 25);
             this.написатьToolStripMenuItem.Text = "Написать";
             this.написатьToolStripMenuItem.Click += new System.EventHandler(this.написатьToolStripMenuItem_Click);
             // 
@@ -90,7 +92,7 @@
             // 
             this.почтовыеЯщикиToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.почтовыеЯщикиToolStripMenuItem.Name = "почтовыеЯщикиToolStripMenuItem";
-            this.почтовыеЯщикиToolStripMenuItem.Size = new System.Drawing.Size(122, 21);
+            this.почтовыеЯщикиToolStripMenuItem.Size = new System.Drawing.Size(122, 25);
             this.почтовыеЯщикиToolStripMenuItem.Text = "Почтовые ящики";
             this.почтовыеЯщикиToolStripMenuItem.Click += new System.EventHandler(this.почтовыеЯщикиToolStripMenuItem_Click);
             // 
@@ -162,6 +164,15 @@
             this.b_attach.Text = "Прикрепления";
             this.b_attach.UseVisualStyleBackColor = true;
             // 
+            // stateIndicator
+            // 
+            this.stateIndicator.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.stateIndicator.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.stateIndicator.Name = "stateIndicator";
+            this.stateIndicator.Size = new System.Drawing.Size(72, 25);
+            this.stateIndicator.Text = "Статус";
+            this.stateIndicator.Click += new System.EventHandler(this.stateIndicator_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -200,5 +211,6 @@
         private System.Windows.Forms.TextBox tb_from;
         private System.Windows.Forms.Button b_reply;
         private System.Windows.Forms.Button b_attach;
+        private System.Windows.Forms.ToolStripMenuItem stateIndicator;
     }
 }

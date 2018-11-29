@@ -28,11 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.list = new System.Windows.Forms.DataGridView();
             this.attach_fileDialog = new System.Windows.Forms.SaveFileDialog();
             this.id_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.path_coll = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.name_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ext_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.size_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -47,7 +46,6 @@
             this.list.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.list.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.id_col,
-            this.path_coll,
             this.name_col,
             this.ext_col,
             this.size_col,
@@ -73,14 +71,6 @@
             this.id_col.ReadOnly = true;
             this.id_col.Visible = false;
             // 
-            // path_coll
-            // 
-            this.path_coll.Frozen = true;
-            this.path_coll.HeaderText = "Абсолютный путь";
-            this.path_coll.Name = "path_coll";
-            this.path_coll.ReadOnly = true;
-            this.path_coll.Visible = false;
-            // 
             // name_col
             // 
             this.name_col.Frozen = true;
@@ -105,10 +95,10 @@
             // 
             // download_coll
             // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
-            this.download_coll.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.Color.Black;
+            this.download_coll.DefaultCellStyle = dataGridViewCellStyle1;
             this.download_coll.Frozen = true;
             this.download_coll.HeaderText = "Загрузить";
             this.download_coll.Name = "download_coll";
@@ -136,7 +126,6 @@
         private System.Windows.Forms.DataGridView list;
         private System.Windows.Forms.SaveFileDialog attach_fileDialog;
         private System.Windows.Forms.DataGridViewTextBoxColumn id_col;
-        private System.Windows.Forms.DataGridViewTextBoxColumn path_coll;
         private System.Windows.Forms.DataGridViewTextBoxColumn name_col;
         private System.Windows.Forms.DataGridViewTextBoxColumn ext_col;
         private System.Windows.Forms.DataGridViewTextBoxColumn size_col;

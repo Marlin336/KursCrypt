@@ -13,11 +13,19 @@ namespace KursCrypt
 {
     public struct Email
     {
+        private static int count = 0;
         public int id;// Выдается на сессию
         public string Login, Password;
+        public Email(string login, string password)
+        {
+            id = count++;
+            Login = login;
+            Password = password;
+        }
     }
     public partial class MainForm : Form
     {
+        public bool state;
         public List<Email> emails = new List<Email>();
         private int curr_email = -1;
         public ImapClient curr_client = new ImapClient("imap.mail.ru", 993, true, true);
@@ -25,6 +33,17 @@ namespace KursCrypt
         public MainForm()
         {
             InitializeComponent();
+            state = curr_client.Connect();
+            if (state)
+            {
+                stateIndicator.Text = "Online";
+                stateIndicator.ForeColor = Color.LightGreen;
+            }
+            else
+            {
+                stateIndicator.Text = "Offline";
+                stateIndicator.ForeColor = Color.Red;
+            }
         }
 
         private void почтовыеЯщикиToolStripMenuItem_Click(object sender, EventArgs e)
@@ -56,6 +75,30 @@ namespace KursCrypt
             //}
             //else
             //    MessageBox.Show("Для того чтобы написать письмо нужно авторизоваться", "", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+        }
+
+        private void stateIndicator_Click(object sender, EventArgs e)
+        {
+            if (state)
+            {
+                curr_client.Disconnect();
+                state = false;
+                stateIndicator.Text = "Offline";
+                stateIndicator.ForeColor = Color.Red;
+            }
+            else
+            {
+                if (curr_client.Connect())
+                {
+                    state = true;
+                    stateIndicator.Text = "Online";
+                    stateIndicator.ForeColor = Color.LightGreen;
+                }
+                else
+                {
+                    MessageBox.Show("Не удается подключиться. Проверьте подключение к сети!", "Ошибка соединения", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
         }
     }
 }

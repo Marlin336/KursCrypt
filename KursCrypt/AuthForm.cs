@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ImapX.Authentication;
 
 namespace KursCrypt
 {
@@ -39,20 +40,14 @@ namespace KursCrypt
                 try
                 {
                     ImapX.ImapClient client = Main.curr_client;
-                    if (client.Connect())
+                    if (client.IsConnected)
                     {
                         if (client.Login(tb_mail.Text, tb_pass.Text))
                         {
-                            Email profile = new Email();
-                            profile.Login = tb_mail.Text;
-                            profile.Password = tb_pass.Text;
-                            profile.id = emails.Count != 0 ? emails[emails.Count - 1].id + 1 : 0;
+                            Email profile = new Email(tb_mail.Text, tb_pass.Text);
                             emails.Add(profile);
-                            Boxes.lb_boxes.Items.Clear();
-                            foreach (Email item in emails)
-                            {
-                                Boxes.lb_boxes.Items.Add(item.Login + "[" + item.id + "]");
-                            }
+                            Boxes.AddToBoxlist(profile);
+                            client.Logout();
                         }
                         else
                         {
