@@ -22,7 +22,6 @@ namespace KursCrypt
                 object[] row = { item.id, item.Login };
                 grid_boxes.Rows.Add(row);
             }
-            grid_boxes_RowsCountChange();
         }
 
         private void b_add_Click(object sender, EventArgs e)
@@ -37,21 +36,6 @@ namespace KursCrypt
             grid_boxes.Rows.Add(row);
         }
 
-        private void grid_boxes_RowsCountChange()
-        {
-            b_del.Enabled = grid_boxes.RowCount != 0;
-        }
-
-        private void grid_boxes_RowsRemoved(object sender, DataGridViewRowsRemovedEventArgs e)
-        {
-            grid_boxes_RowsCountChange();
-        }
-
-        private void grid_boxes_RowsAdded(object sender, DataGridViewRowsAddedEventArgs e)
-        {
-            grid_boxes_RowsCountChange();
-        }
-
         private void b_del_Click(object sender, EventArgs e)
         {
             for (int i = 0; i < Main.emails.Count; i++)
@@ -60,6 +44,21 @@ namespace KursCrypt
                 {
                     Main.emails.RemoveAt(i);
                     grid_boxes.Rows.RemoveAt(grid_boxes.SelectedRows[0].Index);
+                    break;
+                }
+            }
+        }
+
+        private void grid_boxes_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            for (int i = 0; i < Main.emails.Count; i++)
+            {
+                if (Main.emails[i].id == (int)grid_boxes.SelectedRows[0].Cells[0].Value)
+                {
+                    Main.curr_client.Login(Main.emails[i].Login, Main.emails[i].Password);
+                    Main.curr_email = Main.emails[i].id;
+                    Close();
+                    Main.RedrawMailList();
                     break;
                 }
             }

@@ -81,8 +81,7 @@
             this.grid_boxes.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.grid_boxes.Size = new System.Drawing.Size(217, 220);
             this.grid_boxes.TabIndex = 4;
-            this.grid_boxes.RowsAdded += new System.Windows.Forms.DataGridViewRowsAddedEventHandler(this.grid_boxes_RowsAdded);
-            this.grid_boxes.RowsRemoved += new System.Windows.Forms.DataGridViewRowsRemovedEventHandler(this.grid_boxes_RowsRemoved);
+            this.grid_boxes.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grid_boxes_CellDoubleClick);
             // 
             // id_col
             // 

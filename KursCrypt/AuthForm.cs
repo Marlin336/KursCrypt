@@ -9,6 +9,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ImapX.Authentication;
+using ImapX;
 
 namespace KursCrypt
 {
@@ -17,6 +18,7 @@ namespace KursCrypt
         BoxesForm Boxes;
         MainForm Main;
         List<Email> emails;
+        ImapClient client;
         public AuthForm(BoxesForm boxes)
         {
             Boxes = boxes;
@@ -28,8 +30,8 @@ namespace KursCrypt
         private void bAccept_Click(object sender, EventArgs e)
         {
             Regex rgx = new Regex(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" +
-         @"\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\" +
-         @".)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$");
+            @"\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\" +
+            @".)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$");
             if (!rgx.IsMatch(tb_mail.Text))
             {
                 MessageBox.Show("Неверно введённый E-mail", null, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
@@ -39,15 +41,14 @@ namespace KursCrypt
             {
                 try
                 {
-                    ImapX.ImapClient client = Main.curr_client;
-                    if (client.IsConnected)
+                    client = new ImapClient(Main.curr_client.Host, Main.curr_client.Port, true, false);
+                    if (client.Connect())
                     {
                         if (client.Login(tb_mail.Text, tb_pass.Text))
                         {
                             Email profile = new Email(tb_mail.Text, tb_pass.Text);
                             emails.Add(profile);
                             Boxes.AddToBoxlist(profile);
-                            client.Logout();
                         }
                         else
                         {
@@ -60,9 +61,12 @@ namespace KursCrypt
                     }
                 }
                 catch (Exception)
-                {
-
+                { 
                     throw;
+                }
+                finally
+                {
+                    tb_mail.Text = tb_pass.Text = null;
                 }
             }
         }

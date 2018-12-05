@@ -23,12 +23,14 @@ namespace KursCrypt
             Password = password;
         }
     }
+    public enum Folder { inbox, sent, junk, trash};
     public partial class MainForm : Form
     {
         public bool state;
         public List<Email> emails = new List<Email>();
-        private int curr_email = -1;
-        public ImapClient curr_client = new ImapClient("imap.mail.ru", 993, true, true);
+        public int curr_email = -1;
+        public ImapClient curr_client = new ImapClient("imap.mail.ru", 993, true, false);
+        public Folder curr_fold { get; private set; } = Folder.inbox;
 
         public MainForm()
         {
@@ -64,17 +66,13 @@ namespace KursCrypt
 
         private void Write_message(string to, string subj)
         {
-            WriteForm write = new WriteForm(this, to, subj);
-            write.Show();
-            /// ПОКА ТЕСТ
-
-            //if (curr_email != -1)
-            //{
-            //    WriteForm write = new WriteForm(this);
-            //    write.Show();
-            //}
-            //else
-            //    MessageBox.Show("Для того чтобы написать письмо нужно авторизоваться", "", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            if (curr_email != -1)
+            {
+                WriteForm write = new WriteForm(this);
+                write.Show();
+            }
+            else
+                MessageBox.Show("Для того чтобы написать письмо нужно авторизоваться", "", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 
         private void stateIndicator_Click(object sender, EventArgs e)
@@ -98,6 +96,73 @@ namespace KursCrypt
                 {
                     MessageBox.Show("Не удается подключиться. Проверьте подключение к сети!", "Ошибка соединения", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
+            }
+        }
+
+        private void входящиеToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            отправленныеToolStripMenuItem.Checked = спамToolStripMenuItem.Checked = корзинаToolStripMenuItem.Checked = false;
+            входящиеToolStripMenuItem.Checked = true;
+            curr_fold = Folder.inbox;
+            RedrawMailList();
+        }
+
+        private void отправленныеToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            входящиеToolStripMenuItem.Checked = спамToolStripMenuItem.Checked = корзинаToolStripMenuItem.Checked = false;
+            отправленныеToolStripMenuItem.Checked = true;
+            curr_fold = Folder.sent;
+            RedrawMailList();
+        }
+
+        private void спамToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            входящиеToolStripMenuItem.Checked = отправленныеToolStripMenuItem.Checked = корзинаToolStripMenuItem.Checked = false;
+            спамToolStripMenuItem.Checked = true;
+            curr_fold = Folder.junk;
+            RedrawMailList();
+        }
+
+        private void корзинаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            входящиеToolStripMenuItem.Checked = спамToolStripMenuItem.Checked = отправленныеToolStripMenuItem.Checked = false;
+            корзинаToolStripMenuItem.Checked = true;
+            curr_fold = Folder.trash;
+            RedrawMailList();
+        }
+
+        public void RedrawMailList()
+        {
+            //Нужно получить сообщения из сервера
+            lb_mail.Items.Clear();
+            switch (curr_fold)
+            {
+                case Folder.inbox:
+                    foreach (var item in curr_client.Folders.Inbox.Messages)
+                    {
+                        lb_mail.Items.Add("От: " + item.From + "\n" + "Тема: " + item.Subject + "\n" + item.Date);
+                    }
+                    break;
+                case Folder.sent:
+                    foreach (var item in curr_client.Folders.Sent.Messages)
+                    {
+                        lb_mail.Items.Add("От: " + item.From + "\n" + "Тема: " + item.Subject + "\n" + item.Date);
+                    }
+                    break;
+                case Folder.junk:
+                    foreach (var item in curr_client.Folders.Junk.Messages)
+                    {
+                        lb_mail.Items.Add("От: " + item.From + "\n" + "Тема: " + item.Subject + "\n" + item.Date);
+                    }
+                    break;
+                case Folder.trash:
+                    foreach (var item in curr_client.Folders.Trash.Messages)
+                    {
+                        lb_mail.Items.Add("От: " + item.From + "\n" + "Тема: " + item.Subject + "\n" + item.Date);
+                    }
+                    break;
+                default:
+                    break;
             }
         }
     }

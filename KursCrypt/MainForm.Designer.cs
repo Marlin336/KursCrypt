@@ -28,32 +28,25 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.lb_mail = new System.Windows.Forms.ListBox();
             this.tb_opentext = new System.Windows.Forms.TextBox();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
-            this.написатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.stateIndicator = new System.Windows.Forms.ToolStripMenuItem();
             this.почтовыеЯщикиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.написатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.папкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.входящиеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.отправленныеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.спамToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.корзинаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.label2 = new System.Windows.Forms.Label();
             this.tb_subject = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.tb_from = new System.Windows.Forms.TextBox();
             this.b_reply = new System.Windows.Forms.Button();
             this.b_attach = new System.Windows.Forms.Button();
-            this.stateIndicator = new System.Windows.Forms.ToolStripMenuItem();
+            this.lb_mail = new System.Windows.Forms.ListBox();
             this.menuStrip.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // lb_mail
-            // 
-            this.lb_mail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
-            this.lb_mail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lb_mail.FormattingEnabled = true;
-            this.lb_mail.ItemHeight = 16;
-            this.lb_mail.Location = new System.Drawing.Point(12, 37);
-            this.lb_mail.Name = "lb_mail";
-            this.lb_mail.Size = new System.Drawing.Size(269, 468);
-            this.lb_mail.TabIndex = 0;
             // 
             // tb_opentext
             // 
@@ -71,30 +64,83 @@
             // menuStrip
             // 
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.написатьToolStripMenuItem,
+            this.stateIndicator,
             this.почтовыеЯщикиToolStripMenuItem,
-            this.stateIndicator});
+            this.написатьToolStripMenuItem,
+            this.папкиToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
             this.menuStrip.Size = new System.Drawing.Size(845, 29);
             this.menuStrip.TabIndex = 2;
             this.menuStrip.Text = "menuStrip";
             // 
+            // stateIndicator
+            // 
+            this.stateIndicator.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.stateIndicator.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.stateIndicator.Name = "stateIndicator";
+            this.stateIndicator.Size = new System.Drawing.Size(72, 25);
+            this.stateIndicator.Text = "Статус";
+            this.stateIndicator.Click += new System.EventHandler(this.stateIndicator_Click);
+            // 
+            // почтовыеЯщикиToolStripMenuItem
+            // 
+            this.почтовыеЯщикиToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.почтовыеЯщикиToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.почтовыеЯщикиToolStripMenuItem.Name = "почтовыеЯщикиToolStripMenuItem";
+            this.почтовыеЯщикиToolStripMenuItem.Size = new System.Drawing.Size(122, 25);
+            this.почтовыеЯщикиToolStripMenuItem.Text = "Почтовые ящики";
+            this.почтовыеЯщикиToolStripMenuItem.Click += new System.EventHandler(this.почтовыеЯщикиToolStripMenuItem_Click);
+            // 
             // написатьToolStripMenuItem
             // 
+            this.написатьToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.написатьToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.написатьToolStripMenuItem.Name = "написатьToolStripMenuItem";
             this.написатьToolStripMenuItem.Size = new System.Drawing.Size(75, 25);
             this.написатьToolStripMenuItem.Text = "Написать";
             this.написатьToolStripMenuItem.Click += new System.EventHandler(this.написатьToolStripMenuItem_Click);
             // 
-            // почтовыеЯщикиToolStripMenuItem
+            // папкиToolStripMenuItem
             // 
-            this.почтовыеЯщикиToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.почтовыеЯщикиToolStripMenuItem.Name = "почтовыеЯщикиToolStripMenuItem";
-            this.почтовыеЯщикиToolStripMenuItem.Size = new System.Drawing.Size(122, 25);
-            this.почтовыеЯщикиToolStripMenuItem.Text = "Почтовые ящики";
-            this.почтовыеЯщикиToolStripMenuItem.Click += new System.EventHandler(this.почтовыеЯщикиToolStripMenuItem_Click);
+            this.папкиToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.входящиеToolStripMenuItem,
+            this.отправленныеToolStripMenuItem,
+            this.спамToolStripMenuItem,
+            this.корзинаToolStripMenuItem});
+            this.папкиToolStripMenuItem.Name = "папкиToolStripMenuItem";
+            this.папкиToolStripMenuItem.Size = new System.Drawing.Size(63, 25);
+            this.папкиToolStripMenuItem.Text = "Папки...";
+            // 
+            // входящиеToolStripMenuItem
+            // 
+            this.входящиеToolStripMenuItem.Checked = true;
+            this.входящиеToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.входящиеToolStripMenuItem.Name = "входящиеToolStripMenuItem";
+            this.входящиеToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.входящиеToolStripMenuItem.Text = "Входящие";
+            this.входящиеToolStripMenuItem.Click += new System.EventHandler(this.входящиеToolStripMenuItem_Click);
+            // 
+            // отправленныеToolStripMenuItem
+            // 
+            this.отправленныеToolStripMenuItem.Name = "отправленныеToolStripMenuItem";
+            this.отправленныеToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.отправленныеToolStripMenuItem.Text = "Отправленные";
+            this.отправленныеToolStripMenuItem.Click += new System.EventHandler(this.отправленныеToolStripMenuItem_Click);
+            // 
+            // спамToolStripMenuItem
+            // 
+            this.спамToolStripMenuItem.Name = "спамToolStripMenuItem";
+            this.спамToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.спамToolStripMenuItem.Text = "Спам";
+            this.спамToolStripMenuItem.Click += new System.EventHandler(this.спамToolStripMenuItem_Click);
+            // 
+            // корзинаToolStripMenuItem
+            // 
+            this.корзинаToolStripMenuItem.Name = "корзинаToolStripMenuItem";
+            this.корзинаToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.корзинаToolStripMenuItem.Text = "Корзина";
+            this.корзинаToolStripMenuItem.Click += new System.EventHandler(this.корзинаToolStripMenuItem_Click);
             // 
             // label2
             // 
@@ -164,20 +210,24 @@
             this.b_attach.Text = "Прикрепления";
             this.b_attach.UseVisualStyleBackColor = true;
             // 
-            // stateIndicator
+            // lb_mail
             // 
-            this.stateIndicator.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
-            this.stateIndicator.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.stateIndicator.Name = "stateIndicator";
-            this.stateIndicator.Size = new System.Drawing.Size(72, 25);
-            this.stateIndicator.Text = "Статус";
-            this.stateIndicator.Click += new System.EventHandler(this.stateIndicator_Click);
+            this.lb_mail.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left)));
+            this.lb_mail.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lb_mail.FormattingEnabled = true;
+            this.lb_mail.ItemHeight = 16;
+            this.lb_mail.Location = new System.Drawing.Point(12, 37);
+            this.lb_mail.Name = "lb_mail";
+            this.lb_mail.Size = new System.Drawing.Size(269, 468);
+            this.lb_mail.TabIndex = 0;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(845, 521);
+            this.Controls.Add(this.lb_mail);
             this.Controls.Add(this.b_attach);
             this.Controls.Add(this.b_reply);
             this.Controls.Add(this.tb_from);
@@ -185,11 +235,10 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.tb_subject);
             this.Controls.Add(this.tb_opentext);
-            this.Controls.Add(this.lb_mail);
             this.Controls.Add(this.menuStrip);
             this.MinimumSize = new System.Drawing.Size(861, 560);
             this.Name = "MainForm";
-            this.Text = "Почтовый клиент v0.1.0";
+            this.Text = "Почтовый клиент";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
@@ -199,8 +248,6 @@
         }
 
         #endregion
-
-        public System.Windows.Forms.ListBox lb_mail;
         private System.Windows.Forms.TextBox tb_opentext;
         private System.Windows.Forms.MenuStrip menuStrip;
         private System.Windows.Forms.ToolStripMenuItem написатьToolStripMenuItem;
@@ -212,5 +259,11 @@
         private System.Windows.Forms.Button b_reply;
         private System.Windows.Forms.Button b_attach;
         private System.Windows.Forms.ToolStripMenuItem stateIndicator;
+        private System.Windows.Forms.ListBox lb_mail;
+        private System.Windows.Forms.ToolStripMenuItem папкиToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem входящиеToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem отправленныеToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem спамToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem корзинаToolStripMenuItem;
     }
 }
