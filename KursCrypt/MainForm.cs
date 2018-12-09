@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Net.Mail;
 
 namespace KursCrypt
 {
@@ -134,6 +135,8 @@ namespace KursCrypt
         public void RedrawMailList()
         {
             //Нужно получить сообщения из сервера
+            List<ImapX.Message> messages = new List<ImapX.Message>();
+            //= imap.Folders[comboBox3.SelectedIndex].Search("ALL", ImapX.Enums.MessageFetchMode.ClientDefault, uo.count);
             lb_mail.Items.Clear();
             switch (curr_fold)
             {

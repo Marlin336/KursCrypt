@@ -35,14 +35,14 @@
             this.label2 = new System.Windows.Forms.Label();
             this.b_send = new System.Windows.Forms.Button();
             this.list = new System.Windows.Forms.DataGridView();
-            this.b_addattach = new System.Windows.Forms.Button();
-            this.b_delattach = new System.Windows.Forms.Button();
-            this.attach_fileDialog = new System.Windows.Forms.OpenFileDialog();
             this.id_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.path_coll = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.name_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ext_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.size_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.b_addattach = new System.Windows.Forms.Button();
+            this.b_delattach = new System.Windows.Forms.Button();
+            this.attach_fileDialog = new System.Windows.Forms.OpenFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.list)).BeginInit();
             this.SuspendLayout();
             // 
@@ -109,6 +109,7 @@
             this.b_send.TabIndex = 5;
             this.b_send.Text = "Отправить";
             this.b_send.UseVisualStyleBackColor = true;
+            this.b_send.Click += new System.EventHandler(this.b_send_Click);
             // 
             // list
             // 
@@ -132,32 +133,6 @@
             this.list.Size = new System.Drawing.Size(504, 150);
             this.list.TabIndex = 7;
             this.list.TabStop = false;
-            // 
-            // b_addattach
-            // 
-            this.b_addattach.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.b_addattach.Location = new System.Drawing.Point(522, 421);
-            this.b_addattach.Name = "b_addattach";
-            this.b_addattach.Size = new System.Drawing.Size(141, 34);
-            this.b_addattach.TabIndex = 8;
-            this.b_addattach.Text = "Добавить файл...";
-            this.b_addattach.UseVisualStyleBackColor = true;
-            this.b_addattach.Click += new System.EventHandler(this.b_addattach_Click);
-            // 
-            // b_delattach
-            // 
-            this.b_delattach.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.b_delattach.Location = new System.Drawing.Point(522, 461);
-            this.b_delattach.Name = "b_delattach";
-            this.b_delattach.Size = new System.Drawing.Size(141, 34);
-            this.b_delattach.TabIndex = 9;
-            this.b_delattach.Text = "Удалить файл";
-            this.b_delattach.UseVisualStyleBackColor = true;
-            this.b_delattach.Click += new System.EventHandler(this.b_delattach_Click);
-            // 
-            // attach_fileDialog
-            // 
-            this.attach_fileDialog.Multiselect = true;
             // 
             // id_col
             // 
@@ -196,6 +171,32 @@
             this.size_col.HeaderText = "Размер (КБ)";
             this.size_col.Name = "size_col";
             this.size_col.ReadOnly = true;
+            // 
+            // b_addattach
+            // 
+            this.b_addattach.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.b_addattach.Location = new System.Drawing.Point(522, 421);
+            this.b_addattach.Name = "b_addattach";
+            this.b_addattach.Size = new System.Drawing.Size(141, 34);
+            this.b_addattach.TabIndex = 8;
+            this.b_addattach.Text = "Добавить файл...";
+            this.b_addattach.UseVisualStyleBackColor = true;
+            this.b_addattach.Click += new System.EventHandler(this.b_addattach_Click);
+            // 
+            // b_delattach
+            // 
+            this.b_delattach.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.b_delattach.Location = new System.Drawing.Point(522, 461);
+            this.b_delattach.Name = "b_delattach";
+            this.b_delattach.Size = new System.Drawing.Size(141, 34);
+            this.b_delattach.TabIndex = 9;
+            this.b_delattach.Text = "Удалить файл";
+            this.b_delattach.UseVisualStyleBackColor = true;
+            this.b_delattach.Click += new System.EventHandler(this.b_delattach_Click);
+            // 
+            // attach_fileDialog
+            // 
+            this.attach_fileDialog.Multiselect = true;
             // 
             // WriteForm
             // 

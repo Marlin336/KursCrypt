@@ -9,6 +9,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Net.Mail;
+using System.Net.Mime;
 
 namespace KursCrypt
 {
@@ -18,14 +20,14 @@ namespace KursCrypt
         {
             static int count = 0;
             public int id;
-            public string path, name, ext;
+            public string path, name, extension;
             public double size;
             public Attach_elem(FileInfo file)
             {
                 id = count++;
                 path = file.FullName;
                 name = file.Name;
-                ext = file.Extension;
+                extension = file.Extension;
                 size = Math.Round((double)file.Length / 1024, 2);//KB
             }
         } 
@@ -66,7 +68,7 @@ namespace KursCrypt
                     if (!same)
                     {
                         attach_list.Add(new Attach_elem(fileInfo));
-                        object[] vs = { attach_list[attach_list.Count - 1].id, attach_list[attach_list.Count - 1].path, attach_list[attach_list.Count - 1].name, attach_list[attach_list.Count - 1].ext, attach_list[attach_list.Count - 1].size };
+                        object[] vs = { attach_list[attach_list.Count - 1].id, attach_list[attach_list.Count - 1].path, attach_list[attach_list.Count - 1].name, attach_list[attach_list.Count - 1].extension, attach_list[attach_list.Count - 1].size };
                         list.Rows.Add(vs);
                     }
                     else
@@ -94,6 +96,33 @@ namespace KursCrypt
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void b_send_Click(object sender, EventArgs e)
+        {
+            int index = -1;
+            for (int i = 0; i < Main.emails.Count;i++)
+            {
+                if (Main.emails[i].id == Main.curr_email)
+                {
+                    index = i;
+                    break;
+                }
+            }
+            MailMessage message = new MailMessage(Main.emails[index].Login, cb_to.Text, tb_subject.Text, textBox.Text);
+            List<System.Net.Mail.Attachment> attachments = new List<System.Net.Mail.Attachment>();
+            foreach (var item in attach_list)
+                message.Attachments.Add(new System.Net.Mail.Attachment(item.path, MediaTypeNames.Application.Octet));
+            SmtpClient smtp = new SmtpClient(Main.curr_client.Host, 25);
+            try
+            {
+                smtp.Send(message);
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
     }
