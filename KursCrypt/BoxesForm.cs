@@ -55,11 +55,21 @@ namespace KursCrypt
             {
                 if (Main.emails[i].id == (int)grid_boxes.SelectedRows[0].Cells[0].Value)
                 {
-                    Main.curr_client.Login(Main.emails[i].Login, Main.emails[i].Password);
-                    Main.curr_email = Main.emails[i].id;
-                    Close();
-                    Main.RedrawMailList();
-                    break;
+                    ImapX.ImapClient client = new ImapX.ImapClient(Main.curr_client.Host, Main.curr_client.Port, true, false);
+                    if (client.Connect())
+                    {
+                        client.Login(Main.emails[i].Login, Main.emails[i].Password);
+                        Main.curr_client = client;
+                        Main.curr_email = Main.emails[i].id;
+                        Main.stateIndicator.Text = Main.emails[i].Login;
+                        Close();
+                        Main.RedrawMailList();
+                        break;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Ошибка поключения. Проверьте соединение с сетью!", "Ошибка сети", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
         }

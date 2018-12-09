@@ -82,7 +82,7 @@ namespace KursCrypt
             {
                 curr_client.Disconnect();
                 state = false;
-                stateIndicator.Text = "Offline";
+                stateIndicator.Text = curr_email!=-1? emails[emails.FindIndex(em => em.id == curr_email)].Login : "Offline"; //Эту магию нужно понять! Очень полезно
                 stateIndicator.ForeColor = Color.Red;
             }
             else
@@ -90,7 +90,7 @@ namespace KursCrypt
                 if (curr_client.Connect())
                 {
                     state = true;
-                    stateIndicator.Text = "Online";
+                    stateIndicator.Text = curr_email != -1 ? emails[emails.FindIndex(em => em.id == curr_email)].Login : "Online";
                     stateIndicator.ForeColor = Color.LightGreen;
                 }
                 else
