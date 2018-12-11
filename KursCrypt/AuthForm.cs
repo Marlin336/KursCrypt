@@ -46,7 +46,7 @@ namespace KursCrypt
                     {
                         if (client.Login(tb_mail.Text, tb_pass.Text))
                         {
-                            Email profile = new Email(tb_mail.Text, tb_pass.Text, tb_name.Text);
+                            Email profile = new Email(tb_mail.Text, tb_pass.Text, tb_name.ForeColor == SystemColors.InactiveCaption?"":tb_name.Text);
                             emails.Add(profile);
                             Boxes.AddToBoxlist(profile);
                         }
