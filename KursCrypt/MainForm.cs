@@ -33,7 +33,7 @@ namespace KursCrypt
         public string host { get; private set; }
         public bool state;
         public List<Email> emails = new List<Email>();
-        public int curr_id = -1;
+        public int curr_id { get; set; } = -1;
         public ImapClient curr_client = null;
         public Folder curr_fold { get; private set; } = Folder.inbox;
 

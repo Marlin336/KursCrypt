@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ImapX;
 
 namespace KursCrypt
 {
@@ -51,26 +52,20 @@ namespace KursCrypt
 
         private void grid_boxes_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            for (int i = 0; i < Main.emails.Count; i++)
+            Email email_ref = Main.emails[Main.emails.FindIndex(em => em.id == (int)grid_boxes.SelectedRows[0].Cells[0].Value)];
+            ImapClient client = new ImapClient(Main.host, Main.port, true, false);
+            if (Main.state = client.Connect())
             {
-                if (Main.emails[i].id == (int)grid_boxes.SelectedRows[0].Cells[0].Value)
-                {
-                    ImapX.ImapClient client = new ImapX.ImapClient(Main.curr_client.Host, Main.curr_client.Port, true, false);
-                    if (client.Connect())
-                    {
-                        client.Login(Main.emails[i].Login, Main.emails[i].Password);
-                        Main.curr_client = client;
-                        Main.curr_id = Main.emails[i].id;
-                        Main.stateIndicator.Text = Main.emails[i].Login;
-                        Close();
-                        Main.RedrawMailList();
-                        break;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Ошибка поключения. Проверьте соединение с сетью!", "Ошибка сети", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
+                client.Login(email_ref.Login, email_ref.Password);
+                Main.curr_client = client;
+                Main.curr_id = email_ref.id;
+                Main.stateIndicator.Text = email_ref.Login;
+                Close();
+                Main.RedrawMailList();
+            }
+            else
+            {
+                MessageBox.Show("Ошибка поключения. Проверьте соединение с сетью!", "Ошибка сети", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

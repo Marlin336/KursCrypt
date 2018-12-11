@@ -101,16 +101,8 @@ namespace KursCrypt
 
         private void b_send_Click(object sender, EventArgs e)
         {
-            int index = -1;
-            for (int i = 0; i < Main.emails.Count;i++)
-            {
-                if (Main.emails[i].id == Main.curr_id)
-                {
-                    index = i;
-                    break;
-                }
-            }
-            MailMessage message = new MailMessage(Main.emails[index].Login, cb_to.Text, tb_subject.Text, textBox.Text);
+            Email email_ref = Main.emails[Main.emails.FindIndex(em => em.id == Main.curr_id)];
+            MailMessage message = new MailMessage(email_ref.Login, cb_to.Text, tb_subject.Text, textBox.Text);
             List<System.Net.Mail.Attachment> attachments = new List<System.Net.Mail.Attachment>();
             foreach (var item in attach_list)
                 message.Attachments.Add(new System.Net.Mail.Attachment(item.path, MediaTypeNames.Application.Octet));
