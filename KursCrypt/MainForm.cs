@@ -18,18 +18,20 @@ namespace KursCrypt
     {
         private static int count = 0;
         public int id;// Выдается на сессию
-        public string Login, Password;
-        public Email(string login, string password)
+        public string Address, Password, Name;
+        public Email(string login, string password, string name)
         {
             id = count++;
-            Login = login;
+            Address = login;
             Password = password;
+            Name = name;
         }
     }
     public enum Folder { inbox, sent, junk, trash};
     public partial class MainForm : Form
     {
-        public int port { get; private set; }
+        public int rcv_port { get; private set; }
+        public int snd_port { get; private set; }
         public string host { get; private set; }
         public bool state;
         public List<Email> emails = new List<Email>();
@@ -45,19 +47,32 @@ namespace KursCrypt
                 MessageBox.Show("Файл настроек не найден. Будет создан новый файл с настройками по умолчанию", "Файл настроек не найден", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 XElement setfile =  new XElement(
                         "connect",
-                        new XElement("host", "imap.mail.ru"),
-                        new XElement("port", 993)
+                        new XElement("host", "mail.ru"),
+                        new XElement("rcv_port", 993),
+                        new XElement("snd_port", 587)
                         );
                 setfile.Save("Settings.xml");
             }
             GetSettings();
-            curr_client = new ImapClient(host, port, true, false);
+            curr_client = new ImapClient("imap."+host, rcv_port, true, false);
+            state = curr_client.Connect();
+            if (state)
+            {
+                stateIndicator.ForeColor = Color.LightGreen;
+                stateIndicator.Text = "Online";
+            }
+            else
+            {
+                stateIndicator.ForeColor = Color.Red;
+                stateIndicator.Text = "Offline";
+            }
         }
         public void GetSettings()
         {
             XDocument settings = XDocument.Load("Settings.xml");
             host = settings.Element("connect").Element("host").Value.ToString();
-            port = int.Parse(settings.Element("connect").Element("port").Value);
+            rcv_port = int.Parse(settings.Element("connect").Element("rcv_port").Value);
+            snd_port = int.Parse(settings.Element("connect").Element("snd_port").Value);
         }
 
         private void почтовыеЯщикиToolStripMenuItem_Click(object sender, EventArgs e)
@@ -89,27 +104,20 @@ namespace KursCrypt
 
         private void stateIndicator_Click(object sender, EventArgs e)
         {
-            if(curr_id != -1)
+            if (!curr_client.IsConnected)
             {
-                if (state)
+                if (curr_client.Connect())
                 {
-                    curr_client.Disconnect();
-                    state = false;
-                    stateIndicator.Text = curr_id != -1 ? emails[emails.FindIndex(em => em.id == curr_id)].Login : "Offline"; //Эту магию нужно понять! Очень полезно
-                    stateIndicator.ForeColor = Color.Red;
+                    state = true;
+                    stateIndicator.Text = curr_id != -1 ? emails[emails.FindIndex(em => em.id == curr_id)].Address : "Online";
+                    stateIndicator.ForeColor = Color.LightGreen;
                 }
                 else
                 {
-                    if (curr_client.Connect())
-                    {
-                        state = true;
-                        stateIndicator.Text = curr_id != -1 ? emails[emails.FindIndex(em => em.id == curr_id)].Login : "Online";
-                        stateIndicator.ForeColor = Color.LightGreen;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Не удается подключиться. Проверьте подключение к сети!", "Ошибка соединения", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    MessageBox.Show("Не удается подключиться. Проверьте подключение к сети!", "Ошибка соединения", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    state = false;
+                    stateIndicator.Text = curr_id != -1 ? emails[emails.FindIndex(em => em.id == curr_id)].Address : "Offline";
+                    stateIndicator.ForeColor = Color.Red;
                 }
             }
         }

@@ -20,7 +20,7 @@ namespace KursCrypt
             InitializeComponent();
             foreach (Email item in main.emails)
             {
-                object[] row = { item.id, item.Login };
+                object[] row = { item.id, item.Address };
                 grid_boxes.Rows.Add(row);
             }
         }
@@ -33,7 +33,7 @@ namespace KursCrypt
 
         public void AddToBoxlist(Email email)
         {
-            object[] row = { email.id, email.Login };
+            object[] row = { email.id, email.Address };
             grid_boxes.Rows.Add(row);
         }
 
@@ -53,13 +53,14 @@ namespace KursCrypt
         private void grid_boxes_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             Email email_ref = Main.emails[Main.emails.FindIndex(em => em.id == (int)grid_boxes.SelectedRows[0].Cells[0].Value)];
-            ImapClient client = new ImapClient(Main.host, Main.port, true, false);
+            ImapClient client = new ImapClient("imap."+Main.host, Main.rcv_port, true, false);
             if (Main.state = client.Connect())
             {
-                client.Login(email_ref.Login, email_ref.Password);
+                client.Login(email_ref.Address, email_ref.Password);
                 Main.curr_client = client;
                 Main.curr_id = email_ref.id;
-                Main.stateIndicator.Text = email_ref.Login;
+                Main.stateIndicator.Text = email_ref.Address;
+                Main.stateIndicator.ForeColor = Color.LightGreen;
                 Close();
                 Main.RedrawMailList();
             }

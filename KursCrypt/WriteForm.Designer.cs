@@ -58,7 +58,7 @@
             this.textBox.Multiline = true;
             this.textBox.Name = "textBox";
             this.textBox.Size = new System.Drawing.Size(651, 259);
-            this.textBox.TabIndex = 0;
+            this.textBox.TabIndex = 3;
             // 
             // cb_to
             // 
@@ -88,7 +88,7 @@
             this.tb_subject.Location = new System.Drawing.Point(68, 39);
             this.tb_subject.Name = "tb_subject";
             this.tb_subject.Size = new System.Drawing.Size(595, 20);
-            this.tb_subject.TabIndex = 3;
+            this.tb_subject.TabIndex = 2;
             // 
             // label2
             // 
@@ -178,7 +178,7 @@
             this.b_addattach.Location = new System.Drawing.Point(522, 421);
             this.b_addattach.Name = "b_addattach";
             this.b_addattach.Size = new System.Drawing.Size(141, 34);
-            this.b_addattach.TabIndex = 8;
+            this.b_addattach.TabIndex = 4;
             this.b_addattach.Text = "Добавить файл...";
             this.b_addattach.UseVisualStyleBackColor = true;
             this.b_addattach.Click += new System.EventHandler(this.b_addattach_Click);
@@ -190,6 +190,7 @@
             this.b_delattach.Name = "b_delattach";
             this.b_delattach.Size = new System.Drawing.Size(141, 34);
             this.b_delattach.TabIndex = 9;
+            this.b_delattach.TabStop = false;
             this.b_delattach.Text = "Удалить файл";
             this.b_delattach.UseVisualStyleBackColor = true;
             this.b_delattach.Click += new System.EventHandler(this.b_delattach_Click);
@@ -200,6 +201,7 @@
             // 
             // WriteForm
             // 
+            this.AcceptButton = this.b_send;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(673, 539);

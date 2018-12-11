@@ -46,7 +46,7 @@ namespace KursCrypt
                     {
                         if (client.Login(tb_mail.Text, tb_pass.Text))
                         {
-                            Email profile = new Email(tb_mail.Text, tb_pass.Text);
+                            Email profile = new Email(tb_mail.Text, tb_pass.Text, tb_name.Text);
                             emails.Add(profile);
                             Boxes.AddToBoxlist(profile);
                         }
@@ -60,14 +60,29 @@ namespace KursCrypt
                         MessageBox.Show("Ошибка соединения", null, MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
-                catch (Exception)
-                { 
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     throw;
                 }
-                finally
-                {
-                    tb_mail.Text = tb_pass.Text = null;
-                }
+            }
+        }
+
+        private void tb_name_Enter(object sender, EventArgs e)
+        {
+            if (tb_name.ForeColor == SystemColors.InactiveCaption)
+            {
+                tb_name.Text = null;
+                tb_name.ForeColor = SystemColors.WindowText;
+            }
+        }
+
+        private void tb_name_Leave(object sender, EventArgs e)
+        {
+            if (tb_name.Text.Length == 0)
+            {
+                tb_name.ForeColor = SystemColors.InactiveCaption;
+                tb_name.Text = "Необязательно";
             }
         }
     }

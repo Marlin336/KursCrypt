@@ -31,10 +31,13 @@
             this.tb_host = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.num_port = new System.Windows.Forms.NumericUpDown();
+            this.num_rcv_port = new System.Windows.Forms.NumericUpDown();
             this.b_savesettings = new System.Windows.Forms.Button();
             this.b_cancelsettings = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.num_port)).BeginInit();
+            this.num_snd_port = new System.Windows.Forms.NumericUpDown();
+            this.label3 = new System.Windows.Forms.Label();
+            ((System.ComponentModel.ISupportInitialize)(this.num_rcv_port)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.num_snd_port)).BeginInit();
             this.SuspendLayout();
             // 
             // tb_host
@@ -60,27 +63,27 @@
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label2.Location = new System.Drawing.Point(11, 49);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(52, 20);
+            this.label2.Size = new System.Drawing.Size(136, 20);
             this.label2.TabIndex = 4;
-            this.label2.Text = "Порт:";
+            this.label2.Text = "Порт получения:";
             // 
-            // num_port
+            // num_rcv_port
             // 
-            this.num_port.Location = new System.Drawing.Point(69, 49);
-            this.num_port.Maximum = new decimal(new int[] {
+            this.num_rcv_port.Location = new System.Drawing.Point(152, 52);
+            this.num_rcv_port.Maximum = new decimal(new int[] {
             65535,
             0,
             0,
             0});
-            this.num_port.Name = "num_port";
-            this.num_port.Size = new System.Drawing.Size(97, 20);
-            this.num_port.TabIndex = 5;
+            this.num_rcv_port.Name = "num_rcv_port";
+            this.num_rcv_port.Size = new System.Drawing.Size(97, 20);
+            this.num_rcv_port.TabIndex = 5;
             // 
             // b_savesettings
             // 
             this.b_savesettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.b_savesettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.b_savesettings.Location = new System.Drawing.Point(12, 86);
+            this.b_savesettings.Location = new System.Drawing.Point(12, 129);
             this.b_savesettings.Name = "b_savesettings";
             this.b_savesettings.Size = new System.Drawing.Size(119, 34);
             this.b_savesettings.TabIndex = 11;
@@ -93,7 +96,7 @@
             this.b_cancelsettings.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.b_cancelsettings.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.b_cancelsettings.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.b_cancelsettings.Location = new System.Drawing.Point(137, 86);
+            this.b_cancelsettings.Location = new System.Drawing.Point(137, 129);
             this.b_cancelsettings.Name = "b_cancelsettings";
             this.b_cancelsettings.Size = new System.Drawing.Size(119, 34);
             this.b_cancelsettings.TabIndex = 12;
@@ -101,22 +104,47 @@
             this.b_cancelsettings.UseVisualStyleBackColor = true;
             this.b_cancelsettings.Click += new System.EventHandler(this.b_cancelsettings_Click);
             // 
+            // num_snd_port
+            // 
+            this.num_snd_port.Location = new System.Drawing.Point(152, 90);
+            this.num_snd_port.Maximum = new decimal(new int[] {
+            65535,
+            0,
+            0,
+            0});
+            this.num_snd_port.Name = "num_snd_port";
+            this.num_snd_port.Size = new System.Drawing.Size(97, 20);
+            this.num_snd_port.TabIndex = 14;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label3.Location = new System.Drawing.Point(11, 90);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(127, 20);
+            this.label3.TabIndex = 13;
+            this.label3.Text = "Порт отправки:";
+            // 
             // SettingsForm
             // 
             this.AcceptButton = this.b_savesettings;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.b_cancelsettings;
-            this.ClientSize = new System.Drawing.Size(268, 132);
+            this.ClientSize = new System.Drawing.Size(268, 175);
+            this.Controls.Add(this.num_snd_port);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.b_cancelsettings);
             this.Controls.Add(this.b_savesettings);
-            this.Controls.Add(this.num_port);
+            this.Controls.Add(this.num_rcv_port);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tb_host);
             this.Name = "SettingsForm";
             this.Text = "Насторойки";
-            ((System.ComponentModel.ISupportInitialize)(this.num_port)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.num_rcv_port)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.num_snd_port)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -126,8 +154,10 @@
         private System.Windows.Forms.TextBox tb_host;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.NumericUpDown num_port;
+        private System.Windows.Forms.NumericUpDown num_rcv_port;
         private System.Windows.Forms.Button b_savesettings;
         private System.Windows.Forms.Button b_cancelsettings;
+        private System.Windows.Forms.NumericUpDown num_snd_port;
+        private System.Windows.Forms.Label label3;
     }
 }

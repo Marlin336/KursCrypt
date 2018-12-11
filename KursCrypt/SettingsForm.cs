@@ -18,7 +18,8 @@ namespace KursCrypt
         {
             InitializeComponent();
             Main = main;
-            num_port.Value = Main.port;
+            num_rcv_port.Value = Main.rcv_port;
+            num_snd_port.Value = Main.snd_port;
             tb_host.Text = Main.host;
         }
 
@@ -29,7 +30,8 @@ namespace KursCrypt
                 XElement setfile = new XElement(
                         "connect",
                         new XElement("host", tb_host.Text),
-                        new XElement("port", num_port.Value)
+                        new XElement("rcv_port", num_rcv_port.Value),
+                        new XElement("snd_port", num_snd_port.Value)
                         );
                 setfile.Save("Settings.xml");
                 Main.GetSettings();
