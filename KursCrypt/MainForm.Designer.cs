@@ -31,6 +31,7 @@
             this.tb_opentext = new System.Windows.Forms.TextBox();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.stateIndicator = new System.Windows.Forms.ToolStripMenuItem();
+            this.настройкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.почтовыеЯщикиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.написатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.папкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,7 +54,7 @@
             this.tb_opentext.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.tb_opentext.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.tb_opentext.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tb_opentext.Location = new System.Drawing.Point(287, 89);
             this.tb_opentext.Multiline = true;
             this.tb_opentext.Name = "tb_opentext";
@@ -65,12 +66,13 @@
             // 
             this.menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.stateIndicator,
+            this.настройкиToolStripMenuItem,
             this.почтовыеЯщикиToolStripMenuItem,
             this.написатьToolStripMenuItem,
             this.папкиToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(845, 29);
+            this.menuStrip.Size = new System.Drawing.Size(845, 25);
             this.menuStrip.TabIndex = 2;
             this.menuStrip.Text = "menuStrip";
             // 
@@ -79,16 +81,24 @@
             this.stateIndicator.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.stateIndicator.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.stateIndicator.Name = "stateIndicator";
-            this.stateIndicator.Size = new System.Drawing.Size(72, 25);
-            this.stateIndicator.Text = "Статус";
+            this.stateIndicator.Size = new System.Drawing.Size(12, 21);
             this.stateIndicator.Click += new System.EventHandler(this.stateIndicator_Click);
+            // 
+            // настройкиToolStripMenuItem
+            // 
+            this.настройкиToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.настройкиToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9.75F);
+            this.настройкиToolStripMenuItem.Name = "настройкиToolStripMenuItem";
+            this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(83, 21);
+            this.настройкиToolStripMenuItem.Text = "Настройки";
+            this.настройкиToolStripMenuItem.Click += new System.EventHandler(this.настройкиToolStripMenuItem_Click);
             // 
             // почтовыеЯщикиToolStripMenuItem
             // 
             this.почтовыеЯщикиToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.почтовыеЯщикиToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.почтовыеЯщикиToolStripMenuItem.Name = "почтовыеЯщикиToolStripMenuItem";
-            this.почтовыеЯщикиToolStripMenuItem.Size = new System.Drawing.Size(122, 25);
+            this.почтовыеЯщикиToolStripMenuItem.Size = new System.Drawing.Size(122, 21);
             this.почтовыеЯщикиToolStripMenuItem.Text = "Почтовые ящики";
             this.почтовыеЯщикиToolStripMenuItem.Click += new System.EventHandler(this.почтовыеЯщикиToolStripMenuItem_Click);
             // 
@@ -97,7 +107,7 @@
             this.написатьToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.написатьToolStripMenuItem.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.написатьToolStripMenuItem.Name = "написатьToolStripMenuItem";
-            this.написатьToolStripMenuItem.Size = new System.Drawing.Size(75, 25);
+            this.написатьToolStripMenuItem.Size = new System.Drawing.Size(75, 21);
             this.написатьToolStripMenuItem.Text = "Написать";
             this.написатьToolStripMenuItem.Click += new System.EventHandler(this.написатьToolStripMenuItem_Click);
             // 
@@ -109,7 +119,7 @@
             this.спамToolStripMenuItem,
             this.корзинаToolStripMenuItem});
             this.папкиToolStripMenuItem.Name = "папкиToolStripMenuItem";
-            this.папкиToolStripMenuItem.Size = new System.Drawing.Size(63, 25);
+            this.папкиToolStripMenuItem.Size = new System.Drawing.Size(63, 21);
             this.папкиToolStripMenuItem.Text = "Папки...";
             // 
             // входящиеToolStripMenuItem
@@ -265,5 +275,6 @@
         private System.Windows.Forms.ToolStripMenuItem спамToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem корзинаToolStripMenuItem;
         public System.Windows.Forms.ToolStripMenuItem stateIndicator;
+        private System.Windows.Forms.ToolStripMenuItem настройкиToolStripMenuItem;
     }
 }

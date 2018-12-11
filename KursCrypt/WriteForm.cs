@@ -104,7 +104,7 @@ namespace KursCrypt
             int index = -1;
             for (int i = 0; i < Main.emails.Count;i++)
             {
-                if (Main.emails[i].id == Main.curr_email)
+                if (Main.emails[i].id == Main.curr_id)
                 {
                     index = i;
                     break;

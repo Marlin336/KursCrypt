@@ -60,7 +60,7 @@ namespace KursCrypt
                     {
                         client.Login(Main.emails[i].Login, Main.emails[i].Password);
                         Main.curr_client = client;
-                        Main.curr_email = Main.emails[i].id;
+                        Main.curr_id = Main.emails[i].id;
                         Main.stateIndicator.Text = Main.emails[i].Login;
                         Close();
                         Main.RedrawMailList();
