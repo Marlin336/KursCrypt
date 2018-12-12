@@ -44,9 +44,9 @@ namespace KursCrypt
             var messages = Main.curr_client.Folders.Sent.Messages;
             for (int i = 0, count = 0; i < messages.Count() && count < 5; i++)
             {
-                if (!hotRecips.Exists(str => str == messages[i].From.Address))
+                if (!hotRecips.Exists(str => str == messages[i].To[messages[i].To.Count - 1].Address))
                 {
-                    hotRecips.Add(messages[i].From.Address);
+                    hotRecips.Add(messages[i].To[messages[i].To.Count - 1].Address);
                     count++;
                 }    
             }

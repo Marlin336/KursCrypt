@@ -163,7 +163,7 @@
             this.grid_messlist.RowTemplate.ReadOnly = true;
             this.grid_messlist.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.grid_messlist.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grid_messlist.Size = new System.Drawing.Size(625, 481);
+            this.grid_messlist.Size = new System.Drawing.Size(625, 492);
             this.grid_messlist.TabIndex = 0;
             this.grid_messlist.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grid_messlist_CellDoubleClick);
             // 
@@ -212,7 +212,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(649, 521);
+            this.ClientSize = new System.Drawing.Size(649, 532);
             this.Controls.Add(this.grid_messlist);
             this.Controls.Add(this.menuStrip);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;

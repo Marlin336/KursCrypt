@@ -186,16 +186,16 @@ namespace KursCrypt
             switch (curr_fold)
             {
                 case Folder.inbox:
-                    read = new ReadForm(this, curr_client.Folders.Inbox, (long)grid_messlist.SelectedRows[0].Cells[0].Value);
+                    read = new ReadForm(this, curr_client.Folders.Inbox, (long)grid_messlist.Rows[e.RowIndex].Cells[0].Value);
                     break;
                 case Folder.sent:
-                    read = new ReadForm(this, curr_client.Folders.Sent, (long)grid_messlist.SelectedRows[0].Cells[0].Value);
+                    read = new ReadForm(this, curr_client.Folders.Sent, (long)grid_messlist.Rows[e.RowIndex].Cells[0].Value);
                     break;
                 case Folder.junk:
-                    read = new ReadForm(this, curr_client.Folders.Junk, (long)grid_messlist.SelectedRows[0].Cells[0].Value);
+                    read = new ReadForm(this, curr_client.Folders.Junk, (long)grid_messlist.Rows[e.RowIndex].Cells[0].Value);
                     break;
                 case Folder.trash:
-                    read = new ReadForm(this, curr_client.Folders.Trash, (long)grid_messlist.SelectedRows[0].Cells[0].Value);
+                    read = new ReadForm(this, curr_client.Folders.Trash, (long)grid_messlist.Rows[e.RowIndex].Cells[0].Value);
                     break;
                 default:
                     read = new ReadForm(this, curr_client.Folders.All, 0);
