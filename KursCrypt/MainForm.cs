@@ -33,6 +33,7 @@ namespace KursCrypt
         public int rcv_port { get; private set; }
         public int snd_port { get; private set; }
         public string host { get; set; }
+        public int msg_cntr { get; set; }
         public List<Email> emails = new List<Email>();
         public int curr_id { get; set; } = -1;
         public ImapClient curr_client = null;
@@ -47,7 +48,8 @@ namespace KursCrypt
                 XElement setfile = new XElement(
                         "connect",
                         new XElement("rcv_port", 993),
-                        new XElement("snd_port", 587)
+                        new XElement("snd_port", 587),
+                        new XElement("msg_cntr", 25)
                         );
                 setfile.Save("Settings.xml");
             }
@@ -79,6 +81,7 @@ namespace KursCrypt
             XDocument settings = XDocument.Load("Settings.xml");
             rcv_port = int.Parse(settings.Element("connect").Element("rcv_port").Value);
             snd_port = int.Parse(settings.Element("connect").Element("snd_port").Value);
+            msg_cntr = int.Parse(settings.Element("connect").Element("msg_cntr").Value);
         }
         private void почтовыеЯщикиToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -136,43 +139,53 @@ namespace KursCrypt
         {
             if (curr_client == null)
                 return;
-            grid_messlist.Rows.Clear();
-            switch (curr_fold)
+            try
             {
-                case Folder.inbox:
-                    curr_client.Folders.Inbox.Search("ALL", ImapX.Enums.MessageFetchMode.ClientDefault, 25);
-                    foreach (var item in curr_client.Folders.Inbox.Messages)
-                    {
-                        object[] row = { item.UId, item.From.Address, item.From.DisplayName, item.Subject, item.Date, item.Attachments.Length };
-                        grid_messlist.Rows.Add(row);
-                    }
-                    break;
-                case Folder.sent:
-                    curr_client.Folders.Sent.Search("ALL", ImapX.Enums.MessageFetchMode.ClientDefault, 25);
-                    foreach (var item in curr_client.Folders.Sent.Messages)
-                    {
-                        object[] row = { item.UId, item.From.Address, item.From.DisplayName, item.Subject, item.Date, item.Attachments.Length };
-                        grid_messlist.Rows.Add(row);
-                    }
-                    break;
-                case Folder.junk:
-                    curr_client.Folders.Junk.Search("ALL", ImapX.Enums.MessageFetchMode.ClientDefault, 25);
-                    foreach (var item in curr_client.Folders.Junk.Messages)
-                    {
-                        object[] row = { item.UId, item.From.Address, item.From.DisplayName, item.Subject, item.Date, item.Attachments.Length };
-                        grid_messlist.Rows.Add(row);
-                    }
-                    break;
-                case Folder.trash:
-                    curr_client.Folders.Trash.Search("ALL", ImapX.Enums.MessageFetchMode.ClientDefault, 25);
-                    foreach (var item in curr_client.Folders.Trash.Messages)
-                    {
-                        object[] row = { item.UId, item.From.Address, item.From.DisplayName, item.Subject, item.Date, item.Attachments.Length };
-                        grid_messlist.Rows.Add(row);
-                    }
-                    break;
-                default:
-                    break;
+                switch (curr_fold)
+                {
+                    case Folder.inbox:
+                        curr_client.Folders.Inbox.Search("ALL", ImapX.Enums.MessageFetchMode.ClientDefault, msg_cntr);
+                        grid_messlist.Rows.Clear();
+                        foreach (var item in curr_client.Folders.Inbox.Messages)
+                        {
+                            object[] row = { item.UId, item.From.Address, item.From.DisplayName, item.Subject, item.Date, item.Attachments.Length };
+                            grid_messlist.Rows.Add(row);
+                        }
+                        break;
+                    case Folder.sent:
+                        curr_client.Folders.Sent.Search("ALL", ImapX.Enums.MessageFetchMode.ClientDefault, msg_cntr);
+                        grid_messlist.Rows.Clear();
+                        foreach (var item in curr_client.Folders.Sent.Messages)
+                        {
+                            object[] row = { item.UId, item.From.Address, item.From.DisplayName, item.Subject, item.Date, item.Attachments.Length };
+                            grid_messlist.Rows.Add(row);
+                        }
+                        break;
+                    case Folder.junk:
+                        curr_client.Folders.Junk.Search("ALL", ImapX.Enums.MessageFetchMode.ClientDefault, msg_cntr);
+                        grid_messlist.Rows.Clear();
+                        foreach (var item in curr_client.Folders.Junk.Messages)
+                        {
+                            object[] row = { item.UId, item.From.Address, item.From.DisplayName, item.Subject, item.Date, item.Attachments.Length };
+                            grid_messlist.Rows.Add(row);
+                        }
+                        break;
+                    case Folder.trash:
+                        curr_client.Folders.Trash.Search("ALL", ImapX.Enums.MessageFetchMode.ClientDefault, msg_cntr);
+                        grid_messlist.Rows.Clear();
+                        foreach (var item in curr_client.Folders.Trash.Messages)
+                        {
+                            object[] row = { item.UId, item.From.Address, item.From.DisplayName, item.Subject, item.Date, item.Attachments.Length };
+                            grid_messlist.Rows.Add(row);
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
         private void настройкиToolStripMenuItem_Click(object sender, EventArgs e)

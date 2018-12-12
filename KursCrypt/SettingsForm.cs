@@ -21,6 +21,7 @@ namespace KursCrypt
             Main = main;
             num_rcv_port.Value = Main.rcv_port;
             num_snd_port.Value = Main.snd_port;
+            num_msg_cntr.Value = Main.msg_cntr;
         }
         private void b_savesettings_Click(object sender, EventArgs e)
         {
@@ -29,7 +30,8 @@ namespace KursCrypt
                 XElement setfile = new XElement(
                         "connect",
                         new XElement("rcv_port", num_rcv_port.Value),
-                        new XElement("snd_port", num_snd_port.Value)
+                        new XElement("snd_port", num_snd_port.Value),
+                        new XElement("msg_cntr", num_msg_cntr.Value)
                         );
                 setfile.Save("Settings.xml");
                 Main.GetSettings();
