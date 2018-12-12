@@ -121,6 +121,8 @@
             this.Controls.Add(this.num_rcv_port);
             this.Controls.Add(this.label2);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
             this.Name = "SettingsForm";
             this.Text = "Насторойки";
             ((System.ComponentModel.ISupportInitialize)(this.num_rcv_port)).EndInit();

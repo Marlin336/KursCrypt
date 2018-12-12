@@ -144,7 +144,7 @@ namespace KursCrypt
             switch (curr_fold)
             {
                 case Folder.inbox:
-                    curr_client.Folders.Inbox.Search("ALL", ImapX.Enums.MessageFetchMode.ClientDefault, -1).ToList();
+                    curr_client.Folders.Inbox.Search("ALL", ImapX.Enums.MessageFetchMode.Attachments| ImapX.Enums.MessageFetchMode.Headers| ImapX.Enums.MessageFetchMode.GMailMessageId, -1).ToList();
                     foreach (var item in curr_client.Folders.Inbox.Messages)
                     {
                         object[] row = { item.UId, item.From.Address, item.From.DisplayName, item.Subject, item.Date, item.Attachments.Length };

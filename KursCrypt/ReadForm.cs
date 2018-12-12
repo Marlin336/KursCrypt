@@ -33,5 +33,19 @@ namespace KursCrypt
             tb_from.Text = message.From.DisplayName + " <" + message.From.Address + ">";
             b_attach.Enabled = message.Attachments.Length > 0;
         }
+
+        private void b_attach_Click(object sender, EventArgs e)
+        {
+            InAttachForm attachForm = new InAttachForm(message);
+            attachForm.Show();
+        }
+
+        private void b_reply_Click(object sender, EventArgs e)
+        {
+            string addressee = tb_from.Text.Substring(tb_from.Text.IndexOf('<') + 1);
+            addressee = addressee.Substring(0, addressee.Length - 1);
+            WriteForm write = new WriteForm(Main, addressee, "Re:" + tb_subject.Text);
+            write.ShowDialog();
+        }
     }
 }

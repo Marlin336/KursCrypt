@@ -44,20 +44,22 @@
             this.b_attach.Location = new System.Drawing.Point(12, 429);
             this.b_attach.Name = "b_attach";
             this.b_attach.Size = new System.Drawing.Size(152, 34);
-            this.b_attach.TabIndex = 17;
+            this.b_attach.TabIndex = 1;
             this.b_attach.Text = "Прикрепления";
             this.b_attach.UseVisualStyleBackColor = true;
+            this.b_attach.Click += new System.EventHandler(this.b_attach_Click);
             // 
             // b_reply
             // 
             this.b_reply.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.b_reply.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
-            this.b_reply.Location = new System.Drawing.Point(514, 429);
+            this.b_reply.Location = new System.Drawing.Point(590, 429);
             this.b_reply.Name = "b_reply";
             this.b_reply.Size = new System.Drawing.Size(152, 34);
-            this.b_reply.TabIndex = 16;
+            this.b_reply.TabIndex = 0;
             this.b_reply.Text = "Ответить";
             this.b_reply.UseVisualStyleBackColor = true;
+            this.b_reply.Click += new System.EventHandler(this.b_reply_Click);
             // 
             // tb_from
             // 
@@ -68,8 +70,8 @@
             this.tb_from.Location = new System.Drawing.Point(70, 6);
             this.tb_from.Name = "tb_from";
             this.tb_from.ReadOnly = true;
-            this.tb_from.Size = new System.Drawing.Size(596, 20);
-            this.tb_from.TabIndex = 15;
+            this.tb_from.Size = new System.Drawing.Size(672, 20);
+            this.tb_from.TabIndex = 3;
             this.tb_from.TabStop = false;
             // 
             // label1
@@ -100,8 +102,8 @@
             this.tb_subject.Location = new System.Drawing.Point(70, 32);
             this.tb_subject.Name = "tb_subject";
             this.tb_subject.ReadOnly = true;
-            this.tb_subject.Size = new System.Drawing.Size(596, 20);
-            this.tb_subject.TabIndex = 12;
+            this.tb_subject.Size = new System.Drawing.Size(672, 20);
+            this.tb_subject.TabIndex = 4;
             this.tb_subject.TabStop = false;
             // 
             // tb_opentext
@@ -115,14 +117,14 @@
             this.tb_opentext.Name = "tb_opentext";
             this.tb_opentext.ReadOnly = true;
             this.tb_opentext.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tb_opentext.Size = new System.Drawing.Size(654, 365);
-            this.tb_opentext.TabIndex = 11;
+            this.tb_opentext.Size = new System.Drawing.Size(730, 365);
+            this.tb_opentext.TabIndex = 2;
             // 
             // ReadForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(678, 475);
+            this.ClientSize = new System.Drawing.Size(754, 475);
             this.Controls.Add(this.b_attach);
             this.Controls.Add(this.b_reply);
             this.Controls.Add(this.tb_from);
@@ -130,6 +132,7 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.tb_subject);
             this.Controls.Add(this.tb_opentext);
+            this.MinimumSize = new System.Drawing.Size(349, 514);
             this.Name = "ReadForm";
             this.Text = "Чтение сообщения";
             this.ResumeLayout(false);

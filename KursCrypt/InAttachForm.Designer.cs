@@ -108,12 +108,18 @@
             this.download_coll.UseColumnTextForButtonValue = true;
             this.download_coll.Width = 75;
             // 
+            // attach_fileDialog
+            // 
+            this.attach_fileDialog.Filter = "Все файлы|*.*";
+            // 
             // InAttachForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(601, 287);
             this.Controls.Add(this.list);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "InAttachForm";
             this.Text = "Прикрепления";
             ((System.ComponentModel.ISupportInitialize)(this.list)).EndInit();
