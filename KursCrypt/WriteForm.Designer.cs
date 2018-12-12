@@ -64,11 +64,6 @@
             // cb_to
             // 
             this.cb_to.FormattingEnabled = true;
-            this.cb_to.Items.AddRange(new object[] {
-            "abc",
-            "bcd",
-            "cde",
-            "efg"});
             this.cb_to.Location = new System.Drawing.Point(68, 12);
             this.cb_to.Name = "cb_to";
             this.cb_to.Size = new System.Drawing.Size(595, 21);

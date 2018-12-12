@@ -33,11 +33,25 @@ namespace KursCrypt
 
         MainForm Main;
         List<Attach_elem> attach_list = new List<Attach_elem>();
+        List<string> recs = new List<string>();
 
         public WriteForm(MainForm main)
         {
             Main = main;
             InitializeComponent();
+            Main.curr_client.Folders.Sent.Search("ALL", ImapX.Enums.MessageFetchMode.Headers, 25);
+            List<string> hotRecips = new List<string>();
+            var messages = Main.curr_client.Folders.Sent.Messages;
+            for (int i = 0, count = 0; i < messages.Count() && count < 5; i++)
+            {
+                if (!hotRecips.Exists(str => str == messages[i].From.Address))
+                {
+                    hotRecips.Add(messages[i].From.Address);
+                    count++;
+                }    
+            }
+            foreach (var item in hotRecips)
+                cb_to.Items.Add(item);
         }
         public WriteForm(MainForm main, string to, string subject) : this(main)
         {
@@ -97,6 +111,7 @@ namespace KursCrypt
         {
             if (MessageBox.Show("Отправить сообщение?", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
             {
+                List<string> failRecip = new List<string>();
                 try
                 {
                     Email email_ref = Main.emails[Main.emails.FindIndex(em => em.id == Main.curr_id)];
@@ -104,25 +119,39 @@ namespace KursCrypt
                     string[] toList = cb_to.Text.Split();
                     foreach (var recipient in toList)
                     {
-                        MailMessage message = new MailMessage(new MailAddress(email_ref.Address, name), new MailAddress(recipient))
+                        try
                         {
-                            Subject = tb_subject.Text,
-                            Body = textBox.Text,
-                        };
-                        List<System.Net.Mail.Attachment> attachments = new List<System.Net.Mail.Attachment>();
-                        foreach (var attach in attach_list)
-                            message.Attachments.Add(new System.Net.Mail.Attachment(attach.path, MediaTypeNames.Application.Octet));
-                        SmtpClient smtp = new SmtpClient
+                            MailMessage message = new MailMessage(new MailAddress(email_ref.Address, name), new MailAddress(recipient))
+                            {
+                                Subject = tb_subject.Text,
+                                Body = textBox.Text,
+                            };
+                            List<Attachment> attachments = new List<Attachment>();
+                            foreach (var attach in attach_list)
+                                message.Attachments.Add(new Attachment(attach.path, MediaTypeNames.Application.Octet));
+                            SmtpClient smtp = new SmtpClient
+                            {
+                                Port = Main.snd_port,
+                                Host = "smtp." + Main.host,
+                                EnableSsl = true,
+                                Timeout = 10000,
+                                DeliveryMethod = SmtpDeliveryMethod.Network,
+                                UseDefaultCredentials = false,
+                                Credentials = new System.Net.NetworkCredential(email_ref.Address, email_ref.Password)
+                            };
+                            smtp.Send(message);
+                        }
+                        catch (SmtpFailedRecipientException exRecip)
                         {
-                            Port = Main.snd_port,
-                            Host = "smtp." + Main.host,
-                            EnableSsl = true,
-                            Timeout = 10000,
-                            DeliveryMethod = SmtpDeliveryMethod.Network,
-                            UseDefaultCredentials = false,
-                            Credentials = new System.Net.NetworkCredential(email_ref.Address, email_ref.Password)
-                        };
-                        smtp.Send(message);
+                            failRecip.Add(exRecip.FailedRecipient);
+                        }
+                    }
+                    if (failRecip.Count != 0)
+                    {
+                        string except = null;
+                        foreach (var item in failRecip)
+                            except += item + "\n";
+                        MessageBox.Show("Не удалось отправить сообщение данным пользователям:\n" + except, "Ошибка отправки сообщения", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                     Close();
                 }

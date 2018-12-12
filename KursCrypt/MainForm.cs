@@ -33,7 +33,6 @@ namespace KursCrypt
         public int rcv_port { get; private set; }
         public int snd_port { get; private set; }
         public string host { get; set; }
-        public bool state;
         public List<Email> emails = new List<Email>();
         public int curr_id { get; set; } = -1;
         public ImapClient curr_client = null;
@@ -102,22 +101,8 @@ namespace KursCrypt
         }
         private void stateIndicator_Click(object sender, EventArgs e)
         {
-            if (curr_client != null && !curr_client.IsConnected)
-            {
-                if (curr_client.Connect())
-                {
-                    state = true;
-                    stateIndicator.Text = curr_id != -1 ? emails[emails.FindIndex(em => em.id == curr_id)].Address : "Online";
-                    stateIndicator.ForeColor = Color.LightGreen;
-                }
-                else
-                {
-                    MessageBox.Show("Не удается подключиться. Проверьте подключение к сети!", "Ошибка соединения", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    state = false;
-                    stateIndicator.Text = curr_id != -1 ? emails[emails.FindIndex(em => em.id == curr_id)].Address : "Offline";
-                    stateIndicator.ForeColor = Color.Red;
-                }
-            }
+            if (curr_client != null && curr_client.IsConnected)
+                RedrawMailList();
         }
         private void входящиеToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -155,7 +140,7 @@ namespace KursCrypt
             switch (curr_fold)
             {
                 case Folder.inbox:
-                    curr_client.Folders.Inbox.Search("ALL", ImapX.Enums.MessageFetchMode.Attachments| ImapX.Enums.MessageFetchMode.Headers| ImapX.Enums.MessageFetchMode.GMailMessageId, -1).ToList();
+                    curr_client.Folders.Inbox.Search("ALL", ImapX.Enums.MessageFetchMode.ClientDefault, 25);
                     foreach (var item in curr_client.Folders.Inbox.Messages)
                     {
                         object[] row = { item.UId, item.From.Address, item.From.DisplayName, item.Subject, item.Date, item.Attachments.Length };
@@ -163,7 +148,7 @@ namespace KursCrypt
                     }
                     break;
                 case Folder.sent:
-                    curr_client.Folders.Sent.Search("ALL", ImapX.Enums.MessageFetchMode.ClientDefault, -1).ToList();
+                    curr_client.Folders.Sent.Search("ALL", ImapX.Enums.MessageFetchMode.ClientDefault, 25);
                     foreach (var item in curr_client.Folders.Sent.Messages)
                     {
                         object[] row = { item.UId, item.From.Address, item.From.DisplayName, item.Subject, item.Date, item.Attachments.Length };
@@ -171,7 +156,7 @@ namespace KursCrypt
                     }
                     break;
                 case Folder.junk:
-                    curr_client.Folders.Junk.Search("ALL", ImapX.Enums.MessageFetchMode.ClientDefault, -1).ToList();
+                    curr_client.Folders.Junk.Search("ALL", ImapX.Enums.MessageFetchMode.ClientDefault, 25);
                     foreach (var item in curr_client.Folders.Junk.Messages)
                     {
                         object[] row = { item.UId, item.From.Address, item.From.DisplayName, item.Subject, item.Date, item.Attachments.Length };
@@ -179,7 +164,7 @@ namespace KursCrypt
                     }
                     break;
                 case Folder.trash:
-                    curr_client.Folders.Trash.Search("ALL", ImapX.Enums.MessageFetchMode.ClientDefault, -1).ToList();
+                    curr_client.Folders.Trash.Search("ALL", ImapX.Enums.MessageFetchMode.ClientDefault, 25);
                     foreach (var item in curr_client.Folders.Trash.Messages)
                     {
                         object[] row = { item.UId, item.From.Address, item.From.DisplayName, item.Subject, item.Date, item.Attachments.Length };
