@@ -33,18 +33,17 @@ namespace KursCrypt
 
         MainForm Main;
         List<Attach_elem> attach_list = new List<Attach_elem>();
+
         public WriteForm(MainForm main)
         {
             Main = main;
             InitializeComponent();
         }
-
         public WriteForm(MainForm main, string to, string subject) : this(main)
         {
             cb_to.Text = to;
             tb_subject.Text = subject;
         }
-
         private void b_addattach_Click(object sender, EventArgs e)
         {
             bool same = false;
@@ -73,7 +72,6 @@ namespace KursCrypt
                 }
             }
         }
-
         private void b_delattach_Click(object sender, EventArgs e)
         {
             try
@@ -95,7 +93,6 @@ namespace KursCrypt
                 MessageBox.Show(ex.Message, "Ошибка!", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void b_send_Click(object sender, EventArgs e)
         {
             if (MessageBox.Show("Отправить сообщение?", Text, MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)

@@ -14,6 +14,7 @@ namespace KursCrypt
     public partial class BoxesForm : Form
     {
         public MainForm Main;
+
         public BoxesForm(MainForm main)
         {
             Main = main;
@@ -24,26 +25,22 @@ namespace KursCrypt
                 grid_boxes.Rows.Add(row);
             }
         }
-
         private void b_add_Click(object sender, EventArgs e)
         {
             AuthForm auth = new AuthForm(this);
             auth.ShowDialog();
         }
-
         public void AddToBoxlist(Email email)
         {
             object[] row = { email.id, email.Address };
             grid_boxes.Rows.Add(row);
         }
-
         private void b_del_Click(object sender, EventArgs e)
         {
             Email email_ref = Main.emails[Main.emails.FindIndex(em => em.id == (int)grid_boxes.SelectedRows[0].Cells[0].Value)];
             Main.emails.Remove(email_ref);
             grid_boxes.Rows.RemoveAt(grid_boxes.SelectedRows[0].Index);
         }
-
         private void grid_boxes_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             Email email_ref = Main.emails[Main.emails.FindIndex(em => em.id == (int)grid_boxes.SelectedRows[0].Cells[0].Value)];

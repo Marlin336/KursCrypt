@@ -19,10 +19,10 @@ namespace KursCrypt
         private static int count = 0;
         public int id;// Выдается на сессию
         public string Address, Password, Name;
-        public Email(string login, string password, string name)
+        public Email(string address, string password, string name)
         {
             id = count++;
-            Address = login;
+            Address = address;
             Password = password;
             Name = name;
         }
@@ -44,8 +44,8 @@ namespace KursCrypt
             InitializeComponent();
             if(!File.Exists("Settings.xml"))
             { 
-                MessageBox.Show("Файл настроек не найден. Будет создан новый файл с настройками по умолчанию", "Файл настроек не найден", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                XElement setfile =  new XElement(
+                MessageBox.Show("Файл настроек не найден. Настройки будут сброшены до дефолтных", "Файл настроек не найден", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                XElement setfile = new XElement(
                         "connect",
                         new XElement("rcv_port", 993),
                         new XElement("snd_port", 587)
@@ -53,6 +53,27 @@ namespace KursCrypt
                 setfile.Save("Settings.xml");
             }
             GetSettings();
+            if (!File.Exists("Profile.xml"))
+            {
+                XElement profile = new XElement("body",null);
+                profile.Save("Profile.xml");
+            }
+            else
+            {
+                XDocument profile = XDocument.Load("Profile.xml");
+                XElement node;
+                if (!profile.Element("body").IsEmpty)
+                {
+                    node = profile.Element("body").Element("user");
+                    while (node != null)
+                    {
+                        emails.Add(new Email(node.Element("ads").Value,
+                        node.Element("pwd").Value,
+                        node.Element("nm").Value));
+                        node = (XElement)node.NextNode;
+                    } 
+                }
+            }
         }
         public void GetSettings()
         {
@@ -60,19 +81,15 @@ namespace KursCrypt
             rcv_port = int.Parse(settings.Element("connect").Element("rcv_port").Value);
             snd_port = int.Parse(settings.Element("connect").Element("snd_port").Value);
         }
-
         private void почтовыеЯщикиToolStripMenuItem_Click(object sender, EventArgs e)
         {
             BoxesForm boxes = new BoxesForm(this);
             boxes.ShowDialog();
         }
-
         private void написатьToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Write_message(null, null);
         }
-
-
         private void Write_message(string to, string subj)
         {
             if (curr_id != -1)
@@ -83,7 +100,6 @@ namespace KursCrypt
             else
                 MessageBox.Show("Для того чтобы написать письмо нужно авторизоваться", "", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
-
         private void stateIndicator_Click(object sender, EventArgs e)
         {
             if (curr_client != null && !curr_client.IsConnected)
@@ -103,7 +119,6 @@ namespace KursCrypt
                 }
             }
         }
-
         private void входящиеToolStripMenuItem_Click(object sender, EventArgs e)
         {
             отправленныеToolStripMenuItem.Checked = спамToolStripMenuItem.Checked = корзинаToolStripMenuItem.Checked = false;
@@ -111,7 +126,6 @@ namespace KursCrypt
             curr_fold = Folder.inbox;
             RedrawMailList();
         }
-
         private void отправленныеToolStripMenuItem_Click(object sender, EventArgs e)
         {
             входящиеToolStripMenuItem.Checked = спамToolStripMenuItem.Checked = корзинаToolStripMenuItem.Checked = false;
@@ -119,7 +133,6 @@ namespace KursCrypt
             curr_fold = Folder.sent;
             RedrawMailList();
         }
-
         private void спамToolStripMenuItem_Click(object sender, EventArgs e)
         {
             входящиеToolStripMenuItem.Checked = отправленныеToolStripMenuItem.Checked = корзинаToolStripMenuItem.Checked = false;
@@ -127,7 +140,6 @@ namespace KursCrypt
             curr_fold = Folder.junk;
             RedrawMailList();
         }
-
         private void корзинаToolStripMenuItem_Click(object sender, EventArgs e)
         {
             входящиеToolStripMenuItem.Checked = спамToolStripMenuItem.Checked = отправленныеToolStripMenuItem.Checked = false;
@@ -135,7 +147,6 @@ namespace KursCrypt
             curr_fold = Folder.trash;
             RedrawMailList();
         }
-
         public void RedrawMailList()
         {
             if (curr_client == null)
@@ -179,13 +190,11 @@ namespace KursCrypt
                     break;
             }
         }
-
         private void настройкиToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SettingsForm settings = new SettingsForm(this);
             settings.Show();
         }
-
         private void grid_messlist_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
             ReadForm read;

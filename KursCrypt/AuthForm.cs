@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ImapX.Authentication;
 using ImapX;
+using System.Xml.Linq;
 
 namespace KursCrypt
 {
@@ -19,6 +20,7 @@ namespace KursCrypt
         MainForm Main;
         List<Email> emails;
         ImapClient client;
+
         public AuthForm(BoxesForm boxes)
         {
             Boxes = boxes;
@@ -26,7 +28,6 @@ namespace KursCrypt
             emails = Main.emails;
             InitializeComponent();
         }
-
         private void bAccept_Click(object sender, EventArgs e)
         {
             Regex rgx = new Regex(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" +
@@ -50,6 +51,15 @@ namespace KursCrypt
                             Email profile = new Email(tb_mail.Text, tb_pass.Text, tb_name.ForeColor == SystemColors.InactiveCaption?"":tb_name.Text);
                             emails.Add(profile);
                             Boxes.AddToBoxlist(profile);
+                            XDocument document = XDocument.Load("Profile.xml");
+                            document.Root.Add(
+                                 new XElement("user",
+                                    new XElement("ads", profile.Address),
+                                    new XElement("pwd", profile.Password),
+                                    new XElement("nm", profile.Name)
+                                    )
+                                );
+                            document.Save("Profile.xml");
                         }
                         else
                         {
@@ -68,7 +78,6 @@ namespace KursCrypt
                 }
             }
         }
-
         private void tb_name_Enter(object sender, EventArgs e)
         {
             if (tb_name.ForeColor == SystemColors.InactiveCaption)
@@ -77,7 +86,6 @@ namespace KursCrypt
                 tb_name.ForeColor = SystemColors.WindowText;
             }
         }
-
         private void tb_name_Leave(object sender, EventArgs e)
         {
             if (tb_name.Text.Length == 0)

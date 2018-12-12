@@ -13,6 +13,7 @@ namespace KursCrypt
     public partial class InAttachForm : Form
     {
         ImapX.Message handled_message;
+
         public InAttachForm(ImapX.Message message)
         {
             InitializeComponent();
@@ -23,7 +24,6 @@ namespace KursCrypt
                 list.Rows.Add(row);
             }   
         }
-
         private void list_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             var senderGrid = (DataGridView)sender;
