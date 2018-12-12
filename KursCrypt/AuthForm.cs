@@ -41,7 +41,8 @@ namespace KursCrypt
             {
                 try
                 {
-                    client = new ImapClient(Main.curr_client.Host, Main.curr_client.Port, true, false);
+                    string host_str = tb_mail.Text.Substring(tb_mail.Text.IndexOf('@') + 1);
+                    client = new ImapClient("imap." + host_str, Main.rcv_port, true, false);
                     if (client.Connect())
                     {
                         if (client.Login(tb_mail.Text, tb_pass.Text))

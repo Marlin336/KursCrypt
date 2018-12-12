@@ -32,7 +32,7 @@ namespace KursCrypt
     {
         public int rcv_port { get; private set; }
         public int snd_port { get; private set; }
-        public string host { get; private set; }
+        public string host { get; set; }
         public bool state;
         public List<Email> emails = new List<Email>();
         public int curr_id { get; set; } = -1;
@@ -47,30 +47,17 @@ namespace KursCrypt
                 MessageBox.Show("Файл настроек не найден. Будет создан новый файл с настройками по умолчанию", "Файл настроек не найден", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 XElement setfile =  new XElement(
                         "connect",
-                        new XElement("host", "mail.ru"),
                         new XElement("rcv_port", 993),
                         new XElement("snd_port", 587)
                         );
                 setfile.Save("Settings.xml");
             }
             GetSettings();
-            curr_client = new ImapClient("imap."+host, rcv_port, true, false);
-            state = curr_client.Connect();
-            if (state)
-            {
-                stateIndicator.ForeColor = Color.LightGreen;
-                stateIndicator.Text = "Online";
-            }
-            else
-            {
-                stateIndicator.ForeColor = Color.Red;
-                stateIndicator.Text = "Offline";
-            }
+            curr_client = null;
         }
         public void GetSettings()
         {
             XDocument settings = XDocument.Load("Settings.xml");
-            host = settings.Element("connect").Element("host").Value.ToString();
             rcv_port = int.Parse(settings.Element("connect").Element("rcv_port").Value);
             snd_port = int.Parse(settings.Element("connect").Element("snd_port").Value);
         }
@@ -104,7 +91,7 @@ namespace KursCrypt
 
         private void stateIndicator_Click(object sender, EventArgs e)
         {
-            if (!curr_client.IsConnected)
+            if (curr_client != null && !curr_client.IsConnected)
             {
                 if (curr_client.Connect())
                 {
@@ -157,6 +144,8 @@ namespace KursCrypt
         public void RedrawMailList()
         {
             //Нужно получить сообщения из сервера
+            if (true)
+                return;
             List<ImapX.Message> messages = new List<ImapX.Message>();
             //= imap.Folders[comboBox3.SelectedIndex].Search("ALL", ImapX.Enums.MessageFetchMode.ClientDefault, uo.count);
             lb_mail.Items.Clear();

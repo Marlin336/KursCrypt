@@ -120,6 +120,7 @@
             this.Controls.Add(this.tb_pass);
             this.Controls.Add(this.tb_mail);
             this.Controls.Add(this.bAccept);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "AuthForm";
             this.Text = "Авторизация";
             this.ResumeLayout(false);

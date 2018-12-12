@@ -1,4 +1,4 @@
-﻿using ImapX;
+﻿using System.Net.Mail;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,7 +9,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Net.Mail;
 using System.Net.Mime;
 
 namespace KursCrypt
@@ -33,12 +32,10 @@ namespace KursCrypt
         } 
 
         MainForm Main;
-        ImapClient client;
         List<Attach_elem> attach_list = new List<Attach_elem>();
         public WriteForm(MainForm main)
         {
             Main = main;
-            client = Main.curr_client;
             InitializeComponent();
         }
 
@@ -107,25 +104,34 @@ namespace KursCrypt
                 {
                     Email email_ref = Main.emails[Main.emails.FindIndex(em => em.id == Main.curr_id)];
                     string name = email_ref.Name.Length == 0 ? email_ref.Address.Substring(0, email_ref.Address.IndexOf('@')) : email_ref.Name;
-                    MailMessage message = new MailMessage(name, cb_to.Text, tb_subject.Text, textBox.Text);
-                    List<System.Net.Mail.Attachment> attachments = new List<System.Net.Mail.Attachment>();
-                    foreach (var item in attach_list)
-                        message.Attachments.Add(new System.Net.Mail.Attachment(item.path, MediaTypeNames.Application.Octet));
-                    SmtpClient smtp = new SmtpClient();
-                    smtp.Port = Main.snd_port;
-                    smtp.Host = "smtp." + Main.host;
-                    smtp.EnableSsl = true;
-                    smtp.Timeout = 10000;
-                    smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
-                    smtp.UseDefaultCredentials = false;
-                    smtp.Credentials = new System.Net.NetworkCredential(email_ref.Address, email_ref.Password);
-                    smtp.Send(message);
+                    string[] toList = cb_to.Text.Split();
+                    foreach (var recipient in toList)
+                    {
+                        MailMessage message = new MailMessage(new MailAddress(email_ref.Address, name), new MailAddress(recipient))
+                        {
+                            Subject = tb_subject.Text,
+                            Body = textBox.Text,
+                        };
+                        List<System.Net.Mail.Attachment> attachments = new List<System.Net.Mail.Attachment>();
+                        foreach (var attach in attach_list)
+                            message.Attachments.Add(new System.Net.Mail.Attachment(attach.path, MediaTypeNames.Application.Octet));
+                        SmtpClient smtp = new SmtpClient
+                        {
+                            Port = Main.snd_port,
+                            Host = "smtp." + Main.host,
+                            EnableSsl = true,
+                            Timeout = 10000,
+                            DeliveryMethod = SmtpDeliveryMethod.Network,
+                            UseDefaultCredentials = false,
+                            Credentials = new System.Net.NetworkCredential(email_ref.Address, email_ref.Password)
+                        };
+                        smtp.Send(message);
+                    }
                     Close();
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    throw;
                 }
             }
         }
