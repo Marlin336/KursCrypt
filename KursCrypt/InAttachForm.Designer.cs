@@ -30,12 +30,12 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.list = new System.Windows.Forms.DataGridView();
-            this.attach_fileDialog = new System.Windows.Forms.SaveFileDialog();
             this.id_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.name_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ext_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.size_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.download_coll = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.attach_fileDialog = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.list)).BeginInit();
             this.SuspendLayout();
             // 
@@ -58,7 +58,7 @@
             this.list.RowHeadersVisible = false;
             this.list.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.list.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.list.Size = new System.Drawing.Size(577, 150);
+            this.list.Size = new System.Drawing.Size(577, 263);
             this.list.TabIndex = 8;
             this.list.TabStop = false;
             this.list.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.list_CellContentClick);
@@ -112,7 +112,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(601, 173);
+            this.ClientSize = new System.Drawing.Size(601, 287);
             this.Controls.Add(this.list);
             this.Name = "InAttachForm";
             this.Text = "Прикрепления";

@@ -53,7 +53,6 @@ namespace KursCrypt
                 setfile.Save("Settings.xml");
             }
             GetSettings();
-            curr_client = null;
         }
         public void GetSettings()
         {
@@ -73,10 +72,6 @@ namespace KursCrypt
             Write_message(null, null);
         }
 
-        private void b_reply_Click(object sender, EventArgs e)
-        {
-            Write_message(tb_from.Text, "Re: " + tb_subject.Text);
-        }
 
         private void Write_message(string to, string subj)
         {
@@ -143,36 +138,41 @@ namespace KursCrypt
 
         public void RedrawMailList()
         {
-            //Нужно получить сообщения из сервера
-            if (true)
+            if (curr_client == null)
                 return;
-            List<ImapX.Message> messages = new List<ImapX.Message>();
-            //= imap.Folders[comboBox3.SelectedIndex].Search("ALL", ImapX.Enums.MessageFetchMode.ClientDefault, uo.count);
-            lb_mail.Items.Clear();
+            grid_messlist.Rows.Clear();
             switch (curr_fold)
             {
                 case Folder.inbox:
+                    curr_client.Folders.Inbox.Search("ALL", ImapX.Enums.MessageFetchMode.ClientDefault, -1).ToList();
                     foreach (var item in curr_client.Folders.Inbox.Messages)
                     {
-                        lb_mail.Items.Add("От: " + item.From + "\n" + "Тема: " + item.Subject + "\n" + item.Date);
+                        object[] row = { item.UId, item.From.Address, item.From.DisplayName, item.Subject, item.Date, item.Attachments.Length };
+                        grid_messlist.Rows.Add(row);
                     }
                     break;
                 case Folder.sent:
+                    curr_client.Folders.Sent.Search("ALL", ImapX.Enums.MessageFetchMode.ClientDefault, -1).ToList();
                     foreach (var item in curr_client.Folders.Sent.Messages)
                     {
-                        lb_mail.Items.Add("От: " + item.From + "\n" + "Тема: " + item.Subject + "\n" + item.Date);
+                        object[] row = { item.UId, item.From.Address, item.From.DisplayName, item.Subject, item.Date, item.Attachments.Length };
+                        grid_messlist.Rows.Add(row);
                     }
                     break;
                 case Folder.junk:
+                    curr_client.Folders.Junk.Search("ALL", ImapX.Enums.MessageFetchMode.ClientDefault, -1).ToList();
                     foreach (var item in curr_client.Folders.Junk.Messages)
                     {
-                        lb_mail.Items.Add("От: " + item.From + "\n" + "Тема: " + item.Subject + "\n" + item.Date);
+                        object[] row = { item.UId, item.From.Address, item.From.DisplayName, item.Subject, item.Date, item.Attachments.Length };
+                        grid_messlist.Rows.Add(row);
                     }
                     break;
                 case Folder.trash:
+                    curr_client.Folders.Trash.Search("ALL", ImapX.Enums.MessageFetchMode.ClientDefault, -1).ToList();
                     foreach (var item in curr_client.Folders.Trash.Messages)
                     {
-                        lb_mail.Items.Add("От: " + item.From + "\n" + "Тема: " + item.Subject + "\n" + item.Date);
+                        object[] row = { item.UId, item.From.Address, item.From.DisplayName, item.Subject, item.Date, item.Attachments.Length };
+                        grid_messlist.Rows.Add(row);
                     }
                     break;
                 default:
@@ -184,6 +184,30 @@ namespace KursCrypt
         {
             SettingsForm settings = new SettingsForm(this);
             settings.Show();
+        }
+
+        private void grid_messlist_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            ReadForm read;
+            switch (curr_fold)
+            {
+                case Folder.inbox:
+                    read = new ReadForm(this, curr_client.Folders.Inbox, (long)grid_messlist.SelectedRows[0].Cells[0].Value);
+                    break;
+                case Folder.sent:
+                    read = new ReadForm(this, curr_client.Folders.Sent, (long)grid_messlist.SelectedRows[0].Cells[0].Value);
+                    break;
+                case Folder.junk:
+                    read = new ReadForm(this, curr_client.Folders.Junk, (long)grid_messlist.SelectedRows[0].Cells[0].Value);
+                    break;
+                case Folder.trash:
+                    read = new ReadForm(this, curr_client.Folders.Trash, (long)grid_messlist.SelectedRows[0].Cells[0].Value);
+                    break;
+                default:
+                    read = new ReadForm(this, curr_client.Folders.All, 0);
+                    break;
+            }
+            read.Show();
         }
     }
 }
