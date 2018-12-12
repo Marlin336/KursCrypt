@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Linq;
 using ImapX;
 
 namespace KursCrypt
@@ -40,6 +41,18 @@ namespace KursCrypt
             Email email_ref = Main.emails[Main.emails.FindIndex(em => em.id == (int)grid_boxes.SelectedRows[0].Cells[0].Value)];
             Main.emails.Remove(email_ref);
             grid_boxes.Rows.RemoveAt(grid_boxes.SelectedRows[0].Index);
+            XDocument document = XDocument.Load("Profile.xml");
+            XElement node = document.Element("body").Element("user");
+            while (node != null)
+            {
+                if (node.Element("ads").Value == email_ref.Address)
+                {
+                    node.Remove();
+                    document.Save("Profile.xml");
+                    break;
+                }
+                node = (XElement)node.NextNode;
+            }
         }
         private void grid_boxes_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
@@ -52,7 +65,6 @@ namespace KursCrypt
                 Main.curr_client = client;
                 Main.curr_id = email_ref.id;
                 Main.stateIndicator.Text = email_ref.Address;
-                Main.stateIndicator.ForeColor = Color.LightGreen;
                 Close();
                 Main.RedrawMailList();
             }
