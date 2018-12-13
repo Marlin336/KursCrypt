@@ -40,17 +40,17 @@
             this.спамToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.корзинаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.grid_messlist = new System.Windows.Forms.DataGridView();
+            this.con_menu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.прочитатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ответитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.посмотретьВложенияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.удалитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.uidCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FromAddressCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FromNameCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SubjCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DateCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AttachCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.con_menu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.прочитатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ответитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.посмотретьВложенияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.удалитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grid_messlist)).BeginInit();
             this.con_menu.SuspendLayout();
@@ -175,6 +175,44 @@
             this.grid_messlist.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grid_messlist_CellDoubleClick);
             this.grid_messlist.MouseClick += new System.Windows.Forms.MouseEventHandler(this.grid_messlist_MouseClick);
             // 
+            // con_menu
+            // 
+            this.con_menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.прочитатьToolStripMenuItem,
+            this.ответитьToolStripMenuItem,
+            this.посмотретьВложенияToolStripMenuItem,
+            this.удалитьToolStripMenuItem});
+            this.con_menu.Name = "con_menu";
+            this.con_menu.Size = new System.Drawing.Size(225, 114);
+            // 
+            // прочитатьToolStripMenuItem
+            // 
+            this.прочитатьToolStripMenuItem.Name = "прочитатьToolStripMenuItem";
+            this.прочитатьToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.прочитатьToolStripMenuItem.Text = "Прочитать";
+            this.прочитатьToolStripMenuItem.Click += new System.EventHandler(this.прочитатьToolStripMenuItem_Click);
+            // 
+            // ответитьToolStripMenuItem
+            // 
+            this.ответитьToolStripMenuItem.Name = "ответитьToolStripMenuItem";
+            this.ответитьToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.ответитьToolStripMenuItem.Text = "Ответить";
+            this.ответитьToolStripMenuItem.Click += new System.EventHandler(this.ответитьToolStripMenuItem_Click);
+            // 
+            // посмотретьВложенияToolStripMenuItem
+            // 
+            this.посмотретьВложенияToolStripMenuItem.Name = "посмотретьВложенияToolStripMenuItem";
+            this.посмотретьВложенияToolStripMenuItem.Size = new System.Drawing.Size(224, 22);
+            this.посмотретьВложенияToolStripMenuItem.Text = "Посмотреть прикрепления";
+            this.посмотретьВложенияToolStripMenuItem.Click += new System.EventHandler(this.посмотретьВложенияToolStripMenuItem_Click);
+            // 
+            // удалитьToolStripMenuItem
+            // 
+            this.удалитьToolStripMenuItem.Name = "удалитьToolStripMenuItem";
+            this.удалитьToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.удалитьToolStripMenuItem.Text = "Удалить";
+            this.удалитьToolStripMenuItem.Click += new System.EventHandler(this.удалитьToolStripMenuItem_Click);
+            // 
             // uidCol
             // 
             this.uidCol.HeaderText = "UID";
@@ -216,44 +254,6 @@
             this.AttachCol.Name = "AttachCol";
             this.AttachCol.ReadOnly = true;
             // 
-            // con_menu
-            // 
-            this.con_menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.прочитатьToolStripMenuItem,
-            this.ответитьToolStripMenuItem,
-            this.посмотретьВложенияToolStripMenuItem,
-            this.удалитьToolStripMenuItem});
-            this.con_menu.Name = "con_menu";
-            this.con_menu.Size = new System.Drawing.Size(200, 114);
-            // 
-            // прочитатьToolStripMenuItem
-            // 
-            this.прочитатьToolStripMenuItem.Name = "прочитатьToolStripMenuItem";
-            this.прочитатьToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
-            this.прочитатьToolStripMenuItem.Text = "Прочитать";
-            this.прочитатьToolStripMenuItem.Click += new System.EventHandler(this.прочитатьToolStripMenuItem_Click);
-            // 
-            // ответитьToolStripMenuItem
-            // 
-            this.ответитьToolStripMenuItem.Name = "ответитьToolStripMenuItem";
-            this.ответитьToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
-            this.ответитьToolStripMenuItem.Text = "Ответить";
-            this.ответитьToolStripMenuItem.Click += new System.EventHandler(this.ответитьToolStripMenuItem_Click);
-            // 
-            // посмотретьВложенияToolStripMenuItem
-            // 
-            this.посмотретьВложенияToolStripMenuItem.Name = "посмотретьВложенияToolStripMenuItem";
-            this.посмотретьВложенияToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
-            this.посмотретьВложенияToolStripMenuItem.Text = "Посмотреть вложения";
-            this.посмотретьВложенияToolStripMenuItem.Click += new System.EventHandler(this.посмотретьВложенияToolStripMenuItem_Click);
-            // 
-            // удалитьToolStripMenuItem
-            // 
-            this.удалитьToolStripMenuItem.Name = "удалитьToolStripMenuItem";
-            this.удалитьToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
-            this.удалитьToolStripMenuItem.Text = "Удалить";
-            this.удалитьToolStripMenuItem.Click += new System.EventHandler(this.удалитьToolStripMenuItem_Click);
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -287,16 +287,16 @@
         public System.Windows.Forms.ToolStripMenuItem stateIndicator;
         private System.Windows.Forms.ToolStripMenuItem настройкиToolStripMenuItem;
         private System.Windows.Forms.DataGridView grid_messlist;
+        private System.Windows.Forms.ContextMenuStrip con_menu;
+        private System.Windows.Forms.ToolStripMenuItem прочитатьToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ответитьToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem посмотретьВложенияToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem удалитьToolStripMenuItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn uidCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn FromAddressCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn FromNameCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn SubjCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn DateCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn AttachCol;
-        private System.Windows.Forms.ContextMenuStrip con_menu;
-        private System.Windows.Forms.ToolStripMenuItem прочитатьToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem ответитьToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem посмотретьВложенияToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem удалитьToolStripMenuItem;
     }
 }
