@@ -120,6 +120,10 @@ namespace KursCrypt
                     {
                         try
                         {
+                            if (CryptItem.Checked)
+                            {
+                                
+                            }
                             MailMessage message = new MailMessage(new MailAddress(email_ref.Address, email_ref.Name), new MailAddress(recipient))
                             {
                                 Subject = tb_subject.Text,
@@ -159,6 +163,16 @@ namespace KursCrypt
                     MessageBox.Show(ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private void CryptItem_Click(object sender, EventArgs e)
+        {
+            CryptItem.Checked = !CryptItem.Checked;
+        }
+
+        private void SignItem_Click(object sender, EventArgs e)
+        {
+            SignItem.Checked = !SignItem.Checked;
         }
     }
 }
