@@ -123,28 +123,28 @@
             this.входящиеToolStripMenuItem.Checked = true;
             this.входящиеToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.входящиеToolStripMenuItem.Name = "входящиеToolStripMenuItem";
-            this.входящиеToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.входящиеToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.входящиеToolStripMenuItem.Text = "Входящие";
             this.входящиеToolStripMenuItem.Click += new System.EventHandler(this.входящиеToolStripMenuItem_Click);
             // 
             // отправленныеToolStripMenuItem
             // 
             this.отправленныеToolStripMenuItem.Name = "отправленныеToolStripMenuItem";
-            this.отправленныеToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.отправленныеToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.отправленныеToolStripMenuItem.Text = "Отправленные";
             this.отправленныеToolStripMenuItem.Click += new System.EventHandler(this.отправленныеToolStripMenuItem_Click);
             // 
             // спамToolStripMenuItem
             // 
             this.спамToolStripMenuItem.Name = "спамToolStripMenuItem";
-            this.спамToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.спамToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.спамToolStripMenuItem.Text = "Спам";
             this.спамToolStripMenuItem.Click += new System.EventHandler(this.спамToolStripMenuItem_Click);
             // 
             // корзинаToolStripMenuItem
             // 
             this.корзинаToolStripMenuItem.Name = "корзинаToolStripMenuItem";
-            this.корзинаToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.корзинаToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.корзинаToolStripMenuItem.Text = "Корзина";
             this.корзинаToolStripMenuItem.Click += new System.EventHandler(this.корзинаToolStripMenuItem_Click);
             // 
