@@ -110,6 +110,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "BoxesForm";
+            this.ShowIcon = false;
             this.Text = "Ящики";
             ((System.ComponentModel.ISupportInitialize)(this.grid_boxes)).EndInit();
             this.ResumeLayout(false);

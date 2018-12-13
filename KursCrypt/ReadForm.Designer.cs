@@ -134,6 +134,7 @@
             this.Controls.Add(this.tb_opentext);
             this.MinimumSize = new System.Drawing.Size(349, 514);
             this.Name = "ReadForm";
+            this.ShowIcon = false;
             this.Text = "Чтение сообщения";
             this.ResumeLayout(false);
             this.PerformLayout();

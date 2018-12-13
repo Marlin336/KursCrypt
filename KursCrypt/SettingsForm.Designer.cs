@@ -156,6 +156,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SettingsForm";
+            this.ShowIcon = false;
             this.Text = "Насторойки";
             ((System.ComponentModel.ISupportInitialize)(this.num_rcv_port)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.num_snd_port)).EndInit();

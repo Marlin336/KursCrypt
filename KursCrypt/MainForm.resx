@@ -138,10 +138,88 @@
   <metadata name="AttachCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
+  <metadata name="uidCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="FromAddressCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="FromNameCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="SubjCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="DateCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="AttachCol.UserAddedColumn" type="System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
   <metadata name="con_menu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>125, 17</value>
   </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>47</value>
   </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        AAABAAEAICAAAAAAGACoDAAAFgAAACgAAAAgAAAAQAAAAAEAGAAAAAAAAAwAAAAAAAAAAAAAAAAAAAAA
+        AAAEBAQEBAQEBAQEBAQEBAQEBAQEBAQAAAAAAADg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg
+        4ODg4ODg4ODg4OAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEBAQEBAQEBAQEBAQEBAQEBAQEBATg
+        4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4OAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAADg4OAEBAQEBASAgIDU/3/U/3/U/3/U/3/U/3/U/3/U/3/U/3/U/3/U/3/U/3/U
+        /3/U/3/U/3/U/3/U/3/U/3/U/3/U/3/U/3/U/3/U/3/U/3/U/3+AgIAAAAAAAADg4ODg4ODg4OAEBATU
+        /3+AgID/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PD/
+        +PD/+PD/+PD/+PCAgIDU/38AAADg4ODg4ODg4ODg4ODg4ODU/3//+PCAgID/+PD/+PD/+PD/+PD/+PD/
+        +PD/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PCAgID/+PDU/3/g4ODg4ODg
+        4ODg4ODg4ODg4ODU/3//+PD/+PCAgID/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PD/
+        +PD/+PD/+PD/+PD/+PD/+PCAgID/+PD/+PDU/3/g4ODg4ODg4ODg4ODg4ODg4ODU/3//+PD/+PD/+PCA
+        gID/+PD/+PD/+PD/+PD/+PD/+PBwcHBwcHBwcHBwcHD/+PD/+PD/+PD/+PD/+PD/+PCAgID/+PD/+PD/
+        +PDU/3/g4ODg4ODg4ODg4ODg4ODg4ODU/3//+PD/+PD/+PD/+PCAgID/+PD/+PD/+PCAgIBwcHD/+PD/
+        +PD/+PD/+PCAgICAgID/+PD/+PD/+PCAgID/+PD/+PD/+PD/+PDU/3/g4ODg4ODg4ODg4ODg4ODg4ODU
+        /3//+PD/+PD/+PD/+PD/+PCAgID/+PCAgID/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PCAgID/+PCAgID/
+        +PD/+PD/+PD/+PD/+PDU/3/g4ODg4ODg4ODg4ODg4ODg4ODU/3//+PD/+PD/+PD/+PD/+PD/+PCAgID/
+        +PD/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PCAgID/+PD/+PD/+PD/+PD/+PD/+PDU/3/g4ODg4ODg
+        4ODg4ODg4ODg4ODU/3//+PD/+PD/+PD/+PD/+PCAgID/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PD/
+        +PD/+PD/+PCAgID/+PD/+PD/+PD/+PD/+PDU/3/g4ODg4ODg4ODg4ODg4ODg4ODU/3//+PD/+PD/+PD/
+        +PCAgID/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PCAgID/+PD/+PD/+PD/
+        +PDU/3/g4ODg4ODg4ODg4ODg4ODg4ODU/3//+PD/+PD/+PCAgID/+PD/+PD/+PD/+PD/+PD/+PD/+PD/
+        +PD/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PCAgID/+PD/+PD/+PDU/3/g4ODg4ODg4ODg4ODg4ODg4ODU
+        /3//+PD/+PCAgID/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PAzmf8zmf//+PD/+PD/+PD/+PD/+PD/+PD/
+        +PD/+PCAgID/+PD/+PDU/3/g4ODg4ODg4ODg4ODg4ODg4ODU/3//+PCAgID/+PD/+PD/+PD/+PD/+PD/
+        +PD/+PD/+PD/+PAzmf8zmf//+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PCAgID/+PDU/3/g4ODg4ODg
+        4ODg4ODg4ODg4ODU/3+AgID/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PD/+PAzmf8zmf8zmf8zmf//+PD/
+        +PD/+PD/+PD/+PD/+PD/+PD/+PD/+PCAgIDU/3/g4ODg4ODg4ODg4ODg4ODg4OCAgIDU/3/U/3/U/3/U
+        /3/U/3/U/3/U/3/U/3/U/3/U/38zmf8zmf8zmf8zmf/U/3/U/3/U/3/U/3/U/3/U/3/U/3/U/3/U/3/U
+        /3+AgIDg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4OAEBATg4ODg4ODg4ODg4ODg4ODg4OAzZv8zmf8z
+        mf8zmf8zmf8zZv/g4ODg4ODg4ODg4ODg4ODg4OAAAADg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg
+        4ODg4OAEBAQEBATg4ODg4ODg4ODg4ODg4ODg4OAzmf8zmf8zmf8zmf8zmf8zmf/g4ODg4ODg4ODg4ODg
+        4ODg4OAAAAAAAADg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4OAEBAQEBAQEBATg4ODg4ODg4ODg4ODg
+        4ODg4OAzmf8zmf8zmf8zmf8zmf8zmf/g4ODg4ODg4ODg4ODg4ODg4OAAAAAAAAAAAADg4ODg4ODg4ODg
+        4ODg4ODg4ODg4OAEBAQEBAQEBAQEBATg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg
+        4ODg4ODg4ODg4ODg4ODg4OAAAAAAAAAAAAAAAADg4ODg4ODg4OAEBAQEBAQEBAQEBAQEBAQEBAQEBATg
+        4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4OAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADg4ODg4ODg4ODg4OARERERERHg4OAWFhbg
+        4ODg4OAWFhbg4OARERERERHg4ODg4ODg4ODg4OAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAADg4ODg4ODg4ODg4OBgYGBgYGAWFhbg4ODg4ODg4ODg4OAWFhZgYGBgYGDg4ODg4ODg
+        4ODg4OAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADg4ODg4ODg4ODg4ODg
+        4OAWFhbg4ODg4ODg4ODg4ODg4ODg4OAWFhbg4ODg4ODg4ODg4ODg4OAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADg4OAWFhbg4OAWFhbg4ODg4ODg4ODg4ODg4ODg4ODg4ODg
+        4OAWFhbg4OAWFhbg4OAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AADg4ODg4OAWFhbg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4OAWFhbg4ODg4OAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADg4ODg4ODg4ODg4ODg4ODg4ODg4ODg
+        4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4OAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAADg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4OAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADg4ODg
+        4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4OAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4ODg
+        4ODg4OAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAADg4ODg4ODg4ODg4ODg4ODg4ODg4ODg4OAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAD/gAH//gAAf2AAAAYgAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+        AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIAAEAGAABgDgAAcB4AAHj+AAB//gAAf/4AAH/+AAB//wAA//8A
+        AP//AAD//4AB///AA///4Af///AP/w==
+</value>
+  </data>
 </root>

@@ -48,6 +48,11 @@ namespace KursCrypt
                     {
                         if (client.Login(tb_mail.Text, tb_pass.Text))
                         {
+                            if (Main.emails.Exists(em => em.Address == tb_mail.Text))
+                            {
+                                MessageBox.Show("Ящик с таким адресом уже связан с клиентом", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                                return;
+                            }
                             Email profile = new Email(tb_mail.Text, tb_pass.Text, tb_name.ForeColor == SystemColors.InactiveCaption?"":tb_name.Text);
                             emails.Add(profile);
                             Boxes.AddToBoxlist(profile);
@@ -68,7 +73,7 @@ namespace KursCrypt
                     }
                     else
                     {
-                        MessageBox.Show("Ошибка соединения", null, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        throw new Exception("Не удалось подключиться к серверу. Проверьте соединение с сетью!");
                     }
                 }
                 catch (Exception ex)
