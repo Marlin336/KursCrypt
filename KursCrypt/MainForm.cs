@@ -90,9 +90,9 @@ namespace KursCrypt
         }
         private void написатьToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Write_message(null, null);
+            Write_message();
         }
-        private void Write_message(string to, string subj)
+        private void Write_message()
         {
             if (curr_id != -1)
             {
@@ -199,22 +199,94 @@ namespace KursCrypt
             switch (curr_fold)
             {
                 case Folder.inbox:
-                    read = new ReadForm(this, curr_client.Folders.Inbox, (long)grid_messlist.Rows[e.RowIndex].Cells[0].Value);
+                    read = new ReadForm(this, curr_client.Folders.Inbox, (long)grid_messlist.SelectedRows[0].Cells[0].Value);
                     break;
                 case Folder.sent:
-                    read = new ReadForm(this, curr_client.Folders.Sent, (long)grid_messlist.Rows[e.RowIndex].Cells[0].Value);
+                    read = new ReadForm(this, curr_client.Folders.Sent, (long)grid_messlist.SelectedRows[0].Cells[0].Value);
                     break;
                 case Folder.junk:
-                    read = new ReadForm(this, curr_client.Folders.Junk, (long)grid_messlist.Rows[e.RowIndex].Cells[0].Value);
+                    read = new ReadForm(this, curr_client.Folders.Junk, (long)grid_messlist.SelectedRows[0].Cells[0].Value);
                     break;
                 case Folder.trash:
-                    read = new ReadForm(this, curr_client.Folders.Trash, (long)grid_messlist.Rows[e.RowIndex].Cells[0].Value);
+                    read = new ReadForm(this, curr_client.Folders.Trash, (long)grid_messlist.SelectedRows[0].Cells[0].Value);
                     break;
                 default:
                     read = new ReadForm(this, curr_client.Folders.All, 0);
                     break;
             }
             read.Show();
+        }
+        private void grid_messlist_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                int currMousOverRow = grid_messlist.HitTest(e.X, e.Y).RowIndex;
+                if (currMousOverRow != -1)
+                {
+                    grid_messlist.Rows[currMousOverRow].Selected = true;
+                    con_menu.Items[2].Enabled = (int)grid_messlist.SelectedRows[0].Cells[5].Value > 0;
+                }
+                if (currMousOverRow != -1)
+                    con_menu.Show(grid_messlist, new Point(e.X, e.Y));
+            }
+        }
+        private void прочитатьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            grid_messlist_CellDoubleClick(null, null);
+        }
+        private void ответитьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            WriteForm write = new WriteForm(this, grid_messlist.SelectedRows[0].Cells[1].Value.ToString(), "Re:" + grid_messlist.SelectedRows[0].Cells[3].Value.ToString());
+            write.Show();
+        }
+        private void посмотретьВложенияToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ReadForm read;
+            switch (curr_fold)
+            {
+                case Folder.inbox:
+                    read = new ReadForm(this, curr_client.Folders.Inbox, (long)grid_messlist.SelectedRows[0].Cells[0].Value);
+                    break;
+                case Folder.sent:
+                    read = new ReadForm(this, curr_client.Folders.Sent, (long)grid_messlist.SelectedRows[0].Cells[0].Value);
+                    break;
+                case Folder.junk:
+                    read = new ReadForm(this, curr_client.Folders.Junk, (long)grid_messlist.SelectedRows[0].Cells[0].Value);
+                    break;
+                case Folder.trash:
+                    read = new ReadForm(this, curr_client.Folders.Trash, (long)grid_messlist.SelectedRows[0].Cells[0].Value);
+                    break;
+                default:
+                    read = new ReadForm(this, curr_client.Folders.All, 0);
+                    break;
+            }
+            InAttachForm attachForm = new InAttachForm(read.message);
+            attachForm.Show();
+        }
+        private void удалитьToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (MessageBox.Show("Удалить это сообщение?", "Подтверждение удаления", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            {
+                switch (curr_fold)
+                {
+                    case Folder.inbox:
+                        curr_client.Folders.Inbox.Messages.First(i => i.UId == (long)grid_messlist.SelectedRows[0].Cells[0].Value).Remove();
+                        grid_messlist.Rows.RemoveAt(grid_messlist.SelectedRows[0].Index);
+                        break;
+                    case Folder.sent:
+                        curr_client.Folders.Sent.Messages.First(i => i.UId == (long)grid_messlist.SelectedRows[0].Cells[0].Value).Remove();
+                        grid_messlist.Rows.RemoveAt(grid_messlist.SelectedRows[0].Index);
+                        break;
+                    case Folder.junk:
+                        curr_client.Folders.Junk.Messages.First(i => i.UId == (long)grid_messlist.SelectedRows[0].Cells[0].Value).Remove();
+                        grid_messlist.Rows.RemoveAt(grid_messlist.SelectedRows[0].Index);
+                        break;
+                    case Folder.trash:
+                        curr_client.Folders.Trash.Messages.First(i => i.UId == (long)grid_messlist.SelectedRows[0].Cells[0].Value).Remove();
+                        grid_messlist.Rows.RemoveAt(grid_messlist.SelectedRows[0].Index);
+                        break;
+                }
+            }
         }
     }
 }

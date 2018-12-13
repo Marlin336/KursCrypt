@@ -14,7 +14,7 @@ namespace KursCrypt
     {
         MainForm Main;
         long uid;
-        ImapX.Message message;
+        public ImapX.Message message { get; private set; }
 
         public ReadForm(MainForm main, ImapX.Folder folder, long uid)
         {

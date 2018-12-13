@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.stateIndicator = new System.Windows.Forms.ToolStripMenuItem();
             this.настройкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -45,8 +46,14 @@
             this.SubjCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DateCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AttachCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.con_menu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.прочитатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ответитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.посмотретьВложенияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.удалитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grid_messlist)).BeginInit();
+            this.con_menu.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -166,6 +173,7 @@
             this.grid_messlist.Size = new System.Drawing.Size(625, 492);
             this.grid_messlist.TabIndex = 0;
             this.grid_messlist.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grid_messlist_CellDoubleClick);
+            this.grid_messlist.MouseClick += new System.Windows.Forms.MouseEventHandler(this.grid_messlist_MouseClick);
             // 
             // uidCol
             // 
@@ -208,6 +216,44 @@
             this.AttachCol.Name = "AttachCol";
             this.AttachCol.ReadOnly = true;
             // 
+            // con_menu
+            // 
+            this.con_menu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.прочитатьToolStripMenuItem,
+            this.ответитьToolStripMenuItem,
+            this.посмотретьВложенияToolStripMenuItem,
+            this.удалитьToolStripMenuItem});
+            this.con_menu.Name = "con_menu";
+            this.con_menu.Size = new System.Drawing.Size(200, 114);
+            // 
+            // прочитатьToolStripMenuItem
+            // 
+            this.прочитатьToolStripMenuItem.Name = "прочитатьToolStripMenuItem";
+            this.прочитатьToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.прочитатьToolStripMenuItem.Text = "Прочитать";
+            this.прочитатьToolStripMenuItem.Click += new System.EventHandler(this.прочитатьToolStripMenuItem_Click);
+            // 
+            // ответитьToolStripMenuItem
+            // 
+            this.ответитьToolStripMenuItem.Name = "ответитьToolStripMenuItem";
+            this.ответитьToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.ответитьToolStripMenuItem.Text = "Ответить";
+            this.ответитьToolStripMenuItem.Click += new System.EventHandler(this.ответитьToolStripMenuItem_Click);
+            // 
+            // посмотретьВложенияToolStripMenuItem
+            // 
+            this.посмотретьВложенияToolStripMenuItem.Name = "посмотретьВложенияToolStripMenuItem";
+            this.посмотретьВложенияToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.посмотретьВложенияToolStripMenuItem.Text = "Посмотреть вложения";
+            this.посмотретьВложенияToolStripMenuItem.Click += new System.EventHandler(this.посмотретьВложенияToolStripMenuItem_Click);
+            // 
+            // удалитьToolStripMenuItem
+            // 
+            this.удалитьToolStripMenuItem.Name = "удалитьToolStripMenuItem";
+            this.удалитьToolStripMenuItem.Size = new System.Drawing.Size(199, 22);
+            this.удалитьToolStripMenuItem.Text = "Удалить";
+            this.удалитьToolStripMenuItem.Click += new System.EventHandler(this.удалитьToolStripMenuItem_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -223,6 +269,7 @@
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grid_messlist)).EndInit();
+            this.con_menu.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -246,5 +293,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn SubjCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn DateCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn AttachCol;
+        private System.Windows.Forms.ContextMenuStrip con_menu;
+        private System.Windows.Forms.ToolStripMenuItem прочитатьToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ответитьToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem посмотретьВложенияToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem удалитьToolStripMenuItem;
     }
 }
