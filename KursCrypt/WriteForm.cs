@@ -115,13 +115,12 @@ namespace KursCrypt
                 try
                 {
                     Email email_ref = Main.emails[Main.emails.FindIndex(em => em.id == Main.curr_id)];
-                    string name = email_ref.Name.Length == 0 ? email_ref.Address.Substring(0, email_ref.Address.IndexOf('@')) : email_ref.Name;
                     string[] toList = cb_to.Text.Split();
                     foreach (var recipient in toList)
                     {
                         try
                         {
-                            MailMessage message = new MailMessage(new MailAddress(email_ref.Address, name), new MailAddress(recipient))
+                            MailMessage message = new MailMessage(new MailAddress(email_ref.Address, email_ref.Name), new MailAddress(recipient))
                             {
                                 Subject = tb_subject.Text,
                                 Body = textBox.Text,

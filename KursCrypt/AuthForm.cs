@@ -53,7 +53,7 @@ namespace KursCrypt
                                 MessageBox.Show("Ящик с таким адресом уже связан с клиентом", "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                                 return;
                             }
-                            Email profile = new Email(tb_mail.Text, tb_pass.Text, tb_name.ForeColor == SystemColors.InactiveCaption?"":tb_name.Text);
+                            Email profile = new Email(tb_mail.Text, tb_pass.Text, tb_name.ForeColor == SystemColors.InactiveCaption?tb_mail.Text.Substring(0,tb_mail.Text.IndexOf('@')):tb_name.Text);
                             emails.Add(profile);
                             Boxes.AddToBoxlist(profile);
                             XDocument document = XDocument.Load("Profile.xml");
