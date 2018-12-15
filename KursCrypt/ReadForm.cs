@@ -21,18 +21,17 @@ namespace KursCrypt
             InitializeComponent();
             Main = main;
             this.uid = uid;
-            foreach (var item in folder.Messages)
-            {
-                if (item.UId == uid)
-                {
-                    message = item;
-                    break;
-                }
-            }
+            message = folder.Messages.First(msg => msg.UId == uid);
             tb_opentext.Text = message.Body.Text;
             tb_subject.Text = message.Subject;
             tb_from.Text = message.From.DisplayName + " <" + message.From.Address + ">";
             b_attach.Enabled = message.Attachments.Length > 0;
+            string cryptflags;
+            if(message.Headers.TryGetValue("crypt", out cryptflags))
+            {
+                byte cryptF = byte.Parse(cryptflags);
+                //Есть флаги-признаки шифрования
+            }
         }
         private void b_attach_Click(object sender, EventArgs e)
         {

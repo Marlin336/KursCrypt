@@ -10,8 +10,6 @@ namespace KursCrypt
 {
     public static class Encryption
     {
-        public static byte[] Key { get; private set; }
-        public static byte[] IV { get; private set; }
         public static byte[] EncDES(string intext, byte[] key, byte[] IV)
         {
             if (intext == null || intext.Length == 0)

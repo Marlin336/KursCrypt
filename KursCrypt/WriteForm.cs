@@ -11,19 +11,12 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net.Mime;
 using System.Security.Cryptography;
+using System.Collections.Specialized;
 
 namespace KursCrypt
 {
     public partial class WriteForm : Form
     {
-        public class CryptedMessage : MailMessage
-        {
-            public byte CryptFlags = 0;
-            public CryptedMessage(byte flags, MailAddress from, MailAddress to) : base(from, to)
-            {
-                CryptFlags = flags;
-            }
-        }
         public struct Attach_elem
         {
             static int count = 0;
@@ -137,17 +130,18 @@ namespace KursCrypt
                                     byte[] Key = desProvider.Key;
                                     byte[] IV = desProvider.IV;
                                     messageText = Convert.ToBase64String(Encryption.EncDES(messageText, Key, IV));
-                                    messageText = Encryption.DecDES(Convert.FromBase64CharArray(messageText.ToArray(), 0, messageText.Length), Key, IV);
+                                    //messageText = Encryption.DecDES(Convert.FromBase64CharArray(messageText.ToArray(), 0, messageText.Length), Key, IV);
                                 }     
                             }
-                            byte flags = 0;
+                            byte flags = 0; // 1м - подпись, 2м - шифрование
                             flags |= CryptItem.Checked ? (byte)2 : (byte)0;
                             flags |= SignItem.Checked ? (byte)1 : (byte)0;
-                            CryptedMessage message = new CryptedMessage(flags, new MailAddress(email_ref.Address, email_ref.Name), new MailAddress(recipient))
+                            MailMessage message = new MailMessage(new MailAddress(email_ref.Address, email_ref.Name), new MailAddress(recipient))
                             {
                                 Subject = tb_subject.Text,
                                 Body = messageText,
                             };
+                            message.Headers.Add("crypt", flags.ToString());
                             List<Attachment> attachments = new List<Attachment>();
                             foreach (var attach in attach_list)
                                 message.Attachments.Add(new Attachment(attach.path, MediaTypeNames.Application.Octet));

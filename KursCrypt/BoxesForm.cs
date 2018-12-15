@@ -65,6 +65,15 @@ namespace KursCrypt
                 Main.curr_client = client;
                 Main.curr_id = email_ref.id;
                 Main.stateIndicator.Text = email_ref.Address;
+                List<string> headersList = new List<string>();
+                headersList.Add("from");
+                headersList.Add("to");
+                headersList.Add("date");
+                headersList.Add("subject");
+                headersList.Add("cc");
+                headersList.Add("content-type");
+                headersList.Add("crypt");
+                Main.curr_client.Behavior.RequestedHeaders = headersList.ToArray();
                 Close();
                 Main.RedrawMailList();
             }
