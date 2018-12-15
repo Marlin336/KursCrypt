@@ -16,6 +16,14 @@ namespace KursCrypt
 {
     public partial class WriteForm : Form
     {
+        public class CryptedMessage : MailMessage
+        {
+            public byte CryptFlags = 0;
+            public CryptedMessage(byte flags, MailAddress from, MailAddress to) : base(from, to)
+            {
+                CryptFlags = flags;
+            }
+        }
         public struct Attach_elem
         {
             static int count = 0;
@@ -132,7 +140,10 @@ namespace KursCrypt
                                     messageText = Encryption.DecDES(Convert.FromBase64CharArray(messageText.ToArray(), 0, messageText.Length), Key, IV);
                                 }     
                             }
-                            MailMessage message = new MailMessage(new MailAddress(email_ref.Address, email_ref.Name), new MailAddress(recipient))
+                            byte flags = 0;
+                            flags |= CryptItem.Checked ? (byte)2 : (byte)0;
+                            flags |= SignItem.Checked ? (byte)1 : (byte)0;
+                            CryptedMessage message = new CryptedMessage(flags, new MailAddress(email_ref.Address, email_ref.Name), new MailAddress(recipient))
                             {
                                 Subject = tb_subject.Text,
                                 Body = messageText,
