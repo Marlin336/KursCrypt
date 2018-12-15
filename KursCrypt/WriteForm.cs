@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Net.Mime;
+using System.Security.Cryptography;
 
 namespace KursCrypt
 {
@@ -116,18 +117,25 @@ namespace KursCrypt
                 {
                     Email email_ref = Main.emails[Main.emails.FindIndex(em => em.id == Main.curr_id)];
                     string[] toList = cb_to.Text.Split();
+                    string messageText = textBox.Text;
                     foreach (var recipient in toList)
                     {
                         try
                         {
                             if (CryptItem.Checked)
                             {
-                                
+                                using (DESCryptoServiceProvider desProvider = new DESCryptoServiceProvider())
+                                {
+                                    byte[] Key = desProvider.Key;
+                                    byte[] IV = desProvider.IV;
+                                    messageText = Convert.ToBase64String(Encryption.EncDES(messageText, Key, IV));
+                                    messageText = Encryption.DecDES(Convert.FromBase64CharArray(messageText.ToArray(), 0, messageText.Length), Key, IV);
+                                }     
                             }
                             MailMessage message = new MailMessage(new MailAddress(email_ref.Address, email_ref.Name), new MailAddress(recipient))
                             {
                                 Subject = tb_subject.Text,
-                                Body = textBox.Text,
+                                Body = messageText,
                             };
                             List<Attachment> attachments = new List<Attachment>();
                             foreach (var attach in attach_list)

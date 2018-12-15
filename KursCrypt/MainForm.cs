@@ -42,7 +42,6 @@ namespace KursCrypt
         public MainForm()
         {
             InitializeComponent();
-            Encryption.SetKey("nik.poludennyy", "Nik_i_ta98");
             if(!File.Exists("Settings.xml"))
             { 
                 MessageBox.Show("Файл настроек не найден. Настройки будут сброшены до дефолтных", "Файл настроек не найден", MessageBoxButtons.OK, MessageBoxIcon.Error);

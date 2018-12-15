@@ -23,9 +23,7 @@ namespace KursCrypt
             byte[] outtext;
             using (DESCryptoServiceProvider des = new DESCryptoServiceProvider())
             {
-                des.Key = key;
-                des.IV = IV;
-                ICryptoTransform encryptor = des.CreateEncryptor(des.Key, des.IV);
+                ICryptoTransform encryptor = des.CreateEncryptor(key, IV);
                 using (MemoryStream mem = new MemoryStream())
                 {
                     using (CryptoStream crypto = new CryptoStream(mem, encryptor, CryptoStreamMode.Write))
@@ -102,11 +100,6 @@ namespace KursCrypt
                 Console.WriteLine(e.ToString());
                 return null;
             }
-        }
-        public static void SetKey(string from, string to)
-        {
-            string init = from + to;
-            SHA1 hashAlg = SHA1.Create();
         }
     }
 }
