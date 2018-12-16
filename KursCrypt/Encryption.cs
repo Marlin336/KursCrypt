@@ -99,5 +99,23 @@ namespace KursCrypt
                 return null;
             }
         }
+        public static byte[] SignDSA(byte[] data, string key)
+        {
+            using (DSACryptoServiceProvider dsa = new DSACryptoServiceProvider())
+            {
+                dsa.FromXmlString(key);
+                return dsa.SignData(data, HashAlgorithmName.SHA1);
+            }
+        }
+        public static bool VerifySign(byte[] data, string key, byte[] sign)
+        {
+            using (DSACryptoServiceProvider dsa = new DSACryptoServiceProvider())
+            {
+                dsa.FromXmlString(key);
+                SHA1 hashAlg = SHA1.Create();
+                byte[] hash = hashAlg.ComputeHash(data);
+                return dsa.VerifySignature(hash, sign);
+            }
+        }
     }
 }
