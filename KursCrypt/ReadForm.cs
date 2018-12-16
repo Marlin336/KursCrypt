@@ -27,10 +27,16 @@ namespace KursCrypt
             tb_from.Text = message.From.DisplayName + " <" + message.From.Address + ">";
             b_attach.Enabled = message.Attachments.Length > 0;
             string cryptflags;
-            if(message.Headers.TryGetValue("crypt", out cryptflags))
+            if(message.Headers.TryGetValue("crypt", out cryptflags)) //Есть флаги-признаки шифрования
             {
                 byte cryptF = byte.Parse(cryptflags);
-                //Есть флаги-признаки шифрования
+                if ((cryptF & 2) != 0)//Флаг шифрования
+                {
+                    byte[] Key = Convert.FromBase64String(message.Headers["dsakey"]);
+                    byte[] IV = Convert.FromBase64String(message.Headers["dsaiv"]);
+                    var a = message.Body.Text.Substring(0, message.Body.Text.IndexOf("\r")) + "=";
+                    tb_opentext.Text = Encryption.DecDES(Convert.FromBase64String(a), Key, IV);
+                }          
             }
         }
         private void b_attach_Click(object sender, EventArgs e)

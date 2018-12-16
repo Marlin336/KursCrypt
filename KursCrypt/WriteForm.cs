@@ -36,6 +36,8 @@ namespace KursCrypt
         MainForm Main;
         List<Attach_elem> attach_list = new List<Attach_elem>();
         List<string> recs = new List<string>();
+        byte[] Key = new byte[8];
+        byte[] IV = new byte[8];
 
         public WriteForm(MainForm main)
         {
@@ -127,8 +129,8 @@ namespace KursCrypt
                             {
                                 using (DESCryptoServiceProvider desProvider = new DESCryptoServiceProvider())
                                 {
-                                    byte[] Key = desProvider.Key;
-                                    byte[] IV = desProvider.IV;
+                                    Key = desProvider.Key;
+                                    IV = desProvider.IV;
                                     messageText = Convert.ToBase64String(Encryption.EncDES(messageText, Key, IV));
                                     //messageText = Encryption.DecDES(Convert.FromBase64CharArray(messageText.ToArray(), 0, messageText.Length), Key, IV);
                                 }     
@@ -139,9 +141,11 @@ namespace KursCrypt
                             MailMessage message = new MailMessage(new MailAddress(email_ref.Address, email_ref.Name), new MailAddress(recipient))
                             {
                                 Subject = tb_subject.Text,
-                                Body = messageText,
+                                Body = messageText,//J0T5ovVsBOodjOO110n1h3E9GcFy2t6hPoFCcpUDQxE=
                             };
                             message.Headers.Add("crypt", flags.ToString());
+                            message.Headers.Add("dsakey", Convert.ToBase64String(Key));
+                            message.Headers.Add("dsaiv", Convert.ToBase64String(IV));
                             List<Attachment> attachments = new List<Attachment>();
                             foreach (var attach in attach_list)
                                 message.Attachments.Add(new Attachment(attach.path, MediaTypeNames.Application.Octet));
@@ -156,6 +160,7 @@ namespace KursCrypt
                                 Credentials = new System.Net.NetworkCredential(email_ref.Address, email_ref.Password)
                             };
                             smtp.Send(message);
+                            Main.curr_client.Folders.Sent.AppendMessage(message);
                         }
                         catch (SmtpFailedRecipientException exRecip)
                         {
