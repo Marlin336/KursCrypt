@@ -31,13 +31,15 @@ namespace KursCrypt
                 extension = file.Extension;
                 size = Math.Round((double)file.Length / 1024, 2);//KB
             }
-        } 
+        }
 
         MainForm Main;
         List<Attach_elem> attach_list = new List<Attach_elem>();
         List<string> recs = new List<string>();
-        byte[] Key;
-        byte[] IV = new byte[8];
+        byte[] KeyDES;
+        byte[] IVDES = new byte[8];
+        string DSAParam_public;
+        byte[] Signature;
 
         public WriteForm(MainForm main)
         {
@@ -129,15 +131,23 @@ namespace KursCrypt
                             {
                                 using (DESCryptoServiceProvider desProvider = new DESCryptoServiceProvider())
                                 {
-                                    Key = desProvider.Key;
-                                    IV = desProvider.IV;
-                                    messageText = Convert.ToBase64String(Encryption.EncDES(messageText, Key, IV));
-                                    using (RSACryptoServiceProvider rsaProvider = new RSACryptoServiceProvider())
+                                    KeyDES = desProvider.Key;
+                                    IVDES = desProvider.IV;
+                                    messageText = Convert.ToBase64String(Encryption.EncDES(messageText, KeyDES, IVDES));
+                                    /*using (RSACryptoServiceProvider rsaProvider = new RSACryptoServiceProvider())
                                     {
                                         rsaProvider.ToXmlString(false);
 
-                                    }
+                                    }*/
                                 }     
+                            }
+                            if (SignItem.Checked)
+                            {
+                                using (DSACryptoServiceProvider dsa = new DSACryptoServiceProvider())
+                                {
+                                    DSAParam_public = dsa.ToXmlString(false);
+                                    Signature = Encryption.SignDSA(Encoding.Default.GetBytes(messageText), dsa.ToXmlString(true));
+                                }
                             }
                             byte flags = 0; // 1м - подпись, 2м - шифрование
                             flags |= CryptItem.Checked ? (byte)2 : (byte)0;
@@ -150,13 +160,13 @@ namespace KursCrypt
                             message.Headers.Add("crypt", flags.ToString());
                             if ((flags & 2) != 0)
                             {
-                                message.Headers.Add("dsakey", Convert.ToBase64String(Key));
-                                message.Headers.Add("dsaiv", Convert.ToBase64String(IV));
+                                message.Headers.Add("deskey", Convert.ToBase64String(KeyDES));
+                                message.Headers.Add("desiv", Convert.ToBase64String(IVDES));
                             }
                             if ((flags & 1) != 0)
                             {
-                                //Флаг подписи
-                                
+                                message.Headers.Add("dsakey", DSAParam_public);
+                                message.Headers.Add("dsasign", Convert.ToBase64String(Signature));
                             }
                             List<Attachment> attachments = new List<Attachment>();
                             foreach (var attach in attach_list)

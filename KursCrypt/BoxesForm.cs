@@ -67,8 +67,10 @@ namespace KursCrypt
                 Main.stateIndicator.Text = email_ref.Address;
                 List<string> headersList = Main.curr_client.Behavior.RequestedHeaders.ToList();
                 headersList.Add("crypt");
-                headersList.Add("dsaKey");
-                headersList.Add("dsaIV");
+                headersList.Add("desKey");
+                headersList.Add("desIV");
+                headersList.Add("dsasign");
+                headersList.Add("dsakey");
                 Main.curr_client.Behavior.RequestedHeaders = headersList.ToArray();
                 Close();
                 Main.RedrawMailList();
