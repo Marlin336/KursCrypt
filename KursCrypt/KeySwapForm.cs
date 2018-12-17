@@ -43,47 +43,33 @@ namespace KursCrypt
                 Subject = "ЗАПРОС ОБМЕНА КЛЮЧАМИ"
             };
             requestMail.Headers.Add("keyswap", "0");
-            
-            /*using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
+            using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
             {
-                XDocument doc = XDocument.Load("KeyHolder.xml");
-                XElement userNode = doc.Element("body").Element("user");
-                XElement recieverNode;
-                while (userNode != null)
+                requestMail.Headers.Add("keypub", rsa.ToXmlString(false));
+                SmtpClient smtp = new SmtpClient
                 {
-                    if (userNode.Attribute("address").Value == email_ref.Address)
-                    {
-                        if (userNode.Element("recieverList").HasElements)
-                        {
-                            recieverNode = userNode.Element("recieverList");
-                        }
-                        else
-                        {
-
-                        }
-                    }
-                    userNode = (XElement)userNode.NextNode;
+                    Port = Main.snd_port,
+                    Host = "smtp." + Main.host,
+                    EnableSsl = true,
+                    Timeout = 10000,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Credentials = new System.Net.NetworkCredential(email_ref.Address, email_ref.Password)
+                };
+                try
+                {
+                    smtp.Send(requestMail);
                 }
-            }*/
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Не удалось отправить запрос\n" + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    throw;
+                }
+                Main.KeyHolders.AddReciever(email_ref.Address, tb_email.Text);
+                Main.KeyHolders.SetKey(email_ref.Address, tb_email.Text, rsa.ToXmlString(true), true);
+                Main.SerializeKeyFile();
+                Close();
+            }
         }
     }
 }
-
-/*
- 
-
-XDocument document = XDocument.Load("Profile.xml");
-XElement node = document.Element("body").Element("user");
-while (node != null)
-{
-    if (node.Element("ads").Value == email_ref.Address)
-    {
-        node.Remove();
-        document.Save("Profile.xml");
-        break;
-    }
-    node = (XElement)node.NextNode;
-            }
-            
-     
-     */

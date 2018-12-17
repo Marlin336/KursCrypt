@@ -42,7 +42,7 @@ namespace KursCrypt
         public void AddReciever(string user, string reciever)
         {
             holder_elem elem = holder.Find(us => us.user_address == user);
-            if (!elem.recievers.Exists(el=>el.reciever_address == reciever))
+            if (!elem.recievers.Exists(el => el.reciever_address == reciever))
             {
                 elem.recievers.Add(new recieverKey(reciever));
             }
@@ -58,6 +58,19 @@ namespace KursCrypt
             else
             {
                 rec.keys[1] = key;
+            }
+        }
+        public string GetKey(string user, string reciever, bool isPrivate)
+        {
+            try
+            {
+                holder_elem elem = holder.Find(us => us.user_address == user);
+                recieverKey reciev = elem.recievers.Find(rec => rec.reciever_address == reciever);
+                return isPrivate ? reciev.keys[0] : reciev.keys[1];
+            }
+            catch (Exception)
+            {
+                return null;
             }
         }
     }

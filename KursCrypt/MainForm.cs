@@ -85,7 +85,7 @@ namespace KursCrypt
                     serializer.Serialize(fs, new KeyHolder());
                 }
             }     
-            using (FileStream fs = new FileStream("KeyHolder.xml", FileMode.OpenOrCreate))
+            using (FileStream fs = new FileStream("KeyHolder.xml", FileMode.Open))
             {
                 KeyHolders = (KeyHolder)serializer.Deserialize(fs);
             }
@@ -228,7 +228,11 @@ namespace KursCrypt
                     read = new ReadForm(this, curr_client.Folders.All, 0);
                     break;
             }
-            read.Show();
+            try
+            {
+                read.Show();
+            }
+            catch (Exception) { }
         }
         private void grid_messlist_MouseClick(object sender, MouseEventArgs e)
         {
@@ -313,6 +317,27 @@ namespace KursCrypt
             else
             {
                 MessageBox.Show("Для обмена ключами нужно авторизоваться", "Необходима авторизация", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+            }
+        }
+
+        public void SerializeKeyFile()
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(KeyHolder));
+            if (File.Exists("KeyHolder.xml"))
+            {
+                using (FileStream fs = new FileStream("KeyHolder.xml", FileMode.Create))
+                {
+                    serializer.Serialize(fs, KeyHolders);
+                }
+            }
+        }
+
+        public KeyHolder DeserilizeKeyFile()
+        {
+            XmlSerializer serializer = new XmlSerializer(typeof(KeyHolder));
+            using (FileStream fs = new FileStream("KeyHolder.xml", FileMode.Open))
+            {
+                return (KeyHolder)serializer.Deserialize(fs);
             }
         }
     }

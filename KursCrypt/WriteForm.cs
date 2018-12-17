@@ -134,11 +134,20 @@ namespace KursCrypt
                                     KeyDES = desProvider.Key;
                                     IVDES = desProvider.IV;
                                     messageText = Convert.ToBase64String(Encryption.EncDES(messageText, KeyDES, IVDES));
-                                    /*using (RSACryptoServiceProvider rsaProvider = new RSACryptoServiceProvider())
+                                    using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
                                     {
-                                        rsaProvider.ToXmlString(false);
-
-                                    }*/
+                                        string buff = Main.KeyHolders.GetKey(email_ref.Address, recipient, false);
+                                        if (buff != null)
+                                        {
+                                            rsa.FromXmlString(Main.KeyHolders.GetKey(email_ref.Address, recipient, false));
+                                            KeyDES = Encryption.EncRSA(KeyDES, rsa.ExportParameters(false), true);
+                                        }
+                                        else
+                                        {
+                                            MessageBox.Show("Нельзя отправить шифрованное сообщение пользователю с которым не был произведён обмен ключами", "Внимание!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                                            return;
+                                        }
+                                    }
                                 }     
                             }
                             if (SignItem.Checked)

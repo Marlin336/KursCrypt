@@ -72,6 +72,7 @@ namespace KursCrypt
                 headersList.Add("dsasign");
                 headersList.Add("dsakey");
                 headersList.Add("keyswap");
+                headersList.Add("keypub");
                 Main.curr_client.Behavior.RequestedHeaders = headersList.ToArray();
                 Close();
                 Main.RedrawMailList();

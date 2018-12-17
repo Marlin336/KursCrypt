@@ -65,6 +65,8 @@ namespace KursCrypt
                                     )
                                 );
                             document.Save("Profile.xml");
+                            Main.KeyHolders.AddUser(tb_mail.Text);
+                            Main.SerializeKeyFile();
                         }
                         else
                         {
