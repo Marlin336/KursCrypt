@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Net.Mail;
 using System.IO;
 using System.Xml.Linq;
+using System.Xml.Serialization;
 
 namespace KursCrypt
 {
@@ -38,6 +39,7 @@ namespace KursCrypt
         public int curr_id { get; set; } = -1;
         public ImapClient curr_client = null;
         public Folder curr_fold { get; private set; } = Folder.inbox;
+        public KeyHolder KeyHolders;
 
         public MainForm()
         {
@@ -74,6 +76,18 @@ namespace KursCrypt
                         node = (XElement)node.NextNode;
                     } 
                 }
+            }
+            XmlSerializer serializer = new XmlSerializer(typeof(KeyHolder));
+            if (!File.Exists("KeyHolder.xml"))
+            {
+                using (FileStream fs = new FileStream("KeyHolder.xml", FileMode.Create))
+                {
+                    serializer.Serialize(fs, new KeyHolder());
+                }
+            }     
+            using (FileStream fs = new FileStream("KeyHolder.xml", FileMode.OpenOrCreate))
+            {
+                KeyHolders = (KeyHolder)serializer.Deserialize(fs);
             }
         }
         public void GetSettings()
@@ -286,6 +300,19 @@ namespace KursCrypt
                         grid_messlist.Rows.RemoveAt(grid_messlist.SelectedRows[0].Index);
                         break;
                 }
+            }
+        }
+
+        private void обменКлючамиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (curr_id != -1)
+            {
+                KeySwapForm swapForm = new KeySwapForm(this);
+                swapForm.Show();
+            }
+            else
+            {
+                MessageBox.Show("Для обмена ключами нужно авторизоваться", "Необходима авторизация", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
         }
     }

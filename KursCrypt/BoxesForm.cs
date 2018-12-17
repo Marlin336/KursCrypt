@@ -71,6 +71,7 @@ namespace KursCrypt
                 headersList.Add("desIV");
                 headersList.Add("dsasign");
                 headersList.Add("dsakey");
+                headersList.Add("keyswap");
                 Main.curr_client.Behavior.RequestedHeaders = headersList.ToArray();
                 Close();
                 Main.RedrawMailList();

@@ -41,17 +41,18 @@
             this.спамToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.корзинаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.grid_messlist = new System.Windows.Forms.DataGridView();
+            this.con_menu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.прочитатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ответитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.посмотретьВложенияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.удалитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.обменКлючамиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.uidCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FromAddressCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FromNameCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SubjCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DateCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.AttachCol = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.con_menu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.прочитатьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ответитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.посмотретьВложенияToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.удалитьToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.grid_messlist)).BeginInit();
             this.con_menu.SuspendLayout();
@@ -64,10 +65,11 @@
             this.настройкиToolStripMenuItem,
             this.почтовыеЯщикиToolStripMenuItem,
             this.написатьToolStripMenuItem,
-            this.папкиToolStripMenuItem});
+            this.папкиToolStripMenuItem,
+            this.обменКлючамиToolStripMenuItem});
             this.menuStrip.Location = new System.Drawing.Point(0, 0);
             this.menuStrip.Name = "menuStrip";
-            this.menuStrip.Size = new System.Drawing.Size(649, 25);
+            this.menuStrip.Size = new System.Drawing.Size(877, 25);
             this.menuStrip.TabIndex = 2;
             this.menuStrip.Text = "menuStrip";
             // 
@@ -123,28 +125,28 @@
             this.входящиеToolStripMenuItem.Checked = true;
             this.входящиеToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.входящиеToolStripMenuItem.Name = "входящиеToolStripMenuItem";
-            this.входящиеToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.входящиеToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.входящиеToolStripMenuItem.Text = "Входящие";
             this.входящиеToolStripMenuItem.Click += new System.EventHandler(this.входящиеToolStripMenuItem_Click);
             // 
             // отправленныеToolStripMenuItem
             // 
             this.отправленныеToolStripMenuItem.Name = "отправленныеToolStripMenuItem";
-            this.отправленныеToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.отправленныеToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.отправленныеToolStripMenuItem.Text = "Отправленные";
             this.отправленныеToolStripMenuItem.Click += new System.EventHandler(this.отправленныеToolStripMenuItem_Click);
             // 
             // спамToolStripMenuItem
             // 
             this.спамToolStripMenuItem.Name = "спамToolStripMenuItem";
-            this.спамToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.спамToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.спамToolStripMenuItem.Text = "Спам";
             this.спамToolStripMenuItem.Click += new System.EventHandler(this.спамToolStripMenuItem_Click);
             // 
             // корзинаToolStripMenuItem
             // 
             this.корзинаToolStripMenuItem.Name = "корзинаToolStripMenuItem";
-            this.корзинаToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.корзинаToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.корзинаToolStripMenuItem.Text = "Корзина";
             this.корзинаToolStripMenuItem.Click += new System.EventHandler(this.корзинаToolStripMenuItem_Click);
             // 
@@ -171,51 +173,10 @@
             this.grid_messlist.RowTemplate.ReadOnly = true;
             this.grid_messlist.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.grid_messlist.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.grid_messlist.Size = new System.Drawing.Size(625, 492);
+            this.grid_messlist.Size = new System.Drawing.Size(853, 492);
             this.grid_messlist.TabIndex = 0;
             this.grid_messlist.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.grid_messlist_CellDoubleClick);
             this.grid_messlist.MouseClick += new System.Windows.Forms.MouseEventHandler(this.grid_messlist_MouseClick);
-            // 
-            // uidCol
-            // 
-            this.uidCol.HeaderText = "UID";
-            this.uidCol.Name = "uidCol";
-            this.uidCol.ReadOnly = true;
-            this.uidCol.Visible = false;
-            // 
-            // FromAddressCol
-            // 
-            this.FromAddressCol.HeaderText = "Адрес отправителя";
-            this.FromAddressCol.Name = "FromAddressCol";
-            this.FromAddressCol.ReadOnly = true;
-            this.FromAddressCol.Width = 150;
-            // 
-            // FromNameCol
-            // 
-            this.FromNameCol.HeaderText = "Псевдоним отправителя";
-            this.FromNameCol.Name = "FromNameCol";
-            this.FromNameCol.ReadOnly = true;
-            this.FromNameCol.Width = 110;
-            // 
-            // SubjCol
-            // 
-            this.SubjCol.HeaderText = "Тема сообщения";
-            this.SubjCol.Name = "SubjCol";
-            this.SubjCol.ReadOnly = true;
-            this.SubjCol.Width = 150;
-            // 
-            // DateCol
-            // 
-            this.DateCol.HeaderText = "Дата/Время";
-            this.DateCol.Name = "DateCol";
-            this.DateCol.ReadOnly = true;
-            this.DateCol.Width = 110;
-            // 
-            // AttachCol
-            // 
-            this.AttachCol.HeaderText = "Прикрепления";
-            this.AttachCol.Name = "AttachCol";
-            this.AttachCol.ReadOnly = true;
             // 
             // con_menu
             // 
@@ -255,17 +216,66 @@
             this.удалитьToolStripMenuItem.Text = "Удалить";
             this.удалитьToolStripMenuItem.Click += new System.EventHandler(this.удалитьToolStripMenuItem_Click);
             // 
+            // обменКлючамиToolStripMenuItem
+            // 
+            this.обменКлючамиToolStripMenuItem.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+            this.обменКлючамиToolStripMenuItem.Name = "обменКлючамиToolStripMenuItem";
+            this.обменКлючамиToolStripMenuItem.Size = new System.Drawing.Size(112, 21);
+            this.обменКлючамиToolStripMenuItem.Text = "Обмен ключами";
+            this.обменКлючамиToolStripMenuItem.Click += new System.EventHandler(this.обменКлючамиToolStripMenuItem_Click);
+            // 
+            // uidCol
+            // 
+            this.uidCol.HeaderText = "UID";
+            this.uidCol.Name = "uidCol";
+            this.uidCol.ReadOnly = true;
+            this.uidCol.Visible = false;
+            // 
+            // FromAddressCol
+            // 
+            this.FromAddressCol.HeaderText = "Адрес отправителя";
+            this.FromAddressCol.Name = "FromAddressCol";
+            this.FromAddressCol.ReadOnly = true;
+            this.FromAddressCol.Width = 200;
+            // 
+            // FromNameCol
+            // 
+            this.FromNameCol.HeaderText = "Псевдоним отправителя";
+            this.FromNameCol.Name = "FromNameCol";
+            this.FromNameCol.ReadOnly = true;
+            this.FromNameCol.Width = 200;
+            // 
+            // SubjCol
+            // 
+            this.SubjCol.HeaderText = "Тема сообщения";
+            this.SubjCol.Name = "SubjCol";
+            this.SubjCol.ReadOnly = true;
+            this.SubjCol.Width = 230;
+            // 
+            // DateCol
+            // 
+            this.DateCol.HeaderText = "Дата/Время";
+            this.DateCol.Name = "DateCol";
+            this.DateCol.ReadOnly = true;
+            this.DateCol.Width = 120;
+            // 
+            // AttachCol
+            // 
+            this.AttachCol.HeaderText = "Прикрепления";
+            this.AttachCol.Name = "AttachCol";
+            this.AttachCol.ReadOnly = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(649, 532);
+            this.ClientSize = new System.Drawing.Size(877, 532);
             this.Controls.Add(this.grid_messlist);
             this.Controls.Add(this.menuStrip);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(665, 560);
+            this.MinimumSize = new System.Drawing.Size(893, 571);
             this.Name = "MainForm";
             this.Text = "Angry mail";
             this.menuStrip.ResumeLayout(false);
@@ -294,6 +304,7 @@
         private System.Windows.Forms.ToolStripMenuItem ответитьToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem посмотретьВложенияToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem удалитьToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem обменКлючамиToolStripMenuItem;
         private System.Windows.Forms.DataGridViewTextBoxColumn uidCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn FromAddressCol;
         private System.Windows.Forms.DataGridViewTextBoxColumn FromNameCol;

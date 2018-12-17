@@ -71,6 +71,13 @@
     <Compile Include="InAttachForm.Designer.cs">
       <DependentUpon>InAttachForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="KeyHolder.cs" />
+    <Compile Include="KeySwapForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="KeySwapForm.Designer.cs">
+      <DependentUpon>KeySwapForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -105,6 +112,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="InAttachForm.resx">
       <DependentUpon>InAttachForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="KeySwapForm.resx">
+      <DependentUpon>KeySwapForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
