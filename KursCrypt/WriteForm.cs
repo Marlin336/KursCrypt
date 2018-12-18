@@ -145,7 +145,7 @@ namespace KursCrypt
                                         else
                                         {
                                             MessageBox.Show("Нельзя отправить шифрованное сообщение пользователю с которым не был произведён обмен ключами", "Внимание!", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                                            return;
+                                            continue;
                                         }
                                     }
                                 }     
