@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using System.Net.Mime;
 using System.Security.Cryptography;
 using System.Collections.Specialized;
+using MailKit;
 
 namespace KursCrypt
 {
@@ -45,15 +46,15 @@ namespace KursCrypt
         {
             Main = main;
             InitializeComponent();
-            Main.curr_client.GetFolder(MailKit.SpecialFolder.Sent);
+            Main.curr_client.GetFolder(SpecialFolder.Sent);
             List<string> hotRecips = new List<string>();
-            Main.curr_client.GetFolder(MailKit.SpecialFolder.Sent).Open(MailKit.FolderAccess.ReadOnly);
-            var messages = Main.curr_client.GetFolder(MailKit.SpecialFolder.Sent);
+            Main.curr_client.GetFolder(SpecialFolder.Sent).Open(FolderAccess.ReadOnly);
+            var messages = Main.curr_client.GetFolder(SpecialFolder.Sent).Fetch(0, Main.msg_cntr - 1, MessageSummaryItems.Full);
             for (int i = 0, count = 0; i < messages.Count() && count < 5; i++)
             {
-                if (!hotRecips.Exists(str => str == messages.ElementAt(i).To.Mailboxes.First().Address))
+                if (!hotRecips.Exists(str => str == messages.ElementAt(i).Envelope.To.Mailboxes.First().Address))
                 {
-                    hotRecips.Add(messages.ElementAt(i).To.Mailboxes.First().Address);
+                    hotRecips.Add(messages.ElementAt(i).Envelope.To.Mailboxes.First().Address);
                     count++;
                 }    
             }
