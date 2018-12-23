@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Security.Cryptography;
 using System.Net.Mail;
+using MimeKit;
 
 namespace KursCrypt
 {
@@ -17,7 +18,7 @@ namespace KursCrypt
         MainForm Main;
         string id;
         Email email_ref;
-        public MimeKit.MimeMessage message { get; private set; }
+        public MimeMessage message { get; private set; }
 
         public ReadForm(MainForm main, Folder folder, string id)
         {
@@ -25,26 +26,33 @@ namespace KursCrypt
             Main = main;
             email_ref = main.emails.Find(em => em.id == main.curr_id);
             this.id = id;
-            switch (folder)
+            try
             {
-                case Folder.inbox:
-                    Main.curr_client.Inbox.Open(MailKit.FolderAccess.ReadOnly);
-                    message = Main.curr_client.Inbox.First(msg => msg.MessageId == id);
-                    break;
-                case Folder.sent:
-                    Main.curr_client.GetFolder(MailKit.SpecialFolder.Sent).Open(MailKit.FolderAccess.ReadOnly);
-                    message = Main.curr_client.GetFolder(MailKit.SpecialFolder.Sent).First(msg => msg.MessageId == id);
-                    break;
-                case Folder.junk:
-                    Main.curr_client.GetFolder(MailKit.SpecialFolder.Junk).Open(MailKit.FolderAccess.ReadOnly);
-                    message = Main.curr_client.GetFolder(MailKit.SpecialFolder.Junk).First(msg => msg.MessageId == id);
-                    break;
-                case Folder.trash:
-                    Main.curr_client.GetFolder(MailKit.SpecialFolder.Trash).Open(MailKit.FolderAccess.ReadOnly);
-                    message = Main.curr_client.GetFolder(MailKit.SpecialFolder.Trash).First(msg => msg.MessageId == id);
-                    break;
-                default:
-                    break;
+                switch (folder)
+                {
+                    case Folder.inbox:
+                        Main.curr_client.Inbox.Open(MailKit.FolderAccess.ReadOnly);
+                        message = Main.curr_client.Inbox.First(msg => msg.MessageId == id);
+                        break;
+                    case Folder.sent:
+                        Main.curr_client.GetFolder(MailKit.SpecialFolder.Sent).Open(MailKit.FolderAccess.ReadOnly);
+                        message = Main.curr_client.GetFolder(MailKit.SpecialFolder.Sent).First(msg => msg.MessageId == id);
+                        break;
+                    case Folder.junk:
+                        Main.curr_client.GetFolder(MailKit.SpecialFolder.Junk).Open(MailKit.FolderAccess.ReadOnly);
+                        message = Main.curr_client.GetFolder(MailKit.SpecialFolder.Junk).First(msg => msg.MessageId == id);
+                        break;
+                    case Folder.trash:
+                        Main.curr_client.GetFolder(MailKit.SpecialFolder.Trash).Open(MailKit.FolderAccess.ReadOnly);
+                        message = Main.curr_client.GetFolder(MailKit.SpecialFolder.Trash).First(msg => msg.MessageId == id);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            catch (Exception)
+            {
+                message = MimeMessage.Load("Saved/" + email_ref.Address + "/" + folder.ToString() + "/" + id);
             }
             tb_opentext.Text = message.TextBody;
             tb_subject.Text = message.Subject;

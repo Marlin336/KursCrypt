@@ -60,7 +60,11 @@ namespace KursCrypt
             Email email_ref = Main.emails[Main.emails.FindIndex(em => em.id == (int)grid_boxes.SelectedRows[0].Cells[0].Value)];
             Main.host = email_ref.Address.Substring(email_ref.Address.IndexOf('@') + 1);
             ImapClient client = new ImapClient();
-            client.Connect("imap." + Main.host, Main.rcv_port, true);
+            try
+            {
+                client.Connect("imap." + Main.host, Main.rcv_port, true);
+            }
+            catch (Exception) { }
             if (client.IsConnected)
             {
                 client.Authenticate(email_ref.Address, email_ref.Password);

@@ -161,42 +161,108 @@ namespace KursCrypt
             {
                 Email email_ref = emails.Find(em => em.id == curr_id);
                 string dir = Directory.CreateDirectory("Saved/" + client_address + "/" + curr_fold.ToString()).FullName;
+                var fullnames = Directory.GetFiles(dir);
+                for (int i = 0; i < fullnames.Length; i++)
+                {
+                    fullnames[i] = fullnames[i].Substring(fullnames[i].LastIndexOf('\\') + 1);
+                }
                 switch (curr_fold)
                 {
                     case Folder.inbox:
                         grid_messlist.Rows.Clear();
-                        curr_client.Inbox.Open(FolderAccess.ReadOnly);
-                        foreach (var item in curr_client.Inbox)
+                        try
                         {
-                            object[] row = { item.MessageId, item.From.Mailboxes.First().Address, item.From[0].Name, item.Subject, item.Date.LocalDateTime, item.Attachments.Count() };
-                            grid_messlist.Rows.Add(row);
+                            curr_client.Inbox.Open(FolderAccess.ReadOnly);
+                            foreach (var item in curr_client.Inbox.Fetch(0, msg_cntr - 1, MessageSummaryItems.All | MessageSummaryItems.BodyStructure))
+                            {
+                                if (!fullnames.Contains(item.Envelope.MessageId))
+                                {
+                                    object[] row = { item.Envelope.MessageId, item.Envelope.From.Mailboxes.First().Address, item.Envelope.From[0].Name, item.Envelope.Subject, item.Date.LocalDateTime, item.Attachments.Count() };
+                                    grid_messlist.Rows.Add(row);
+                                    curr_client.Inbox.First(msg => msg.MessageId == item.Envelope.MessageId).WriteTo(FormatOptions.Default, dir + "/" + item.Envelope.MessageId);
+                                }
+                                else
+                                {
+                                    MimeMessage msg = MimeMessage.Load(dir + "/" + item.Envelope.MessageId);
+                                    object[] row = { msg.MessageId, msg.From.Mailboxes.First().Address, msg.From[0].Name, msg.Subject, msg.Date.LocalDateTime, msg.Attachments.Count() };
+                                    grid_messlist.Rows.Add(row);
+                                }
+                            }
+                        }
+                        catch(Exception)
+                        {
+                            foreach (var item in Directory.EnumerateFiles(dir))
+                            {
+                                MimeMessage msg = MimeMessage.Load(item);
+                                object[] row = { msg.MessageId, msg.From.Mailboxes.First().Address, msg.From[0].Name, msg.Subject, msg.Date.LocalDateTime, msg.Attachments.Count() };
+                                grid_messlist.Rows.Add(row);
+                            }
                         }
                         break;
                     case Folder.sent:
                         grid_messlist.Rows.Clear();
-                        curr_client.GetFolder(SpecialFolder.Sent).Open(FolderAccess.ReadOnly);
-                        foreach (var item in curr_client.GetFolder(SpecialFolder.Sent))
+                        try
                         {
-                            object[] row = { item.MessageId, item.From.Mailboxes.First().Address, item.From[0].Name, item.Subject, item.Date, item.Attachments.Count() };
-                            grid_messlist.Rows.Add(row);
+                            curr_client.GetFolder(SpecialFolder.Sent).Open(FolderAccess.ReadOnly);
+                            foreach (var item in curr_client.GetFolder(SpecialFolder.Sent).Fetch(0, msg_cntr -1, MessageSummaryItems.All | MessageSummaryItems.BodyStructure))
+                            {
+                                object[] row = { item.Envelope.MessageId, item.Envelope.From.Mailboxes.First().Address, item.Envelope.From[0].Name, item.Envelope.Subject, item.Date.LocalDateTime, item.Attachments.Count() };
+                                grid_messlist.Rows.Add(row);
+                                curr_client.GetFolder(SpecialFolder.Sent).First(msg => msg.MessageId == item.Envelope.MessageId).WriteTo(FormatOptions.Default, dir + "/" + item.Envelope.MessageId);
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            foreach (var item in Directory.EnumerateFiles(dir))
+                            {
+                                MimeMessage msg = MimeMessage.Load(item);
+                                object[] row = { msg.MessageId, msg.From.Mailboxes.First().Address, msg.From[0].Name, msg.Subject, msg.Date.LocalDateTime, msg.Attachments.Count() };
+                                grid_messlist.Rows.Add(row);
+                            }
                         }
                         break;
                     case Folder.junk:
                         grid_messlist.Rows.Clear();
-                        curr_client.GetFolder(SpecialFolder.Junk).Open(FolderAccess.ReadOnly);
-                        foreach (var item in curr_client.GetFolder(SpecialFolder.Junk))
+                        try
                         {
-                            object[] row = { item.MessageId, item.From.Mailboxes.First().Address, item.From[0].Name, item.Subject, item.Date, item.Attachments.Count() };
-                            grid_messlist.Rows.Add(row);
+                            curr_client.GetFolder(SpecialFolder.Junk).Open(FolderAccess.ReadOnly);
+                            foreach (var item in curr_client.GetFolder(SpecialFolder.Junk).Fetch(0, msg_cntr - 1, MessageSummaryItems.All | MessageSummaryItems.BodyStructure))
+                            {
+                                object[] row = { item.Envelope.MessageId, item.Envelope.From.Mailboxes.First().Address, item.Envelope.From[0].Name, item.Envelope.Subject, item.Date.LocalDateTime, item.Attachments.Count() };
+                                grid_messlist.Rows.Add(row);
+                                curr_client.GetFolder(SpecialFolder.Junk).First(msg => msg.MessageId == item.Envelope.MessageId).WriteTo(FormatOptions.Default, dir + "/" + item.Envelope.MessageId);
+                            }
+                        }
+                        catch(Exception)
+                        {
+                            foreach (var item in Directory.EnumerateFiles(dir))
+                            {
+                                MimeMessage msg = MimeMessage.Load(item);
+                                object[] row = { msg.MessageId, msg.From.Mailboxes.First().Address, msg.From[0].Name, msg.Subject, msg.Date.LocalDateTime, msg.Attachments.Count() };
+                                grid_messlist.Rows.Add(row);
+                            }
                         }
                         break;
                     case Folder.trash:
                         grid_messlist.Rows.Clear();
-                        curr_client.GetFolder(SpecialFolder.Trash).Open(FolderAccess.ReadOnly);
-                        foreach (var item in curr_client.GetFolder(SpecialFolder.Trash))
+                        try
                         {
-                            object[] row = { item.MessageId, item.From.Mailboxes.First().Address, item.From[0].Name, item.Subject, item.Date, item.Attachments.Count() };
-                            grid_messlist.Rows.Add(row);
+                            curr_client.GetFolder(SpecialFolder.Trash).Open(FolderAccess.ReadOnly);
+                            foreach (var item in curr_client.GetFolder(SpecialFolder.Trash).Fetch(0, msg_cntr - 1, MessageSummaryItems.All | MessageSummaryItems.BodyStructure))
+                            {
+                                object[] row = { item.Envelope.MessageId, item.Envelope.From.Mailboxes.First().Address, item.Envelope.From[0].Name, item.Envelope.Subject, item.Date.LocalDateTime, item.Attachments.Count() };
+                                grid_messlist.Rows.Add(row);
+                                curr_client.GetFolder(SpecialFolder.Trash).First(msg => msg.MessageId == item.Envelope.MessageId).WriteTo(FormatOptions.Default, dir + "/" + item.Envelope.MessageId);
+                            }
+                        }
+                        catch(Exception)
+                        {
+                            foreach (var item in Directory.EnumerateFiles(dir))
+                            {
+                                MimeMessage msg = MimeMessage.Load(item);
+                                object[] row = { msg.MessageId, msg.From.Mailboxes.First().Address, msg.From[0].Name, msg.Subject, msg.Date.LocalDateTime, msg.Attachments.Count() };
+                                grid_messlist.Rows.Add(row);
+                            }
                         }
                         break;
                     default:
@@ -215,7 +281,7 @@ namespace KursCrypt
         }
         private void grid_messlist_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            ReadForm read = new ReadForm(this, curr_fold, grid_messlist.Rows[e.RowIndex].Cells[0].Value.ToString());
+            ReadForm read = new ReadForm(this, curr_fold, grid_messlist.SelectedRows[0].Cells[0].Value.ToString());
             try
             {
                 read.Show();

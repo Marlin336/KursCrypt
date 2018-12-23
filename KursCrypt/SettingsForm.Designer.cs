@@ -128,11 +128,6 @@
             0,
             0,
             0});
-            this.num_msg_cntr.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            -2147483648});
             this.num_msg_cntr.Name = "num_msg_cntr";
             this.num_msg_cntr.Size = new System.Drawing.Size(97, 20);
             this.num_msg_cntr.TabIndex = 2;
