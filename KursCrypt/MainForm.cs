@@ -317,35 +317,6 @@ namespace KursCrypt
             InAttachForm attachForm = new InAttachForm(read.message);
             attachForm.Show();
         }
-        private void удалитьToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (MessageBox.Show("Удалить это сообщение?", "Подтверждение удаления", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-            {
-                switch (curr_fold)
-                {
-                    case Folder.inbox:
-                        curr_client.Inbox.Search(SearchQuery.HeaderContains("Message-Id", grid_messlist.SelectedRows[0].Cells[0].Value.ToString()));
-                        curr_client.Inbox.AddFlags((int)grid_messlist.SelectedRows[0].Cells[0].Value, MessageFlags.Deleted, silent: true);
-                        grid_messlist.Rows.RemoveAt(grid_messlist.SelectedRows[0].Index);
-                        break;
-                    case Folder.sent:
-                        curr_client.GetFolder(SpecialFolder.Sent).Search(SearchQuery.HeaderContains("Message-Id", grid_messlist.SelectedRows[0].Cells[0].Value.ToString()));
-                        curr_client.GetFolder(SpecialFolder.Sent).AddFlags((int)grid_messlist.SelectedRows[0].Cells[0].Value, MessageFlags.Deleted, silent: true);
-                        grid_messlist.Rows.RemoveAt(grid_messlist.SelectedRows[0].Index);
-                        break;
-                    case Folder.junk:
-                        curr_client.GetFolder(SpecialFolder.Junk).Search(SearchQuery.HeaderContains("Message-Id", grid_messlist.SelectedRows[0].Cells[0].Value.ToString()));
-                        curr_client.GetFolder(SpecialFolder.Junk).AddFlags((int)grid_messlist.SelectedRows[0].Cells[0].Value, MessageFlags.Deleted, silent: true);
-                        grid_messlist.Rows.RemoveAt(grid_messlist.SelectedRows[0].Index);
-                        break;
-                    case Folder.trash:
-                        curr_client.GetFolder(SpecialFolder.Trash).Search(SearchQuery.HeaderContains("Message-Id", grid_messlist.SelectedRows[0].Cells[0].Value.ToString()));
-                        curr_client.GetFolder(SpecialFolder.Trash).AddFlags((int)grid_messlist.SelectedRows[0].Cells[0].Value, MessageFlags.Deleted, silent: true);
-                        grid_messlist.Rows.RemoveAt(grid_messlist.SelectedRows[0].Index);
-                        break;
-                }
-            }
-        }
 
         private void обменКлючамиToolStripMenuItem_Click(object sender, EventArgs e)
         {
