@@ -45,14 +45,15 @@ namespace KursCrypt
         {
             Main = main;
             InitializeComponent();
-            Main.curr_client.Folders.Sent.Search("ALL", ImapX.Enums.MessageFetchMode.Headers, 25);
+            Main.curr_client.GetFolder(MailKit.SpecialFolder.Sent);
             List<string> hotRecips = new List<string>();
-            var messages = Main.curr_client.Folders.Sent.Messages;
+            Main.curr_client.GetFolder(MailKit.SpecialFolder.Sent).Open(MailKit.FolderAccess.ReadOnly);
+            var messages = Main.curr_client.GetFolder(MailKit.SpecialFolder.Sent);
             for (int i = 0, count = 0; i < messages.Count() && count < 5; i++)
             {
-                if (!hotRecips.Exists(str => str == messages[i].To[messages[i].To.Count - 1].Address))
+                if (!hotRecips.Exists(str => str == messages.ElementAt(i).To.Mailboxes.First().Address))
                 {
-                    hotRecips.Add(messages[i].To[messages[i].To.Count - 1].Address);
+                    hotRecips.Add(messages.ElementAt(i).To.Mailboxes.First().Address);
                     count++;
                 }    
             }
@@ -191,7 +192,6 @@ namespace KursCrypt
                                 Credentials = new System.Net.NetworkCredential(email_ref.Address, email_ref.Password)
                             };
                             smtp.Send(message);
-                            Main.curr_client.Folders.Sent.AppendMessage(message);
                         }
                         catch (SmtpFailedRecipientException exRecip)
                         {

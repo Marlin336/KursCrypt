@@ -8,7 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
-using ImapX;
+using MailKit.Net.Imap;
+//using ImapX;
 
 namespace KursCrypt
 {
@@ -58,29 +59,22 @@ namespace KursCrypt
         {
             Email email_ref = Main.emails[Main.emails.FindIndex(em => em.id == (int)grid_boxes.SelectedRows[0].Cells[0].Value)];
             Main.host = email_ref.Address.Substring(email_ref.Address.IndexOf('@') + 1);
-            ImapClient client = new ImapClient("imap." + Main.host, Main.rcv_port, true, false);
-            if (client.Connect())
+            ImapClient client = new ImapClient();
+            client.Connect("imap." + Main.host, Main.rcv_port, true);
+            if (client.IsConnected)
             {
-                client.Login(email_ref.Address, email_ref.Password);
+                client.Authenticate(email_ref.Address, email_ref.Password);
                 Main.curr_client = client;
                 Main.curr_id = email_ref.id;
                 Main.stateIndicator.Text = email_ref.Address;
-                List<string> headersList = Main.curr_client.Behavior.RequestedHeaders.ToList();
-                headersList.Add("crypt");
-                headersList.Add("desKey");
-                headersList.Add("desIV");
-                headersList.Add("dsasign");
-                headersList.Add("dsakey");
-                headersList.Add("keyswap");
-                headersList.Add("keypub");
-                Main.curr_client.Behavior.RequestedHeaders = headersList.ToArray();
-                Close();
-                Main.RedrawMailList();
             }
             else
             {
-                MessageBox.Show("Ошибка поключения. Проверьте соединение с сетью!", "Ошибка сети", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Main.curr_id = (int)grid_boxes.SelectedRows[0].Cells[0].Value;
+                MessageBox.Show("Не удалось подключиться к сети", "Ошибка сети", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
             }
+            Close();
+            Main.RedrawMailList(email_ref.Address);
         }
     }
 }

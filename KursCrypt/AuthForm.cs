@@ -9,7 +9,8 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ImapX.Authentication;
-using ImapX;
+//using ImapX;
+using MailKit.Net.Imap;
 using System.Xml.Linq;
 
 namespace KursCrypt
@@ -43,10 +44,12 @@ namespace KursCrypt
                 try
                 {
                     string host_str = tb_mail.Text.Substring(tb_mail.Text.IndexOf('@') + 1);
-                    client = new ImapClient("imap." + host_str, Main.rcv_port, true, false);
-                    if (client.Connect())
+                    client = new ImapClient();
+                    client.Connect("imap." + Main.host, Main.rcv_port, true);
+                    if (client.IsConnected)
                     {
-                        if (client.Login(tb_mail.Text, tb_pass.Text))
+                        client.Authenticate(tb_mail.Text, tb_pass.Text);
+                        if(client.IsAuthenticated)
                         {
                             if (Main.emails.Exists(em => em.Address == tb_mail.Text))
                             {

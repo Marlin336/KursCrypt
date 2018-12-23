@@ -1,15 +1,14 @@
-﻿using ImapX;
+﻿//using ImapX;
+using MailKit;
+using MailKit.Net.Imap;
+using MailKit.Search;
+using MimeKit;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using System.Net.Mail;
 using System.IO;
+using System.Linq;
+using System.Windows.Forms;
 using System.Xml.Linq;
 using System.Xml.Serialization;
 
@@ -118,78 +117,85 @@ namespace KursCrypt
         }
         private void stateIndicator_Click(object sender, EventArgs e)
         {
+            Email email_ref = emails.Find(em => em.id == curr_id);
             if (curr_client != null && curr_client.IsConnected)
-                RedrawMailList();
+                RedrawMailList(email_ref.Address);
         }
         private void входящиеToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Email email_ref = emails.Find(em => em.id == curr_id);
             отправленныеToolStripMenuItem.Checked = спамToolStripMenuItem.Checked = корзинаToolStripMenuItem.Checked = false;
             входящиеToolStripMenuItem.Checked = true;
             curr_fold = Folder.inbox;
-            RedrawMailList();
+            RedrawMailList(email_ref.Address);
         }
         private void отправленныеToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Email email_ref = emails.Find(em => em.id == curr_id);
             входящиеToolStripMenuItem.Checked = спамToolStripMenuItem.Checked = корзинаToolStripMenuItem.Checked = false;
             отправленныеToolStripMenuItem.Checked = true;
             curr_fold = Folder.sent;
-            RedrawMailList();
+            RedrawMailList(email_ref.Address);
         }
         private void спамToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Email email_ref = emails.Find(em => em.id == curr_id);
             входящиеToolStripMenuItem.Checked = отправленныеToolStripMenuItem.Checked = корзинаToolStripMenuItem.Checked = false;
             спамToolStripMenuItem.Checked = true;
             curr_fold = Folder.junk;
-            RedrawMailList();
+            RedrawMailList(email_ref.Address);
         }
         private void корзинаToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            Email email_ref = emails.Find(em => em.id == curr_id);
             входящиеToolStripMenuItem.Checked = спамToolStripMenuItem.Checked = отправленныеToolStripMenuItem.Checked = false;
             корзинаToolStripMenuItem.Checked = true;
             curr_fold = Folder.trash;
-            RedrawMailList();
+            RedrawMailList(email_ref.Address);
         }
-        public void RedrawMailList()
+        public void RedrawMailList(string client_address)
         {
-            if (curr_client == null)
+            if (curr_id == -1) 
                 return;
             try
             {
+                Email email_ref = emails.Find(em => em.id == curr_id);
+                string dir = Directory.CreateDirectory("Saved/" + client_address + "/" + curr_fold.ToString()).FullName;
                 switch (curr_fold)
                 {
                     case Folder.inbox:
-                        curr_client.Folders.Inbox.Search("ALL", ImapX.Enums.MessageFetchMode.ClientDefault, msg_cntr);
                         grid_messlist.Rows.Clear();
-                        foreach (var item in curr_client.Folders.Inbox.Messages)
+                        curr_client.Inbox.Open(FolderAccess.ReadOnly);
+                        foreach (var item in curr_client.Inbox)
                         {
-                            object[] row = { item.UId, item.From.Address, item.From.DisplayName, item.Subject, item.Date, item.Attachments.Length };
+                            object[] row = { item.MessageId, item.From.Mailboxes.First().Address, item.From[0].Name, item.Subject, item.Date.LocalDateTime, item.Attachments.Count() };
                             grid_messlist.Rows.Add(row);
                         }
                         break;
                     case Folder.sent:
-                        curr_client.Folders.Sent.Search("ALL", ImapX.Enums.MessageFetchMode.ClientDefault, msg_cntr);
                         grid_messlist.Rows.Clear();
-                        foreach (var item in curr_client.Folders.Sent.Messages)
+                        curr_client.GetFolder(SpecialFolder.Sent).Open(FolderAccess.ReadOnly);
+                        foreach (var item in curr_client.GetFolder(SpecialFolder.Sent))
                         {
-                            object[] row = { item.UId, item.From.Address, item.From.DisplayName, item.Subject, item.Date, item.Attachments.Length };
+                            object[] row = { item.MessageId, item.From.Mailboxes.First().Address, item.From[0].Name, item.Subject, item.Date, item.Attachments.Count() };
                             grid_messlist.Rows.Add(row);
                         }
                         break;
                     case Folder.junk:
-                        curr_client.Folders.Junk.Search("ALL", ImapX.Enums.MessageFetchMode.ClientDefault, msg_cntr);
                         grid_messlist.Rows.Clear();
-                        foreach (var item in curr_client.Folders.Junk.Messages)
+                        curr_client.GetFolder(SpecialFolder.Junk).Open(FolderAccess.ReadOnly);
+                        foreach (var item in curr_client.GetFolder(SpecialFolder.Junk))
                         {
-                            object[] row = { item.UId, item.From.Address, item.From.DisplayName, item.Subject, item.Date, item.Attachments.Length };
+                            object[] row = { item.MessageId, item.From.Mailboxes.First().Address, item.From[0].Name, item.Subject, item.Date, item.Attachments.Count() };
                             grid_messlist.Rows.Add(row);
                         }
                         break;
                     case Folder.trash:
-                        curr_client.Folders.Trash.Search("ALL", ImapX.Enums.MessageFetchMode.ClientDefault, msg_cntr);
                         grid_messlist.Rows.Clear();
-                        foreach (var item in curr_client.Folders.Trash.Messages)
+                        curr_client.GetFolder(SpecialFolder.Trash).Open(FolderAccess.ReadOnly);
+                        foreach (var item in curr_client.GetFolder(SpecialFolder.Trash))
                         {
-                            object[] row = { item.UId, item.From.Address, item.From.DisplayName, item.Subject, item.Date, item.Attachments.Length };
+                            object[] row = { item.MessageId, item.From.Mailboxes.First().Address, item.From[0].Name, item.Subject, item.Date, item.Attachments.Count() };
                             grid_messlist.Rows.Add(row);
                         }
                         break;
@@ -209,25 +215,7 @@ namespace KursCrypt
         }
         private void grid_messlist_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-            ReadForm read;
-            switch (curr_fold)
-            {
-                case Folder.inbox:
-                    read = new ReadForm(this, curr_client.Folders.Inbox, (long)grid_messlist.SelectedRows[0].Cells[0].Value);
-                    break;
-                case Folder.sent:
-                    read = new ReadForm(this, curr_client.Folders.Sent, (long)grid_messlist.SelectedRows[0].Cells[0].Value);
-                    break;
-                case Folder.junk:
-                    read = new ReadForm(this, curr_client.Folders.Junk, (long)grid_messlist.SelectedRows[0].Cells[0].Value);
-                    break;
-                case Folder.trash:
-                    read = new ReadForm(this, curr_client.Folders.Trash, (long)grid_messlist.SelectedRows[0].Cells[0].Value);
-                    break;
-                default:
-                    read = new ReadForm(this, curr_client.Folders.All, 0);
-                    break;
-            }
+            ReadForm read = new ReadForm(this, curr_fold, grid_messlist.Rows[e.RowIndex].Cells[0].Value.ToString());
             try
             {
                 read.Show();
@@ -259,25 +247,7 @@ namespace KursCrypt
         }
         private void посмотретьВложенияToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ReadForm read;
-            switch (curr_fold)
-            {
-                case Folder.inbox:
-                    read = new ReadForm(this, curr_client.Folders.Inbox, (long)grid_messlist.SelectedRows[0].Cells[0].Value);
-                    break;
-                case Folder.sent:
-                    read = new ReadForm(this, curr_client.Folders.Sent, (long)grid_messlist.SelectedRows[0].Cells[0].Value);
-                    break;
-                case Folder.junk:
-                    read = new ReadForm(this, curr_client.Folders.Junk, (long)grid_messlist.SelectedRows[0].Cells[0].Value);
-                    break;
-                case Folder.trash:
-                    read = new ReadForm(this, curr_client.Folders.Trash, (long)grid_messlist.SelectedRows[0].Cells[0].Value);
-                    break;
-                default:
-                    read = new ReadForm(this, curr_client.Folders.All, 0);
-                    break;
-            }
+            ReadForm read = new ReadForm(this, curr_fold, grid_messlist.SelectedRows[0].Cells[0].Value.ToString());
             InAttachForm attachForm = new InAttachForm(read.message);
             attachForm.Show();
         }
@@ -288,19 +258,23 @@ namespace KursCrypt
                 switch (curr_fold)
                 {
                     case Folder.inbox:
-                        curr_client.Folders.Inbox.Messages.First(i => i.UId == (long)grid_messlist.SelectedRows[0].Cells[0].Value).Remove();
+                        curr_client.Inbox.Search(SearchQuery.HeaderContains("Message-Id", grid_messlist.SelectedRows[0].Cells[0].Value.ToString()));
+                        curr_client.Inbox.AddFlags((int)grid_messlist.SelectedRows[0].Cells[0].Value, MessageFlags.Deleted, silent: true);
                         grid_messlist.Rows.RemoveAt(grid_messlist.SelectedRows[0].Index);
                         break;
                     case Folder.sent:
-                        curr_client.Folders.Sent.Messages.First(i => i.UId == (long)grid_messlist.SelectedRows[0].Cells[0].Value).Remove();
+                        curr_client.GetFolder(SpecialFolder.Sent).Search(SearchQuery.HeaderContains("Message-Id", grid_messlist.SelectedRows[0].Cells[0].Value.ToString()));
+                        curr_client.GetFolder(SpecialFolder.Sent).AddFlags((int)grid_messlist.SelectedRows[0].Cells[0].Value, MessageFlags.Deleted, silent: true);
                         grid_messlist.Rows.RemoveAt(grid_messlist.SelectedRows[0].Index);
                         break;
                     case Folder.junk:
-                        curr_client.Folders.Junk.Messages.First(i => i.UId == (long)grid_messlist.SelectedRows[0].Cells[0].Value).Remove();
+                        curr_client.GetFolder(SpecialFolder.Junk).Search(SearchQuery.HeaderContains("Message-Id", grid_messlist.SelectedRows[0].Cells[0].Value.ToString()));
+                        curr_client.GetFolder(SpecialFolder.Junk).AddFlags((int)grid_messlist.SelectedRows[0].Cells[0].Value, MessageFlags.Deleted, silent: true);
                         grid_messlist.Rows.RemoveAt(grid_messlist.SelectedRows[0].Index);
                         break;
                     case Folder.trash:
-                        curr_client.Folders.Trash.Messages.First(i => i.UId == (long)grid_messlist.SelectedRows[0].Cells[0].Value).Remove();
+                        curr_client.GetFolder(SpecialFolder.Trash).Search(SearchQuery.HeaderContains("Message-Id", grid_messlist.SelectedRows[0].Cells[0].Value.ToString()));
+                        curr_client.GetFolder(SpecialFolder.Trash).AddFlags((int)grid_messlist.SelectedRows[0].Cells[0].Value, MessageFlags.Deleted, silent: true);
                         grid_messlist.Rows.RemoveAt(grid_messlist.SelectedRows[0].Index);
                         break;
                 }

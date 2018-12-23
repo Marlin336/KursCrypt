@@ -30,12 +30,11 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.list = new System.Windows.Forms.DataGridView();
+            this.attach_fileDialog = new System.Windows.Forms.SaveFileDialog();
             this.id_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.name_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ext_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.size_col = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.download_coll = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.attach_fileDialog = new System.Windows.Forms.SaveFileDialog();
             ((System.ComponentModel.ISupportInitialize)(this.list)).BeginInit();
             this.SuspendLayout();
             // 
@@ -48,7 +47,6 @@
             this.id_col,
             this.name_col,
             this.ext_col,
-            this.size_col,
             this.download_coll});
             this.list.Cursor = System.Windows.Forms.Cursors.Default;
             this.list.Location = new System.Drawing.Point(12, 12);
@@ -62,6 +60,10 @@
             this.list.TabIndex = 8;
             this.list.TabStop = false;
             this.list.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.list_CellContentClick);
+            // 
+            // attach_fileDialog
+            // 
+            this.attach_fileDialog.Filter = "Все файлы|*.*";
             // 
             // id_col
             // 
@@ -77,7 +79,7 @@
             this.name_col.HeaderText = "Имя файла";
             this.name_col.Name = "name_col";
             this.name_col.ReadOnly = true;
-            this.name_col.Width = 300;
+            this.name_col.Width = 400;
             // 
             // ext_col
             // 
@@ -85,13 +87,6 @@
             this.ext_col.HeaderText = "Тип файла";
             this.ext_col.Name = "ext_col";
             this.ext_col.ReadOnly = true;
-            // 
-            // size_col
-            // 
-            this.size_col.Frozen = true;
-            this.size_col.HeaderText = "Размер (КБ)";
-            this.size_col.Name = "size_col";
-            this.size_col.ReadOnly = true;
             // 
             // download_coll
             // 
@@ -107,10 +102,6 @@
             this.download_coll.Text = "↓";
             this.download_coll.UseColumnTextForButtonValue = true;
             this.download_coll.Width = 75;
-            // 
-            // attach_fileDialog
-            // 
-            this.attach_fileDialog.Filter = "Все файлы|*.*";
             // 
             // InAttachForm
             // 
@@ -135,7 +126,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn id_col;
         private System.Windows.Forms.DataGridViewTextBoxColumn name_col;
         private System.Windows.Forms.DataGridViewTextBoxColumn ext_col;
-        private System.Windows.Forms.DataGridViewTextBoxColumn size_col;
         private System.Windows.Forms.DataGridViewButtonColumn download_coll;
     }
 }

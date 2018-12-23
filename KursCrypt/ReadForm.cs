@@ -15,34 +15,53 @@ namespace KursCrypt
     public partial class ReadForm : Form
     {
         MainForm Main;
-        long uid;
+        string id;
         Email email_ref;
-        public ImapX.Message message { get; private set; }
+        public MimeKit.MimeMessage message { get; private set; }
 
-        public ReadForm(MainForm main, ImapX.Folder folder, long uid)
+        public ReadForm(MainForm main, Folder folder, string id)
         {
             InitializeComponent();
             Main = main;
             email_ref = main.emails.Find(em => em.id == main.curr_id);
-            this.uid = uid;
-            message = folder.Messages.First(msg => msg.UId == uid);
-            tb_opentext.Text = message.Body.Text;
-            tb_subject.Text = message.Subject;
-            tb_from.Text = message.From.DisplayName + " <" + message.From.Address + ">";
-            b_attach.Enabled = message.Attachments.Length > 0;
-
-            string reqestflag;
-            if (message.Headers.TryGetValue("keyswap", out reqestflag))
+            this.id = id;
+            switch (folder)
             {
-                if (reqestflag == "0")//Пришёл запрос
+                case Folder.inbox:
+                    Main.curr_client.Inbox.Open(MailKit.FolderAccess.ReadOnly);
+                    message = Main.curr_client.Inbox.First(msg => msg.MessageId == id);
+                    break;
+                case Folder.sent:
+                    Main.curr_client.GetFolder(MailKit.SpecialFolder.Sent).Open(MailKit.FolderAccess.ReadOnly);
+                    message = Main.curr_client.GetFolder(MailKit.SpecialFolder.Sent).First(msg => msg.MessageId == id);
+                    break;
+                case Folder.junk:
+                    Main.curr_client.GetFolder(MailKit.SpecialFolder.Junk).Open(MailKit.FolderAccess.ReadOnly);
+                    message = Main.curr_client.GetFolder(MailKit.SpecialFolder.Junk).First(msg => msg.MessageId == id);
+                    break;
+                case Folder.trash:
+                    Main.curr_client.GetFolder(MailKit.SpecialFolder.Trash).Open(MailKit.FolderAccess.ReadOnly);
+                    message = Main.curr_client.GetFolder(MailKit.SpecialFolder.Trash).First(msg => msg.MessageId == id);
+                    break;
+                default:
+                    break;
+            }
+            tb_opentext.Text = message.TextBody;
+            tb_subject.Text = message.Subject;
+            tb_from.Text = message.From.Mailboxes.First().Address;
+            b_attach.Enabled = message.Attachments.Count() > 0;
+            MimeKit.HeaderList headers = new MimeKit.HeaderList();
+            if (message.Headers.Contains("keyswap"))
+            {
+                if (message.Headers["keyswap"] == "0")//Пришёл запрос
                 {
                     if (MessageBox.Show("Произвести обмен ключами шифрования?", "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                     {
-                        Main.KeyHolders.AddReciever(email_ref.Address, message.From.Address);
-                        Main.KeyHolders.SetKey(email_ref.Address, message.From.Address, message.Headers["keypub"], false);
+                        Main.KeyHolders.AddReciever(email_ref.Address, message.From.Mailboxes.First().Address);
+                        Main.KeyHolders.SetKey(email_ref.Address, message.From.Mailboxes.First().Address, message.Headers["keypub"], false);
                         using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
                         {
-                            MailMessage replyMail = new MailMessage(new MailAddress(email_ref.Address, email_ref.Name), new MailAddress(message.From.Address))
+                            MailMessage replyMail = new MailMessage(new MailAddress(email_ref.Address, email_ref.Name), new MailAddress(message.From.Mailboxes.First().Address))
                             {
                                 Subject = "ОТВЕТ НА ЗАПРОС ОБМЕНА КЛЮЧАМИ"
                             };
@@ -67,15 +86,15 @@ namespace KursCrypt
                                 MessageBox.Show("Не удалось отправить запрос\n" + ex.Message, "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                                 throw;
                             }
-                            Main.KeyHolders.AddReciever(email_ref.Address, message.From.Address);
-                            Main.KeyHolders.SetKey(email_ref.Address, message.From.Address, rsa.ToXmlString(true), true);
+                            Main.KeyHolders.AddReciever(email_ref.Address, message.From.Mailboxes.First().Address);
+                            Main.KeyHolders.SetKey(email_ref.Address, message.From.Mailboxes.First().Address, rsa.ToXmlString(true), true);
                             Main.SerializeKeyFile();
                         }
                     }
                 }
                 else //Пришёл ответ
                 {
-                    Main.KeyHolders.SetKey(email_ref.Address, message.From.Address, message.Headers["keypub"], false);
+                    Main.KeyHolders.SetKey(email_ref.Address, message.From.Mailboxes.First().Address, message.Headers["keypub"], false);
                     Main.SerializeKeyFile();
                     MessageBox.Show("Запрос подверждён. Теперь можно шифровать письма с данным пользователем", "Запрс подтверждён", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 }
@@ -83,11 +102,10 @@ namespace KursCrypt
             }
             else
             {
-                string cryptflags;
-                if (message.Headers.TryGetValue("crypt", out cryptflags)) //Есть флаги-признаки шифрования => отправлено с этого клиента
+                if (message.Headers.Contains("crypt")) //Есть флаги-признаки шифрования => отправлено с этого клиента
                 {
-                    byte cryptF = byte.Parse(cryptflags);
-                    string str = (cryptF & 2) != 0 ? message.Body.Text.Substring(0, message.Body.Text.IndexOf("\r")) + "=" : message.Body.Text;
+                    byte cryptF = byte.Parse(message.Headers["crypt"]);
+                    string str = (cryptF & 2) != 0 ? message.TextBody.Substring(0, message.TextBody.IndexOf("\r")) : message.TextBody;
                     if ((cryptF & 1) != 0)//Флаг подписи
                     {
                         byte[] sign = Convert.FromBase64String(message.Headers["dsasign"]);
@@ -107,7 +125,7 @@ namespace KursCrypt
                         byte[] Key;
                         using (RSACryptoServiceProvider rsa = new RSACryptoServiceProvider())
                         {
-                            rsa.FromXmlString(Main.KeyHolders.GetKey(email_ref.Address, message.From.Address, true));
+                            rsa.FromXmlString(Main.KeyHolders.GetKey(email_ref.Address, message.From.Mailboxes.First().Address, true));
                             Key = Encryption.DecRSA(buff, rsa.ExportParameters(true), true);
                         }
                         byte[] IV = Convert.FromBase64String(message.Headers["desiv"]);
@@ -124,7 +142,6 @@ namespace KursCrypt
         private void b_reply_Click(object sender, EventArgs e)
         {
             string addressee = tb_from.Text.Substring(tb_from.Text.IndexOf('<') + 1);
-            addressee = addressee.Substring(0, addressee.Length - 1);
             WriteForm write = new WriteForm(Main, addressee, "Re:" + tb_subject.Text);
             write.ShowDialog();
         }
