@@ -1,16 +1,9 @@
-﻿using System;
+﻿using MailKit.Net.Imap;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using ImapX.Authentication;
-//using ImapX;
-using MailKit.Net.Imap;
 using System.Xml.Linq;
 
 namespace KursCrypt

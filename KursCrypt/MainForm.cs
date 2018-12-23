@@ -1,7 +1,5 @@
-﻿//using ImapX;
-using MailKit;
+﻿using MailKit;
 using MailKit.Net.Imap;
-using MailKit.Search;
 using MimeKit;
 using System;
 using System.Collections.Generic;

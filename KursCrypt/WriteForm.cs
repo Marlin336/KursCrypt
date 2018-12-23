@@ -1,18 +1,13 @@
-﻿using System.Net.Mail;
+﻿using MailKit;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+using System.Net.Mail;
 using System.Net.Mime;
 using System.Security.Cryptography;
-using System.Collections.Specialized;
-using MailKit;
+using System.Text;
+using System.Windows.Forms;
 
 namespace KursCrypt
 {
