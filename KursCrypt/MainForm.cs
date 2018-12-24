@@ -173,27 +173,28 @@ namespace KursCrypt
                             curr_client.Inbox.Open(FolderAccess.ReadOnly);
                             foreach (var item in curr_client.Inbox.Fetch(0, msg_cntr - 1, MessageSummaryItems.All | MessageSummaryItems.BodyStructure))
                             {
+                                object[] row = { item.Envelope.MessageId, item.Envelope.From.Mailboxes.First().Address, item.Envelope.From[0].Name, item.Envelope.Subject, item.Date.LocalDateTime, item.Attachments.Count() };
+                                grid_messlist.Rows.Add(row);
                                 if (!fullnames.Contains(item.Envelope.MessageId))
                                 {
-                                    object[] row = { item.Envelope.MessageId, item.Envelope.From.Mailboxes.First().Address, item.Envelope.From[0].Name, item.Envelope.Subject, item.Date.LocalDateTime, item.Attachments.Count() };
-                                    grid_messlist.Rows.Add(row);
-                                    curr_client.Inbox.First(msg => msg.MessageId == item.Envelope.MessageId).WriteTo(FormatOptions.Default, dir + "/" + item.Envelope.MessageId);
-                                }
-                                else
-                                {
-                                    MimeMessage msg = MimeMessage.Load(dir + "/" + item.Envelope.MessageId);
-                                    object[] row = { msg.MessageId, msg.From.Mailboxes.First().Address, msg.From[0].Name, msg.Subject, msg.Date.LocalDateTime, msg.Attachments.Count() };
-                                    grid_messlist.Rows.Add(row);
+                                    try
+                                    {
+                                        curr_client.Inbox.First(msg => msg.MessageId == item.Envelope.MessageId).WriteTo(FormatOptions.Default, dir + "/" + item.Envelope.MessageId);
+                                    }
+                                    catch (Exception) { continue; }
                                 }
                             }
                         }
-                        catch(Exception)
+                        catch(Exception ex)
                         {
-                            foreach (var item in Directory.EnumerateFiles(dir))
+                            if (curr_client == null)
                             {
-                                MimeMessage msg = MimeMessage.Load(item);
-                                object[] row = { msg.MessageId, msg.From.Mailboxes.First().Address, msg.From[0].Name, msg.Subject, msg.Date.LocalDateTime, msg.Attachments.Count() };
-                                grid_messlist.Rows.Add(row);
+                                foreach (var item in Directory.EnumerateFiles(dir))
+                                {
+                                    MimeMessage msg = MimeMessage.Load(item);
+                                    object[] row = { msg.MessageId, msg.From.Mailboxes.First().Address, msg.From[0].Name, msg.Subject, msg.Date.LocalDateTime, msg.Attachments.Count() };
+                                    grid_messlist.Rows.Add(row);
+                                }
                             }
                         }
                         break;
@@ -206,16 +207,26 @@ namespace KursCrypt
                             {
                                 object[] row = { item.Envelope.MessageId, item.Envelope.From.Mailboxes.First().Address, item.Envelope.From[0].Name, item.Envelope.Subject, item.Date.LocalDateTime, item.Attachments.Count() };
                                 grid_messlist.Rows.Add(row);
-                                curr_client.GetFolder(SpecialFolder.Sent).First(msg => msg.MessageId == item.Envelope.MessageId).WriteTo(FormatOptions.Default, dir + "/" + item.Envelope.MessageId);
+                                if (!fullnames.Contains(item.Envelope.MessageId))
+                                {
+                                    try
+                                    {
+                                        curr_client.GetFolder(SpecialFolder.Sent).First(msg => msg.MessageId == item.Envelope.MessageId).WriteTo(FormatOptions.Default, dir + "/" + item.Envelope.MessageId);
+                                    }
+                                    catch (Exception) { continue; }
+                                }
                             }
                         }
                         catch (Exception)
                         {
-                            foreach (var item in Directory.EnumerateFiles(dir))
+                            if (curr_client == null)
                             {
-                                MimeMessage msg = MimeMessage.Load(item);
-                                object[] row = { msg.MessageId, msg.From.Mailboxes.First().Address, msg.From[0].Name, msg.Subject, msg.Date.LocalDateTime, msg.Attachments.Count() };
-                                grid_messlist.Rows.Add(row);
+                                foreach (var item in Directory.EnumerateFiles(dir))
+                                {
+                                    MimeMessage msg = MimeMessage.Load(item);
+                                    object[] row = { msg.MessageId, msg.From.Mailboxes.First().Address, msg.From[0].Name, msg.Subject, msg.Date.LocalDateTime, msg.Attachments.Count() };
+                                    grid_messlist.Rows.Add(row);
+                                }
                             }
                         }
                         break;
@@ -228,16 +239,26 @@ namespace KursCrypt
                             {
                                 object[] row = { item.Envelope.MessageId, item.Envelope.From.Mailboxes.First().Address, item.Envelope.From[0].Name, item.Envelope.Subject, item.Date.LocalDateTime, item.Attachments.Count() };
                                 grid_messlist.Rows.Add(row);
-                                curr_client.GetFolder(SpecialFolder.Junk).First(msg => msg.MessageId == item.Envelope.MessageId).WriteTo(FormatOptions.Default, dir + "/" + item.Envelope.MessageId);
+                                if (!fullnames.Contains(item.Envelope.MessageId))
+                                {
+                                    try
+                                    {
+                                        curr_client.GetFolder(SpecialFolder.Junk).First(msg => msg.MessageId == item.Envelope.MessageId).WriteTo(FormatOptions.Default, dir + "/" + item.Envelope.MessageId);
+                                    }
+                                    catch (Exception) { continue; }
+                                }
                             }
                         }
                         catch(Exception)
                         {
-                            foreach (var item in Directory.EnumerateFiles(dir))
+                            if (curr_client == null)
                             {
-                                MimeMessage msg = MimeMessage.Load(item);
-                                object[] row = { msg.MessageId, msg.From.Mailboxes.First().Address, msg.From[0].Name, msg.Subject, msg.Date.LocalDateTime, msg.Attachments.Count() };
-                                grid_messlist.Rows.Add(row);
+                                foreach (var item in Directory.EnumerateFiles(dir))
+                                {
+                                    MimeMessage msg = MimeMessage.Load(item);
+                                    object[] row = { msg.MessageId, msg.From.Mailboxes.First().Address, msg.From[0].Name, msg.Subject, msg.Date.LocalDateTime, msg.Attachments.Count() };
+                                    grid_messlist.Rows.Add(row);
+                                }
                             }
                         }
                         break;
@@ -250,16 +271,26 @@ namespace KursCrypt
                             {
                                 object[] row = { item.Envelope.MessageId, item.Envelope.From.Mailboxes.First().Address, item.Envelope.From[0].Name, item.Envelope.Subject, item.Date.LocalDateTime, item.Attachments.Count() };
                                 grid_messlist.Rows.Add(row);
-                                curr_client.GetFolder(SpecialFolder.Trash).First(msg => msg.MessageId == item.Envelope.MessageId).WriteTo(FormatOptions.Default, dir + "/" + item.Envelope.MessageId);
+                                if (!fullnames.Contains(item.Envelope.MessageId))
+                                {
+                                    try
+                                    {
+                                        curr_client.GetFolder(SpecialFolder.Trash).First(msg => msg.MessageId == item.Envelope.MessageId).WriteTo(FormatOptions.Default, dir + "/" + item.Envelope.MessageId);
+                                    }
+                                    catch (Exception) { continue; }
+                                }
                             }
                         }
                         catch(Exception)
                         {
-                            foreach (var item in Directory.EnumerateFiles(dir))
+                            if (curr_client == null)
                             {
-                                MimeMessage msg = MimeMessage.Load(item);
-                                object[] row = { msg.MessageId, msg.From.Mailboxes.First().Address, msg.From[0].Name, msg.Subject, msg.Date.LocalDateTime, msg.Attachments.Count() };
-                                grid_messlist.Rows.Add(row);
+                                foreach (var item in Directory.EnumerateFiles(dir))
+                                {
+                                    MimeMessage msg = MimeMessage.Load(item);
+                                    object[] row = { msg.MessageId, msg.From.Mailboxes.First().Address, msg.From[0].Name, msg.Subject, msg.Date.LocalDateTime, msg.Attachments.Count() };
+                                    grid_messlist.Rows.Add(row);
+                                }
                             }
                         }
                         break;
@@ -315,7 +346,6 @@ namespace KursCrypt
             InAttachForm attachForm = new InAttachForm(read.message);
             attachForm.Show();
         }
-
         private void обменКлючамиToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (curr_id != -1)
@@ -328,7 +358,6 @@ namespace KursCrypt
                 MessageBox.Show("Для обмена ключами нужно авторизоваться", "Необходима авторизация", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
             }
         }
-
         public void SerializeKeyFile()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(KeyHolder));
@@ -340,7 +369,6 @@ namespace KursCrypt
                 }
             }
         }
-
         public KeyHolder DeserilizeKeyFile()
         {
             XmlSerializer serializer = new XmlSerializer(typeof(KeyHolder));

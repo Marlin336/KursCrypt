@@ -36,7 +36,7 @@ namespace KursCrypt
             {
                 try
                 {
-                    string host_str = tb_mail.Text.Substring(tb_mail.Text.IndexOf('@') + 1);
+                    Main.host = tb_mail.Text.Substring(tb_mail.Text.IndexOf('@') + 1);
                     client = new ImapClient();
                     client.Connect("imap." + Main.host, Main.rcv_port, true);
                     if (client.IsConnected)

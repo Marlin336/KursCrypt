@@ -14,7 +14,6 @@ namespace KursCrypt
             InitializeComponent();
             Main = main;
         }
-
         private void b_sentreq_Click(object sender, EventArgs e)
         {
             Regex rgx = new Regex(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}" +

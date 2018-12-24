@@ -209,12 +209,10 @@ namespace KursCrypt
                 }
             }
         }
-
         private void CryptItem_Click(object sender, EventArgs e)
         {
             CryptItem.Checked = !CryptItem.Checked;
         }
-
         private void SignItem_Click(object sender, EventArgs e)
         {
             SignItem.Checked = !SignItem.Checked;
