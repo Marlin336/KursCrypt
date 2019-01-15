@@ -13,7 +13,7 @@ namespace KursCrypt
             handled_message = message;
             foreach (var item in message.Attachments)
             {
-                object[] row = { item.ContentId, item.FileName, item.FileName.Substring(item.FileName.IndexOf('.')), Math.Round((double)item.FileSize / 1024, 2) };
+                object[] row = { item.ContentId, item.FileName, item.FileName.Substring(item.FileName.LastIndexOf('.')), Math.Round((double)item.FileSize / 1024, 2) };
                 list.Rows.Add(row);
             }   
         }
